@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 namespace App\Http\Controllers;
 
@@ -10,9 +10,8 @@ class AppointmentController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth']);
+        $this->middleware(['auth', 'role:super admin']);
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +19,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        return 'Appointment';
+        //
     }
 
     /**
