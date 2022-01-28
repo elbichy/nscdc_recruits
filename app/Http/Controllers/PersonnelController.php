@@ -54,10 +54,6 @@ class PersonnelController extends Controller
     // SHOW ALL ACTIVE PERSONNEL
     public function index()
     {
-        // if(!auth()->user()->hasAnyRole(['super admin'])){
-        //     abort(401, 'You can only manage staff withing your formation');
-        // }
-        // return $personnel = User::with('deployments', 'progressions')->get();
         return view('dashboard.personnel.all');
     }
     public function get_all(){
@@ -72,97 +68,7 @@ class PersonnelController extends Controller
             ->rawColumns(['name', 'checkbox'])
             ->make();
     }
-
-
-    // SHOW ALL PERSONNEL OUT OF SERVICE
-    public function outofservice()
-    {
-        return view('administration.dashboard.personnel.outofservice');
-    }
-    public function get_outofservice(){
-        $personnel = User::onlyTrashed("FIELD(rank_full, 'Commandant General of Corps', 'Deputy Commandant General of Corps', 'Assistant Commandant General of Corps', 'Commandant of Corps', 'Deputy Commandant of Corps', 'Assistant Commandant of Corps', 'Chief Superintendent of Corps', 'Superintendent of Corps', 'Deputy Superintendent of Corps', 'Assistant Superintendent of Corps I', 'Assistant Superintendent of Corps II', 'Chief Inspector of Corps', 'Deputy Chief Inspector of Corps', 'Assistant Chief Inspector of Corps', 'Principal Inspector of Corps I', 'Principal Inspector of Corps II', 'Senior Inspector of Corps', 'Inspector of Corps', 'Assistant Inspector of Corps', 'Chief Corps Assistant', 'Senior Corps Assistant', 'Corps Assistant I', 'Corps Assistant II', 'Corps Assistant III')")->orderBy('service_number', 'ASC');
-        return DataTables::of($personnel)
-            ->editColumn('name', function ($personnel) {
-                return "<b><a href=\"/dashboard/personnel/$personnel->id\">$personnel->name</a></b>";
-            })
-            ->addColumn('checkbox', function($redeployment) {
-                return '<input type="checkbox" name="personnelCheckbox[]" class="personnelCheckbox browser-default" value="'.$redeployment->id.'" />';
-            })
-            ->rawColumns(['name', 'checkbox'])
-            ->make();
-    }
     
-    // SHOW PERSONNEL STATS
-    public function stats()
-    {
-        // $total_personnel = User::count();
-        // $total_formations = Formation::count();
-        // $total_redeployments = Redeployment::count();
-        // $internal = Redeployment::where('type', 'internal')->count();
-        // $external = Redeployment::where('type', 'external')->count();
-
-        // $formations = Formation::withCount('users')->pluck('users_count','formation');
-        // $formationChart = new FormationChart;
-        // $formationChart->labels($formations->keys());
-        // $formationChart->dataset('Formation', 'bar', $formations->values())->options([
-        //     'backgroundColor' => 'red'
-        // ]);
-
-
-        // $ranks = Rank::withCount('users')->orderBy('gl', 'ASC')->pluck('users_count','gl');
-        // $keys = [];
-        // foreach($ranks->keys() as $gl){
-        //     $Rtitle = Rank::where('gl', $gl)->get();
-        //     $Rtitle->count() > 1 ? array_push($keys, 'GL'.$gl." (".$Rtitle[0]->short_title.' & '.$Rtitle[1]->short_title.")") : array_push($keys, 'GL'.$gl." (".$Rtitle[0]->short_title.")");
-        // }
-        // $rankChart = new RankChart;
-        // $rankChart->labels($keys);
-        // $rankChart->dataset('Rank', 'horizontalBar', $ranks->values())->options([
-        //     'backgroundColor' => '#039be5',
-        //     'hoverBackgroundColor' => '#0e75a7'
-        // ]);
-
-
-
-        // $male = User::where('sex', 'male')->count();
-        // $female = User::where('sex', 'female')->count();
-        // $null = User::where('sex', null)->count();
-        // $genderChart = new GenderChart;
-        // $genderChart->labels(['Male', 'Female', 'Null']);
-        // $genderChart->dataset('Rank', 'doughnut', [$male, $female, $null])->options([
-        //     'backgroundColor' => [
-        //         '#01579b',
-        //         '#e91e63',
-        //         '#00695c',
-        //     ]
-        // ]);
-
-        // "Married",
-        // "Divorced",
-        // "Single",
-        // "",
-        // "Widowed"
-
-        // $marital_status = [];
-        // $ms = User::distinct()->pluck('marital_status');
-        // foreach($ms as $status){
-        //     $marital_status[$status] = User::where('marital_status', $status)->count();
-        // }
-        // $marital_status = collect($marital_status);
-        // $maritalStatusChart = new MaritalStatusChart;
-        // $maritalStatusChart->labels($marital_status->keys());
-        // $maritalStatusChart->dataset('Rank', 'pie', $marital_status->values())->options([
-        //     'backgroundColor' => [
-        //         '#43a047',
-        //         '#e53935',
-        //         '#3949ab',
-        //         '#9e9e9e',
-        //         '#8e24aa'
-        //     ]
-        // ]);
-
-        // return view('administration.dashboard.personnel.stats', compact(['total_personnel', 'total_formations', 'total_redeployments', 'internal', 'external', 'formationChart', 'rankChart', 'genderChart', 'maritalStatusChart']));
-    }
 
     // CREATE NEW PERSONNEL
     public function create()
@@ -324,9 +230,6 @@ class PersonnelController extends Controller
 
     // IMPORT NEW DATA
     public function import_data(Request $request){
-        // if (!Gate::allows('isGlobalAdmin')) {
-        //     abort(401);
-        // }
         return view('dashboard/personnel/import');
     }
 
@@ -458,10 +361,6 @@ class PersonnelController extends Controller
     // SHOW SPECIFIC PERSONNEL
     public function show(User $user)
     {
-        // if(auth()->user()->current_formation != $user->current_formation && !auth()->user()->hasAnyRole(['super admin'])){
-        //     abort(401, 'You can only manage staff withing your formation');
-        // }
-
         $personnel = $user;
         $all_formations = Formation::all();
         $state = State::where('id', $personnel->soo)->first();
@@ -489,9 +388,6 @@ class PersonnelController extends Controller
     
     public function ros(User $user)
     {
-        // if(auth()->user()->current_formation != $user->current_formation && auth()->user()->role != 'global_admin'){
-        //     abort(401);
-        // }
 
         $personnel = $user;
         $all_formations = Formation::all();
@@ -525,11 +421,7 @@ class PersonnelController extends Controller
     // UPLOAD A FILE(S)
     public function upload_file(Request $request, User $user)
     {
-
         $storage_drive = env("FILESYSTEM_DRIVER");
-        // if(auth()->user()->current_formation != $user->current_formation && auth()->user()->role != 'global_admin'){
-        //     abort(401);
-
         
         if($storage_drive == 'do_spaces'){
             // DIGITAL OCEAN OPTION //
@@ -612,10 +504,6 @@ class PersonnelController extends Controller
         $personnel = User::where('id', $user)->with(['formations' => function($query){
             $query->latest()->first();
         }])->first();
-        
-        // if(auth()->user()->current_formation != $personnel->current_formation && auth()->user()->role != 'global_admin'){
-        //     abort(401);
-        // }
 
         $banks = array(
             array('id' => '1','name' => 'Access Bank','code'=>'044'),
@@ -680,9 +568,6 @@ class PersonnelController extends Controller
     // EDIT PERSONNEL PASSWORD
     public function change_password(Request $request, User $user)
     {
-        // if(auth()->user()->current_formation != $user->current_formation && auth()->user()->role != 'global_admin'){
-        //     abort(401);
-        // }
         $this->validate($request, [
             'password' => 'required|confirmed|min:6',
         ]);
@@ -714,9 +599,6 @@ class PersonnelController extends Controller
     // UPDATE A PERSONNEL RECORD
     public function update(Request $request, User $user)
     {
-        // if(auth()->user()->current_formation != $user->current_formation && auth()->user()->role != 'global_admin'){
-        //     abort(401);
-        // }
 
         $validation = $request->validate([
             'name' => 'required|string',
@@ -811,9 +693,6 @@ class PersonnelController extends Controller
     // DELETE PERSONNEL RECORD
     public function destroy(Request $request)
     {
-        // if(auth()->user()->role != 'global_admin'){
-        //     abort(401);
-        // }
         $user = User::find($request->user);
         // Storage::deleteDirectory('public/documents/'.$user->service_number);
         $user->status = $request->reason;
