@@ -77,10 +77,6 @@ class PersonnelController extends Controller
     // SHOW ALL PERSONNEL OUT OF SERVICE
     public function outofservice()
     {
-        // if (!Gate::allows('isGlobalAdmin')) {
-        //     abort(401);
-        // }
-        // return $personnel = User::with('deployments', 'progressions')->get();
         return view('administration.dashboard.personnel.outofservice');
     }
     public function get_outofservice(){
