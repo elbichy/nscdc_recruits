@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Qualification;
-use App\User;
+use App\Models\Qualification;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;

@@ -7,6 +7,7 @@ use App\Models\Formation;
 use App\Models\Rank;
 use App\Models\State;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class AppointmentController extends Controller
 {
@@ -37,161 +38,23 @@ class AppointmentController extends Controller
     // GET PROMOTION LIST
     public function get_all($year){
 
-        // $promotions = Promotion::where('year', $year)->orderBy('updated_at', 'DESC')->get();
-        // return DataTables::of($promotions)
-        // ->editColumn('updated_at', function ($promotion) {
-        //     return $promotion->updated_at->toFormattedDateString();
-        //     // return $redeployment->created_at->toDateString();
-        // })
-        // ->addColumn('view', function($promotion) {
-        //     return '
-        //             <a href="'.route('generate_single_junior_promotion_letter', $promotion->id).'" style="margin-right:5px;" class="light-blue-text text-darken-3" title="Print promotion letter"><i class="fas fa-file-word fa-lg"></i></a>
-        //             <a href="#" style="margin-right:5px;" class="light-blue-text text-darken-3" title="Edit promotion record" data-pro_id="'.$promotion->id.'" onclick="editPromotion(event)"><i class="fas fa-edit fa-lg"></i></a>
-        //         ';
-        // })
-        // ->addColumn('checkbox', function($redeployment) {
-        //     return '<input type="checkbox" name="personnelCheckbox[]" class="personnelCheckbox browser-default" value="'.$redeployment->id.'" />';
-        // })
-        // ->rawColumns(['view', 'checkbox'])
-        // ->make();
-    }
-
-    // IMPORT NEW DATA
-    public function import_data(Request $request){
-        // return view('administration/dashboard/promotion/import');
-    }
-
-    // IMPORT STORE IMPORTED PROMOTION DATA
-    public function get_junior(Appointment $promotion)
-    {  
-        // return $promotion;
-    }
-
-    // STORE PROMOTION DATA
-    public function store_junior(Request $request)
-    {  
-        
-        // if($request->has('present_key')){
-        //     return Rank::where('cadre', $request->present_key)->get();
-        // }
-        // if($request->has('new_key')){
-        //     return Rank::where('cadre', $request->new_key)->get();
-        // }
-        // if($request->has('svc_no_key')){
-        //     $user = User::where('service_number', $request->svc_no_key)->with(['formations'=>function($query){
-        //         return $query->latest()->first();
-        //     }])->get();
-        //     $count = User::where('service_number', $request->svc_no_key)->count();
-        //     return response()->json(['status' =>  true, 'record' => $user, 'message' => $count.' records found', 'count' => $count]);
-        // }
-
-        // $validate = $request->validate([
-        //     'svc_no' => 'required|integer',
-        //     'name' => 'required|string',
-        //     'dob' => 'required|date',
-        //     'formation' => 'required|integer',
-        //     'soo' => 'required|string',
-        //     'dofa' => 'required|date',
-        //     'dopa' => 'required|date',
-        //     'present_cadre' => 'required|string',
-        //     'present_gl' => 'required|integer',
-        //     'new_gl' => 'required|integer'
-        // ]);
-        
-        // $command_type = Formation::find($request->formation)->type;
-        // $command = Formation::find($request->formation)->formation;
-        // $present_rank = Rank::where('cadre', $request->present_cadre)->where('gl', $request->present_gl)->first();
-        // $present_rank_full = $present_rank->full_title;
-        // $present_rank_short = $present_rank->short_title;
-        // $promotion_rank = Rank::where('cadre', $request->present_cadre)->where('gl', $request->new_gl)->first();
-        // $new_rank_full = $promotion_rank->full_title;
-        // $new_rank_short = $promotion_rank->short_title;
-
-        // // return $request;
-        // $promotion = Promotion::create([
-        //     "svc_no"=> $request->svc_no,
-        //     "name"=> strtoupper($request->name),
-        //     "dob"=> $request->dob,
-        //     "soo"=> $request->soo,
-        //     "command"=> ucwords($command),
-        //     "command_type"=> $command_type,
-        //     "dofa"=> $request->dofa,
-        //     "dopa"=> $request->dopa,
-        //     "present_gl"=> $request->present_gl,
-        //     "present_rank_full"=> $present_rank_full,
-        //     "present_rank_short"=> $present_rank_short,
-        //     "promotion_gl"=> $request->new_gl,
-        //     "promotion_rank_full"=> $new_rank_full,
-        //     "promotion_rank_short"=> $new_rank_short,
-        //     "effective_date"=> '1-1-2018',
-        //     "type"=> 'normal',
-        //     "ref_number" => Str::random(12)
-        // ]);
-
-        // if($promotion){
-        //     Alert::success('Promotion record added successfully!', 'Success!')->autoclose(2500);
-        //     return back();
-        // }
-    }
-   
-   
-    // IMPORT UPDATE IMPORTED PROMOTION DATA
-    public function update_junior(Request $request)
-    {
-        // $validate = $request->validate([
-        //     'svc_no' => 'required|integer',
-        //     'name' => 'required|string',
-        //     'dob' => 'required|date',
-        //     'formation' => 'required',
-        //     'soo' => 'required|string',
-        //     'additional_qual' => 'required|string',
-        //     'qual_year' => 'required|integer',
-        //     'dofa' => 'required|date',
-        //     'dopa' => 'required|date'
-        // ]);
-        // return $request;
-        // $present_rank_short = Rank::where('full_title', $request->input('update-present_rank'))->pluck('short_title')->first();
-        // $promotion_rank_short = Rank::where('full_title', $request->input('update-new_rank'))->pluck('short_title')->first();
-        // $present_gl = Rank::where('full_title', $request->input('update-present_rank'))->pluck('gl')->first();
-        // $promotion_gl = Rank::where('full_title', $request->input('update-new_rank'))->pluck('gl')->first();
-        // $formation_type = Formation::where('formation', $request->input('update-formation'))->pluck('type')->first();
-        // $present_rank = $request->input('update-present_rank');
-        // $promotion_rank = $request->input('update-new_rank');
-
-        // $update = Promotion::find($request->id)->update([
-        //     'svc_no' => $request->input('update-svc_no'),
-        //     'name' => $request->input('update-name'),
-        //     'command' => $request->input('update-formation'),
-        //     'command_type' => $formation_type,
-        //     'promotion_rank_full' => $promotion_rank,
-        //     'promotion_rank_short' => $promotion_rank_short,
-        //     'promotion_gl' => $promotion_gl,
-        //     'dob' => $request->input('update-dob'),
-        //     'dofa' => $request->input('update-dofa'),
-        //     'dopa' => $request->input('update-dopa'),
-        //     // 'effective_date' => $request->input('update-dob'),
-        //     'present_rank_full' => $present_rank,
-        //     'present_rank_short' => $present_rank_short,
-        //     'present_gl' => $present_gl,
-        //     // 'ref_number' => $request->input('update-dob'),
-        //     // 'serial_no' => $request->input('update-dob'),
-        //     'soo' => $request->input('update-soo'),
-        //     'type' => 'normal'
-        // ]);
-
-        // if($update){
-        //     Alert::success('Promotion record updated successfully!', 'Success!')->autoclose(2500);
-        //     return back();
-        // }
-    }
-    
-    // DELETE PROMOTION DATA
-    public function delete_junior(Request $request)
-    {
-        // $delete = $request->delete_id;
-        // Promotion::find($delete)->delete();
-        // Alert::success('Promotion record trashed successfully!', 'Success!')->autoclose(2500);
-        // return redirect()->back();
+        $appointment = Appointment::where('year', $year)->orderBy('updated_at', 'DESC')->get();
+        return DataTables::of($appointment)
+        ->editColumn('updated_at', function ($appointment) {
+            return $appointment->updated_at->toFormattedDateString();
+            // return $redeployment->created_at->toDateString();
+        })
+        ->addColumn('view', function($appointment) {
+            return '
+                    <a href="'.route('generate_single_junior_promotion_letter', $appointment->id).'" style="margin-right:5px;" class="light-blue-text text-darken-3" title="Print promotion letter"><i class="fas fa-file-word fa-lg"></i></a>
+                    <a href="#" style="margin-right:5px;" class="light-blue-text text-darken-3" title="Edit promotion record" data-pro_id="'.$appointment->id.'" onclick="editPromotion(event)"><i class="fas fa-edit fa-lg"></i></a>
+                ';
+        })
+        ->addColumn('checkbox', function($redeployment) {
+            return '<input type="checkbox" name="personnelCheckbox[]" class="personnelCheckbox browser-default" value="'.$redeployment->id.'" />';
+        })
+        ->rawColumns(['view', 'checkbox'])
+        ->make();
     }
 
     // IMPORT STORE IMPORTED PROMOTION DATA

@@ -117,7 +117,7 @@
                 <div class="collapsible-body">
                 <ul>
                     <li class="{{(request()->segment(3) == 'appointment') ? 'active' : ''}}">
-                        <a href="{{ route('manage_appointment') }}">New appointment</a>
+                        <a href="{{ route('manage_appointment') }}">Appointments</a>
                     </li>
                     
                 </ul>

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Nok;
-use App\User;
+use App\Models\Nok;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;

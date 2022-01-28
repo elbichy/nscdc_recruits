@@ -9,10 +9,10 @@
 
                 {{-- SALES TABLE --}}
                 <div class="sectionTableWrap z-depth-1">
-                    <div class="row topMenuWrap">
+                    {{-- <div class="row topMenuWrap">
                         <a href="#" id="blueBtn" class="blueBtn btn btn-small"><i class="material-icons right">format_list_bulleted</i>eligibility list</a>
                         <a href="#" id="greenBtn" class="greenBtn btn btn-small green darken-2 white-text"><i class="material-icons right">format_list_bulleted</i>norminal roll</a>
-                    </div>
+                    </div> --}}
                     <table class="table centered table-bordered" id="users-table">
                         <thead>
                             <tr>

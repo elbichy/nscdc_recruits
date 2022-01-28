@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Deployment;
-use App\Formation;
-use App\FormationUser;
-use App\User;
+use App\Models\Deployment;
+use App\Models\Formation;
+use App\Models\FormationUser;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -71,7 +71,7 @@ class DeploymentController extends Controller
         $new_formation_type = Formation::where('formation', $command)->pluck('type')->first();
 
         $ref_number = Str::random(12);
-        $insert = auth()->user()->redeployments()->create([
+        $insert = auth()->user()->redeployments->create([
             'type' => $old_formation_type == 'nhq' && $new_formation_type == 'nhq' ? 'internal' : 'external',
             'fullname' => $personnel->name,
             'service_number' => $personnel->service_number,

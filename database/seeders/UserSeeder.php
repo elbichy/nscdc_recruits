@@ -9,6 +9,8 @@ use App\Models\Qualification;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserSeeder extends Seeder
 {
@@ -102,15 +104,14 @@ class UserSeeder extends Seeder
             Nok::insert($nok);
         }
 
-        // $role = Role::create(['name' => 'super admin']);
-        // $permission = Permission::create(['name' => 'all privilages']);
-        // $role->givePermissionTo($permission);
+        $role = Role::create(['name' => 'super admin']);
+        $permission = Permission::create(['name' => 'all privilages']);
+        $role->givePermissionTo($permission);
 
-        // $role2 = Role::create(['name' => 'state admin']);
-        // $permission2 = Permission::create(['name' => 'create', 'name'=>'update']);
-        // $role2->givePermissionTo($permission2);
+        $role2 = Role::create(['name' => 'state admin']);
+        $permission2 = Permission::create(['name' => 'create', 'name'=>'update']);
+        $role2->givePermissionTo($permission2);
 
-        // $user1->assignRole('super admin');
-        // $user2->assignRole('state admin');
+        $user1->assignRole('super admin');
     }
 }

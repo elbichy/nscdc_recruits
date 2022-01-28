@@ -61,9 +61,9 @@
         @include('layouts.nav')
         {{-- CONTENT AREA    --}}
         @yield('content')
-
+        
     </div>
-
+    @include('sweetalert::alert')
     <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
     <script>
         function checkScreenSize() {
