@@ -130,7 +130,3 @@ Route::group(['prefix' => 'dashboard'], function (){
 		Route::post('/privilage/update/', [SettingsController::class, 'asign_privilage'])->name('app_settings_assign_privilage');
 	});
 });
-
-
-// require __DIR__.'/auth.php';
-
