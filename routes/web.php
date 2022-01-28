@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\SettingsController;
-use App\Models\State;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ Route::group(['prefix' => 'dashboard'], function (){
 		Route::get('/new', [PersonnelController::class, 'create'])->name('personnel_create');
 		Route::get('/all', [PersonnelController::class, 'index'])->name('personnel_all');
 		Route::get('/get_all', [PersonnelController::class, 'get_all'])->name('personnel_get_all');
-		Route::get('/get_outofservice', [PersonnelController::class, 'get_outofservice'])->name('get_outofservice');
+		
 		Route::get('/{user}', [PersonnelController::class, 'show'])->name('personnel_show');
 		Route::get('/{user}/ros', [PersonnelController::class, 'ros'])->name('personnel_ros');
 		Route::post('/store', [PersonnelController::class, 'store'])->name('store_personnel');
@@ -83,6 +83,40 @@ Route::group(['prefix' => 'dashboard'], function (){
 
 		Route::get('export/{type}',  [PersonnelController::class, 'export']);
 
+	});
+
+	// PROGRESSION ROUTES
+	Route::group(['prefix' => 'progression'], function () {
+
+		Route::get('/', function(){
+			return redirect()->back();
+		});
+
+		// APPOINTMENT
+		Route::group(['prefix' => 'appointment'], function () {
+
+			Route::get('/manage', [AppointmentController::class, 'manage'])->name('manage_appointment');
+
+			Route::get('/manage/{year}', [AppointmentController::class, 'manage_appointment'])->name('manage_appointment_year');
+			Route::get('/get_all/{year}/', [AppointmentController::class, 'get_all'])->name('appointment_get_list');
+
+			// Route::get('/manage/get/{promotion}', 'PromotionController@get_junior')->name('promotion_get_single_junior');
+			
+			// Route::post('/manage/store', 'PromotionController@store_junior')->name('promotion_store_junior');
+			// Route::post('/manage/update/', 'PromotionController@update_junior')->name('promotion_update_junior');
+			// Route::delete('/manage/delete/', 'PromotionController@delete_junior')->name('promotion_delete_junior');
+			Route::group(['prefix' => 'import'], function () {
+				Route::get('/data', [AppointmentController::class, 'import_data'])->name('import_appointment_data');
+				Route::post('/store', [AppointmentController::class, 'store_imported_promotion'])->name('store_imported_appointment');
+			});
+
+			// // GENERATION OF LETTER
+			Route::post('/generate/letter/bulk', [AppointmentController::class, 'generate_bulk_junior_promotion_letter'])->name('generate_bulk_junior_promotion_letter');
+			
+			Route::get('/generate/letter/{candidate}', [AppointmentController::class, 'generate_single_junior_promotion_letter'])->name('generate_single_junior_promotion_letter');
+		});
+
+		
 	});
 
 	// SETTINGS

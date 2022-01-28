@@ -106,6 +106,25 @@
                 </li>
             </ul>
         </li>
+
+        {{-- PROGRESSION --}}
+        <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+            <li class="{{ request()->segment(2) == 'progression' ? 'active' :  ''}}">
+                <a style="padding:0 32px;" class="collapsible-header">
+                    <i class="fal fa-sort-circle-up fa-2x"></i></i>PROGRESSION<i class="material-icons right">arrow_drop_down</i>
+                </a>
+                <div class="collapsible-body">
+                <ul>
+                    <li class="{{(request()->segment(3) == 'appointment') ? 'active' : ''}}">
+                        <a href="{{ route('manage_appointment') }}">New appointment</a>
+                    </li>
+                    
+                </ul>
+                </div>
+            </li>
+            </ul>
+        </li>
         
         {{-- SETTINGS --}}
         <li class="{{(request()->segment(2) == 'settings') ? 'active' : ''}}">
