@@ -37,37 +37,30 @@
                     <table class="table centered table-bordered striped highlight" id="users-table">
                         <thead>
                             <tr>
-                                <th></th>
                                 <th><input type='checkbox' class='browser-default selectAll'></th>
                                 <th>SN</th>
-                                <th>Svc No.</th>
                                 <th>Fullname</th>
+                                <th>Gender</th>
                                 <th>DOB</th>
                                 <th>SOO</th>
-                                <th>Command</th>
-                                <th>DOFA</th>
-                                <th>DOPA</th>
-                                <th>Present rank</th>
-                                <th>Promotion rank</th>
-                                <th>Effective date</th>
-                                <th>Updated</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Rank</th>
+                                <th>ID NO.</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th></th>
                                 <th>SN</th>
-                                <th>Svc No.</th>
                                 <th>Fullname</th>
+                                <th>Gender</th>
                                 <th>DOB</th>
                                 <th>SOO</th>
-                                <th>Command</th>
-                                <th>DOFA</th>
-                                <th>DOPA</th>
-                                <th>Present rank</th>
-                                <th>Promotion rank</th>
-                                <th>Effective date</th>
-                                <th>Updated</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Rank</th>
+                                <th>ID NO.</th>
                                 <th></th>
                                 {{-- <th></th> --}}
                             </tr>
@@ -170,8 +163,8 @@
                 serverSide: true,
                 ajax:  `{!! route('appointment_get_list', $year) !!}`,
                 columns: [
+
                     
-                    { data: 'view', name: 'view', "orderable": false, "searchable": false},
                     { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
                     {
                         "data": "id",
@@ -180,17 +173,15 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }, "orderable": false, "searchable": false
                     },
-                    { data: 'svc_no', name: 'svc_no'},
                     { data: 'name', name: 'name' },
-                    { data: 'dob', name: 'dob' },
-                    { data: 'soo', name: 'soo' },
-                    { data: 'command', name: 'command'},
-                    { data: 'dofa', name: 'dofa' },
-                    { data: 'dopa', name: 'dofa' },
-                    { data: 'present_rank_short', name: 'present_rank_short'},
-                    { data: 'promotion_rank_short', name: 'promotion_rank_short'},
-                    { data: 'effective_date', name: 'effective_date'},
-                    { data: 'updated_at', name: 'updated_at'}
+                    { data: 'gender', name: 'gender'},
+                    { data: 'date_of_birth', name: 'date_of_birth' },
+                    { data: 'state', name: 'state' },
+                    { data: 'email', name: 'email' },
+                    { data: 'mobile_number', name: 'mobile_number' },
+                    { data: 'position', name: 'position'},
+                    { data: 'id_number', name: 'id_number'},
+                    { data: 'view', name: 'view', "orderable": false, "searchable": false}
                 ],
                 initComplete: function () {
                     this.api().columns().every(function () {
