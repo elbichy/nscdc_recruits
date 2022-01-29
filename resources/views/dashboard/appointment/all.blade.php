@@ -41,7 +41,7 @@
                                 <th>SN</th>
                                 <th>Fullname</th>
                                 <th>Gender</th>
-                                <th>DOB</th>
+                                <th>Day</th>
                                 <th>SOO</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -55,7 +55,7 @@
                                 <th>SN</th>
                                 <th>Fullname</th>
                                 <th>Gender</th>
-                                <th>DOB</th>
+                                <th>Day</th>
                                 <th>SOO</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -175,7 +175,7 @@
                     },
                     { data: 'name', name: 'name' },
                     { data: 'gender', name: 'gender'},
-                    { data: 'date_of_birth', name: 'date_of_birth' },
+                    { data: 'day', name: 'day' },
                     { data: 'state', name: 'state' },
                     { data: 'email', name: 'email' },
                     { data: 'mobile_number', name: 'mobile_number' },
