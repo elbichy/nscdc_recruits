@@ -159,8 +159,22 @@ class AppointmentController extends Controller
         return response()->download(storage_path('app/docs/'.$candidate->name.'.docx'));
     }
 
+
     // GENERATE BULK PROMOTION LETTERS
     public function generate_bulk_appointment_letter(Request $request){
+
+        function formatNbr($nbr){
+            if ($nbr < 10)
+                return "000".$nbr;
+            elseif ($nbr >= 10 && $nbr < 100 )
+                return "00".$nbr;
+            elseif ($nbr >= 100 && $nbr < 1000 )
+                return "0".$nbr;
+            elseif ($nbr >= 1000 )
+                return $nbr;
+            else
+                return strval($nbr);
+        }
 
         $candidates = Appointment::orderByRaw("FIELD(position, 'Inspector of Corps', 'Assistant Inspector of Corps', 'Chief Corps Assistant', 'Senior Corps Assistant', 'Corps Assistant I', 'Corps Assistant II', 'Corps Assistant III')")->find($request->candidates);
 
@@ -187,10 +201,12 @@ class AppointmentController extends Controller
                 'marginBottom' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(0.7),
                 'footerHeight' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(0.3)
             ]);
+
             
+
             // REFERENCE NUMBER AND DATE ////////////////////////////////////////////////
-            $section->addText("Ref No: NSCDC/NHQ/APT/2019/".$candidate->num, ['bold' => true, 'italic' => true], [ 'spaceAfter' => 0, 'align' => \PhpOffice\PhpWord\SimpleType\Jc::END ]);
-            $section->addText("28th January, 2022", null, [ 'align' => \PhpOffice\PhpWord\SimpleType\Jc::END ]);
+            $section->addText("Ref No: NSCDC/NHQ/APT/2019/".formatNbr($candidate->num), ['bold' => true, 'italic' => true], [ 'spaceAfter' => 0, 'align' => \PhpOffice\PhpWord\SimpleType\Jc::END ]);
+            $section->addText("31st January, 2022", null, [ 'align' => \PhpOffice\PhpWord\SimpleType\Jc::END ]);
             // $section->addTextBreak(1);
             $section->addText(strtoupper($candidate->name), ['bold' => true], [ 'spaceAfter' => 0]);
             $section->addText(strtoupper($candidate->state), ['bold' => true], [ 'spaceAfter' => 0]);
@@ -271,7 +287,7 @@ class AppointmentController extends Controller
                 'posVerticalRel' => 'line',
             ]);
 
-            $section->addImage(storage_path().'/app/docs/SVG/dcg_admin_sign3.png', [
+            $section->addImage(storage_path().'/app/docs/SVG/dcg_admin_sign4.png', [
                 'width' => 200,
                 'wrappingStyle' => 'behind',
                 'posHorizontal'    => \PhpOffice\PhpWord\Style\Image::POSITION_HORIZONTAL_CENTER,
