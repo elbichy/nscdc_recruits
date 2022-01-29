@@ -81,20 +81,20 @@ class AppointmentController extends Controller
                 $line['application_code'] == '' ? $application_code = null : $application_code = $line['application_code'];
                 $line['name'] == '' ? $name = null : $name = $line['name'];
                 $line['email'] == '' ? $email = null : $email = $line['email'];
-                $line['date_of_birth'] == '' ? $date_of_birth = null : $date_of_birth = $line['date_of_birth'];
+                // $line['date_of_birth'] == '' ? $date_of_birth = null : $date_of_birth = $line['date_of_birth'];
                 $line['mobile_number'] == '' ? $mobile_number = null : $mobile_number = $line['mobile_number'];
                 $line['gender'] == '' ? $gender = null : $gender = $line['gender'];
                 $line['position'] == '' ? $position = null : $position = $line['position'];
                 $line['state'] == '' ? $state = null : $state = $line['state'];
                 $line['lga'] == '' ? $lga = null : $lga = $line['lga'];
                 $line['time'] == '' ? $time = null : $time = $line['time'];
-                $line['date'] == '' ? $date = null : $date = $line['date'];
+                // $line['date'] == '' ? $date = null : $date = $line['date'];
                 $line['day'] == '' ? $day = null : $day = $line['day'];
                 $line['amount'] == '' ? $amount = null : $amount = $line['amount'];
                 $line['id_number'] == '' ? $id_number = null : $id_number = $line['id_number'];
                 
-                $effective_date = date('d-m-Y', strtotime($date));
-                $year = explode('-', $effective_date)[2];
+                // $effective_date = date('d-m-Y', strtotime($date));
+                // $year = explode('-', $effective_date)[2];
 
                 $rank_applied = Rank::where('full_title', $position)->first();
 
@@ -109,7 +109,7 @@ class AppointmentController extends Controller
                     'application_code' => $application_code,
                     'name' => ucwords($name),
                     'email' => $email,
-                    'date_of_birth' => $date_of_birth,
+                    // 'date_of_birth' => $date_of_birth,
                     'mobile_number' => $mobile_number,
                     'gender' => $gender,
                     'position' => $position,
@@ -117,11 +117,11 @@ class AppointmentController extends Controller
                     'lga' => $lga,
                     'year' => 2019,
                     'time' => $time,
-                    'date' => $date,
+                    // 'date' => $date,
                     'day' => $day,
                     'amount' => $amount,
                     'id_number' => $id_number,
-                    'barcode' => $dNS2D->getBarcodePNG("<b>Authentic!</b> find full details of <b>$name</b> here --> <br/>http://admindb.nscdc.gov.ng/verify/appointment/$year/$id_number", 'QRCODE', 50,50),
+                    'barcode' => $dNS2D->getBarcodePNG("<b>Authentic!</b> find full details of <b>$name</b> here --> <br/>http://admindb.nscdc.gov.ng/verify/appointment/2019/$id_number", 'QRCODE', 50,50),
                     ]
                 );
             });
