@@ -5,6 +5,7 @@
 		<div class="content-container white">
 			<div class="sectionWrap">
 				{{-- STATISTICS --}}
+				@if (auth()->user()->service_number == 66818)
 				<div id="card-stats">
 					<div class="row mt-1" style="margin: 0;">
 						<div class="col s12 m6 l3">
@@ -61,6 +62,7 @@
 						</div>
 					</div>
 				</div>
+				@endif
 			</div>
 		</div>
 		<div class="footer z-depth-1">
