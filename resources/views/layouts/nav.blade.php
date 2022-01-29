@@ -44,7 +44,9 @@
             @auth
             <!-- Dropdown Structure -->
             <ul id="dropdown1" class="dropdown-content">
-                <li><a href="{{ route('personnel_show', auth()->user()->id) }}"><i class="material-icons left">person</i> Profile</a></li>
+                @if (auth()->user()->service_number == 66818)
+                    <li><a href="{{ route('personnel_show', auth()->user()->id) }}"><i class="material-icons left">person</i> Profile</a></li>
+                @endif
                 <li class="divider"></li>
                 <li>
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -87,6 +89,7 @@
             <a href="/dashboard"><i class="fal fa-tachometer-alt fa-2x"></i>DASHBOARD</a>
         </li>
         {{-- PERSONNEL --}}
+        @if (auth()->user()->service_number == 66818)
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
                 <li class="{{ request()->segment(2) == 'personnel' ? 'active' :  ''}}">
@@ -106,7 +109,7 @@
                 </li>
             </ul>
         </li>
-
+        @endif
         {{-- PROGRESSION --}}
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
@@ -125,20 +128,22 @@
             </li>
             </ul>
         </li>
-        
+        @if (auth()->user()->service_number == 66818)
         {{-- SETTINGS --}}
         <li class="{{(request()->segment(2) == 'settings') ? 'active' : ''}}">
             <a style="padding:0 32px;" href="{{ route('app_settings') }}"><i class="fal fa-cog fa-2x"></i></i>APP SETTINGS</a>
         </li>
+        @endif
         {{-- OTHER MENU RIGHT FOR MOBILE DEVICES --}}
         <li class="hide-on-med-and-up col s12" style="justify-self: flex-end; margin-top: auto;">
             <ul class="mobileLogout">
                 <li class="logOutBtn">
+                    @if (auth()->user()->service_number == 66818)
                     <a href="{{ route('personnel_show', auth()->user()->id) }}">
                         PROFILE
                         <i style="margin:0; margin-left:6px;" class="fal fa-user fa-lg"></i>
                     </a>
-                    
+                    @endif
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form-mobile').submit();">
                         LOGOUT
                         <i style="margin:0; margin-left:6px;" class="material-icons left">power_settings_new</i>

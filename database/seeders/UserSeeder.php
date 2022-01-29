@@ -27,6 +27,9 @@ class UserSeeder extends Seeder
             array('id' => '2','formation_id' => '1','user_id' => '1','command' => 'National Headquarters','department' => 'Public Relations','designation' => 'Secretary II','from' => '2016-02-08','to' => '2017-05-15','created_at' => '2021-03-14 07:32:03','updated_at' => '2021-03-14 07:32:03'),
             array('id' => '3','formation_id' => '1','user_id' => '1','command' => 'National Headquarters','department' => 'ICT Unit','designation' => 'Web Developer','from' => '2017-05-15','to' => '2019-08-21','created_at' => '2021-03-14 07:33:40','updated_at' => '2021-03-14 07:33:40')
         );
+        $formation_user2 = array(
+            array('id' => '1','formation_id' => '1','user_id' => '2','command' => 'National Headquarters','department' => 'Procurement','designation' => 'Secretary','from' => '2019-08-21','to' => '2021-03-14','created_at' => '2021-03-13 19:45:21','updated_at' => '2021-03-14 07:21:32'),
+        );
 
         $qualifications = array(
             array('id' => '2','user_id' => '1','qualification' => 'WAEC','course' => 'WAEC','institution' => 'G.S.S Jibi, FCT Abuja','grade' => 'WAEC','year_obtained' => '2009','created_at' => '2021-03-14 09:24:57','updated_at' => '2021-03-14 09:24:57'),
@@ -83,10 +86,51 @@ class UserSeeder extends Seeder
             'current_department' => 'N/A',
             'specialization' => 'GIS'
         ]);
+        
+        User::insert([
+            'name' => 'Jimoh Wasiu Ademola',
+            'username' => '36024',
+            'email' => 'jimoha@gmail.com',
+            'email_verified_at' => NULL,
+            'password' => Hash::make('08062496967'),
+            'remember_token' => NULL,
+            'blood_group' => 'a+',
+            'marital_status' => 'single',
+            'dob' => '1992-01-27',
+            'sex' => 'male',
+            'soo' => '20',
+            'lgoo' => '374',
+            'phone_number' => '08062496967',
+            'residential_address' => '',
+            'service_number' => 36024,
+            'cadre' => 'superintendent',
+            'gl' => '9',
+            'step' => '4',
+            'rank_full' => 'Assistant Superintendent of Corps I',
+            'rank_short' => 'ASC I',
+            'dofa' => '2015-12-22',
+            'doc' => '2015-01-01',
+            'dopa' => '2018-01-01',
+            'paypoint' => 'National Headquarters',
+            'salary_structure' => 'conpass',
+            'bank' => 'Standard Chatered Bank',
+            'account_number' => '0001680036',
+            'bvn' => '22170422895',
+            'ippis_number' => 'CD7016853',
+            'nin_number' => '44825576415',
+            'nhis_number' => '01642155',
+            'nhf' => NULL,
+            'pfa' => 'Premium Pension Limited',
+            'pen_number' => '100781252318',
+            'current_formation' => 'National Headquarters',
+            'current_department' => 'N/A',
+            'specialization' => 'Database Administrator'
+        ]);
 
    
 
         $user1 = User::where('service_number', 66818)->first();
+        $user2 = User::where('service_number', 36024)->first();
 
         foreach ($formation_user1 as $key => $deployment) {
             FormationUser::insert($deployment);
@@ -113,5 +157,6 @@ class UserSeeder extends Seeder
         $role2->givePermissionTo($permission2);
 
         $user1->assignRole('super admin');
+        $user2->assignRole('super admin');
     }
 }

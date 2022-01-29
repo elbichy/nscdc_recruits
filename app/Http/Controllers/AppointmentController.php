@@ -24,18 +24,18 @@ class AppointmentController extends Controller
     
     // DISPLAY APPOINTMENT CAT
     public function manage(){
-        if(auth()->user()->service_number !== 66818){
-            return redirect()->back();
-        }
+        // if(auth()->user()->service_number !== 66818){
+        //     return redirect()->back();
+        // }
         return view('dashboard.appointment.manage');
     }
 
     // DISPLAY JNR PROMOTION LIST
     public function manage_appointment(Request $request, $year){
         // return Appointment::where('year', $year)->orderBy('updated_at', 'DESC')->get();
-        if(auth()->user()->service_number !== 66818){
-            return redirect()->back();
-        }
+        // if(auth()->user()->service_number !== 66818){
+        //     return redirect()->back();
+        // }
         $formations = Formation::all();
         $ranks = Rank::get(['full_title', 'short_title']);
         $states = State::all();
