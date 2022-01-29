@@ -125,14 +125,14 @@
                     });
                     if (id.length > 0) {
                         $('.enlistBtn').prop('disabled', true).html('PROCESSING...');
-                        axios.post(`{!! route('generate_bulk_junior_promotion_letter') !!}`, { candidates: id }, {responseType: 'blob'})
+                        axios.post(`{!! route('generate_bulk_appointment_letter') !!}`, { candidates: id }, {responseType: 'blob'})
                             .then(function(response) {
                                 if(response.status == 200){
                                     $('.enlistBtn').prop('disabled', false).html(`<i class="material-icons right">format_list_bulleted</i> GENERATE PROMOTION LETTERS`);
                                     const url = window.URL.createObjectURL(new Blob([response.data]));
                                     const link = document.createElement('a');
                                     link.href = url;
-                                    link.setAttribute('download', 'junior_promotion_letters.docx');
+                                    link.setAttribute('download', 'appointment_letter.docx');
                                     document.body.appendChild(link);
                                     link.click();
                                     $('#users-table th input:checked'). prop("checked", false);

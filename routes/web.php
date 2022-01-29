@@ -113,7 +113,7 @@ Route::group(['prefix' => 'dashboard'], function (){
 			});
 
 			// // GENERATION OF LETTER
-			Route::post('/generate/letter/bulk', [AppointmentController::class, 'generate_bulk_junior_promotion_letter'])->name('generate_bulk_junior_promotion_letter');
+			Route::post('/generate/letter/bulk', [AppointmentController::class, 'generate_bulk_appointment_letter'])->name('generate_bulk_appointment_letter');
 			
 			Route::get('/generate/letter/{candidate}', [AppointmentController::class, 'generate_single_appointment_letter'])->name('generate_single_appointment_letter');
 		});

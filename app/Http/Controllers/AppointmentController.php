@@ -7,7 +7,9 @@ use App\Models\Formation;
 use App\Models\Rank;
 use App\Models\State;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Milon\Barcode\DNS2D;
+use Milon\Barcode\Facades\DNS2DFacade;
 use Rap2hpoutre\FastExcel\FastExcel;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
@@ -119,7 +121,7 @@ class AppointmentController extends Controller
                     'day' => $day,
                     'amount' => $amount,
                     'id_number' => $id_number,
-                    'barcode' => $dNS2D->getBarcodePNG("<b>Authentic!</b> find full details of <b>$name</b> here --> <br/>http://admindb.nscdc.gov.ng/verify/appointment/$year/$id_number", 'QRCODE', 10,10),
+                    'barcode' => $dNS2D->getBarcodePNG("<b>Authentic!</b> find full details of <b>$name</b> here --> <br/>http://admindb.nscdc.gov.ng/verify/appointment/$year/$id_number", 'QRCODE', 50,50),
                     ]
                 );
             });
@@ -143,7 +145,7 @@ class AppointmentController extends Controller
         // }
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(resource_path('docs/template-universal.docx'));
         $gl = Rank::where('full_title', $candidate->position)->pluck('gl')->first();
-        $templateProcessor->setValue('tsa', $candidate->tsa);
+        $templateProcessor->setValue('num', $candidate->num);
         $templateProcessor->setValue('name', strtoupper($candidate->name));
         $templateProcessor->setValue('state', strtoupper($candidate->state));
         $templateProcessor->setValue('position', strtoupper($candidate->position));
@@ -158,199 +160,144 @@ class AppointmentController extends Controller
     }
 
     // GENERATE BULK PROMOTION LETTERS
-    public function generate_bulk_junior_promotion_letter(Request $request){
+    public function generate_bulk_appointment_letter(Request $request){
 
-        // $candidates = Promotion::orderByRaw("FIELD(promotion_rank_full, 'Inspector of Corps', 'Assistant Inspector of Corps', 'Chief Corps Assistant', 'Senior Corps Assistant', 'Corps Assistant I', 'Corps Assistant II', 'Corps Assistant III')")->find($request->candidates);
+        $candidates = Appointment::orderByRaw("FIELD(position, 'Inspector of Corps', 'Assistant Inspector of Corps', 'Chief Corps Assistant', 'Senior Corps Assistant', 'Corps Assistant I', 'Corps Assistant II', 'Corps Assistant III')")->find($request->candidates);
 
-        // $phpWord = new \PhpOffice\PhpWord\PhpWord();
-        // $phpWord->setDefaultFontName('Times New Roman');
-        // $phpWord->setDefaultFontSize(14);
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord->setDefaultFontName('Times New Roman');
+        $phpWord->setDefaultFontSize(13);
 
-        // foreach($candidates as $candidate){
+        foreach($candidates as $candidate){
 
-        //     $current = Carbon::now();
-        //     // $currentDate = $current->format('jS F, Y');
-        //     $currentDate = '25th November, 2021';
-        //     $image = DNS2DFacade::getBarcodePNG("<b>Authentic!</b> find full details of <b>$candidate->name</b> here --> <br/>http://admindb.nscdc.gov.ng/verify/promotion/jnr/$candidate->year/$candidate->ref_number", 'QRCODE', 50,50);
-        //     $image = str_replace('data:image/png;base64,', '', $image);
-        //     $image = str_replace(' ', '+', $image);
-        //     $imageName = "Promotion QR Code_$candidate->svc_no.png";
-        //     File::put(storage_path().'/app/docs/'.$imageName, base64_decode($image));
+            $image = DNS2DFacade::getBarcodePNG("<b>Authentic!</b> find full details of <b>$candidate->name</b> here --> <br/>http://admindb.nscdc.gov.ng/verify/promotion/jnr/$candidate->year/$candidate->id_number", 'QRCODE', 50,50);
+            $image = str_replace('data:image/png;base64,', '', $image);
+            $image = str_replace(' ', '+', $image);
+            $imageName = "Appointment QR Code_$candidate->application_code.png";
+            File::put(storage_path().'/app/docs/'.$imageName, base64_decode($image));
 
-        //     // PAGE CONTENT WRAPPER
-        //     $section = $phpWord->addSection([
-        //         'orientation' => 'portrait', 
-        //         'marginLeft' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(1.45), 
-        //         'marginRight' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(0.68), 
-        //         'marginTop' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(2.70), 
-        //         'marginBottom' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(0.1),
-        //         'footerHeight' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(0.1)
-        //     ]);
-        //         // $section->addTextBreak(4);
+            $gl = Rank::where('full_title', $candidate->position)->pluck('gl')->first();
 
-        //         // REFERENCE NUMBER AND DATE ////////////////////////////////////////////////
-        //         $table = $section->addTable(['width' => 100 * 50, 'unit' => \PhpOffice\PhpWord\SimpleType\TblWidth::PERCENT]);
-        //         $table->addRow();
+            // PAGE CONTENT WRAPPER
+            $section = $phpWord->addSection([
+                'orientation' => 'portrait', 
+                'marginLeft' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(1.75),
+                'marginRight' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(0.40),
+                'marginTop' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(2.08),
+                'marginBottom' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(0.7),
+                'footerHeight' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(0.3)
+            ]);
+            
+            // REFERENCE NUMBER AND DATE ////////////////////////////////////////////////
+            $section->addText("Ref No: NSCDC/NHQ/APT/2019/".$candidate->num, ['bold' => true, 'italic' => true], [ 'spaceAfter' => 0, 'align' => \PhpOffice\PhpWord\SimpleType\Jc::END ]);
+            $section->addText("28th January, 2022", null, [ 'align' => \PhpOffice\PhpWord\SimpleType\Jc::END ]);
+            // $section->addTextBreak(1);
+            $section->addText(strtoupper($candidate->name), ['bold' => true], [ 'spaceAfter' => 0]);
+            $section->addText(strtoupper($candidate->state), ['bold' => true], [ 'spaceAfter' => 0]);
+            $section->addTextBreak(1, [], [ 'spaceAfter' => 0]);
+            $section->addText('Sir/Madam', [], [ 'spaceAfter' => 0]);
+            $section->addTextBreak(1, [], [ 'spaceAfter' => 0]);
 
-        //         $table->addCell(\PhpOffice\PhpWord\Shared\Converter::inchToTwip(3), ['valign' => 'bottom'])->addText("NSCDC/NHQ/JP/".Carbon::createFromFormat('d-m-Y', $candidate->effective_date)->year."/$candidate->svc_no", ['size' => 14, 'regular' => true, 'bold' => true]);
+            // // TITLE HERE ////////////////////////////////////////////////
+            $section->addText("PROVISIONAL OFFER OF APPOINTMENT", ['bold' => true, 'underline' => 'single'], [ 'align' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER ]);
 
-        //         $table->addCell(\PhpOffice\PhpWord\Shared\Converter::inchToTwip(2.8))->addText("$currentDate", null, [ 'align' => \PhpOffice\PhpWord\SimpleType\Jc::END ]);
-        //         $section->addTextBreak(1);
+            // // BODY OF LETTER //////////////////////////////////////////////////////////////////
+            $paraStyle = ['lineHeight' => 1.0, 'align' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH, 'spaceAfter' => 250 ];
+            $fisrtPara = $section->addTextRun($paraStyle);
+            $fisrtPara->addText("I am directed to refer to your recent application for employment and pleased to inform you that you have been offered appointment as follows:", null, null);
+            // $fisrtPara->addTextBreak(1, ['size' => 8], [ 'spaceAfter' => 0]);
+            
+            $listParaStyle = [ 'align' => \PhpOffice\PhpWord\SimpleType\Jc::START, 'indent' => 0.6, 'spaceAfter' => 0, 'spaceBefore' => 0, 'lineHeight' => 1 ];
+            $list = $section->addTextRun($listParaStyle);
+            $list->addText('i.    Rank: ', null, null);
+            $list->addText(strtoupper($candidate->position), ['bold' => true], [ 'spaceAfter' => 0]);
 
-        //         // $section->addText("NSCDC/NHQ/JP/".Carbon::createFromFormat('d-m-Y', $candidate->effective_date)->year."/$candidate->svc_no", null, [ 'spaceAfter' => 0, 'align' => \PhpOffice\PhpWord\SimpleType\Jc::END ]);
-                
-        //         // $section->addText("$currentDate", null, [ 'align' => \PhpOffice\PhpWord\SimpleType\Jc::END ]);
-        //         // $section->addTextBreak(1);
-                
-        //         $section->addText("$candidate->name ".strtoupper("($candidate->present_rank_short)"), ['bold' => true]);
-        //             $state = $candidate->command;
-        //             if($candidate->command == 'Zone A Headquarters'){
-        //                 $state = 'Lagos';
-        //             }else if($candidate->command == 'Zone B Headquarters'){
-        //                 $state = 'Kaduna';
-        //             }else if($candidate->command == 'Zone C Headquarters'){
-        //                 $state = 'Bauchi';
-        //             }else if($candidate->command == 'Zone D Headquarters'){
-        //                 $state = 'Minna, Niger';
-        //             }else if($candidate->command == 'Zone E Headquarters'){
-        //                 $state = 'Owerri, Imo';
-        //             }else if($candidate->command == 'Zone F Headquarters'){
-        //                 $state = 'Abeokuta';
-        //             }else if($candidate->command == 'Zone G Headquarters'){
-        //                 $state = 'Benin City, Edo';
-        //             }else if($candidate->command == 'Zone H Headquarters'){
-        //                 $state = 'Makurdi, Benue';
-        //             }else if($candidate->command == 'Zone I Headquarters'){
-        //                 $state = 'Damaturu, Yobe';
-        //             }else if($candidate->command == 'Zone J Headquarters'){
-        //                 $state = 'Osun';
-        //             }else if($candidate->command == 'Zone K Headquarters'){
-        //                 $state = 'Awka, Anambra';
-        //             }else if($candidate->command == 'Zone L Headquarters'){
-        //                 $state = 'Port Harcourt, Rivers';
-        //             }else if($candidate->command == 'Zone M Headquarters'){
-        //                 $state = 'Sokoto';
-        //             }else if($candidate->command == 'Zone N Headquarters'){
-        //                 $state = 'Kano';
-        //             }else if($candidate->command == 'Zone O'){
-        //                 $state = 'FCT, Abuja';
-        //             }
-                    
-        //         if($candidate->command_type == 'state'){
-        //             $section->addText("Ufs:  The State Commandant,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Nigeria Security and Civil Defence Corps,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         ".ucwords($candidate->command)." State Command,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         ".ucwords($state)." state.");
-        //         }
-        //         elseif($candidate->command_type == 'zone'){
-        //             $section->addText("Ufs:  The Zonal Commander,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Nigeria Security and Civil Defence Corps,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         ".ucwords($candidate->command).",", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         ".ucwords($state)." state.");
-        //         }
-        //         elseif($candidate->command_type == 'sa'){
-                    
-        //             $section->addText("Ufs:  The Provost,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Nigeria Security and Civil Defence Corps,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         $candidate->command,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         FCT, Abuja.");
-        //         }
-        //         elseif($candidate->command_type == 'kc'){
-        //             $section->addText("Ufs:  The Provost,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Nigeria Security and Civil Defence Corps,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         ".ucwords($candidate->command).",", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Katsina state.");
-        //         }
-        //         elseif($candidate->command_type == 'oc'){
-        //             $section->addText("Ufs:  The Provost,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Nigeria Security and Civil Defence Corps,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         $candidate->command,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Ogun state.");
-        //         }
-        //         elseif($candidate->command_type == 'll'){
-        //             $section->addText("Ufs:  The Provost,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Nigeria Security and Civil Defence Corps,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         $candidate->command,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Lagos state.");
-        //         }
-        //         elseif($candidate->command_type == 'nhq'){
-        //             $section->addText("Ufs:  Deputy Commandant General Administration,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Nigeria Security and Civil Defence Corps,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         National Headquarters,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Sauka, Fct Abuja.");
-        //         }elseif($candidate->command_type == 'fct'){
-        //             $section->addText("Ufs:  The Commandant,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Nigeria Security and Civil Defence Corps,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         ".ucfirst($candidate->command)." Command,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Zone 5, Fct Abuja.");
-        //         }
-        //         elseif($candidate->command_type == 'elo'){
-        //             $section->addText("Ufs:  The Commandant,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Nigeria Security and Civil Defence Corps,", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         ".ucfirst($candidate->command).",", null, [ 'spaceAfter' => 0]);
-        //             $section->addText("         Zone 5, Fct Abuja.");
-        //         }
-        //         $section->addTextBreak(1, ['size' => 8]);
+            $list = $section->addTextRun($listParaStyle);
+            $list->addText('ii.   Nature of Appointment: ', null, null);
+            $list->addText('GENERAL DUTY', ['bold' => true], null);
 
-        //         // TITLE HERE ////////////////////////////////////////////////
-        //         $section->addText("LETTER OF PROMOTION", ['bold' => true, 'underline' => 'single'], [ 'align' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER ]);
+            $list = $section->addTextRun($listParaStyle);
+            $list->addText('iii.  Salary Grade Level/Step: ', null, null);
+            $list->addText($gl, ['bold' => true], null);
+            $list->addText(' Step 2', ['bold' => true], null);
 
-        //         // BODY OF LETTER //////////////////////////////////////////////////////////////////
-        //         $fisrtPara = $section->addTextRun(['lineHeight' => 1.5, 'align' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH ]);
-        //         $fisrtPara->addText("I am pleased to inform you that sequel to your performance at the ".Carbon::createFromFormat('d-m-Y', $candidate->effective_date)->year." promotion examination, the Commandant General has approved your promotion from the rank of", null, [ 'align' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH ]);
-        //         $fisrtPara->addText(" $candidate->present_rank_full ($candidate->present_rank_short)", ['bold' => true]);
-        //         $fisrtPara->addText(" on");
-        //         $fisrtPara->addText(" (CONPASS 0$candidate->present_gl)", ['bold' => true]);
-        //         $fisrtPara->addText(" to the rank of");
-        //         $fisrtPara->addText(" $candidate->promotion_rank_full ($candidate->promotion_rank_short)", ['bold' => true]);
-        //         $fisrtPara->addText(" on");
-        //         $fisrtPara->addText(" (CONPASS 0$candidate->promotion_gl)", ['bold' => true]);
-        //         $fisrtPara->addText(" with effect from");
-        //         $fisrtPara->addText(" ".date('d/m/Y', strtotime($candidate->effective_date)).".", ['bold' => true]);
+            $naira = html_entity_decode('&#8358;', 0, 'UTF-8');
 
-        //         $section->addText('2.       Notice of the promotion will be published in the official gazette soon.', 
-        //         null, 
-        //         [
-        //              'align' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH 
-        //         ]);
+            $list = $section->addTextRun([ 'align' => \PhpOffice\PhpWord\SimpleType\Jc::START, 'indent' => 0.6, 'spaceAfter' => 250, 'spaceBefore' => 0, 'lineHeight' => 1 ]);
+            $list->addText('iv.  Basic Salary: ', null, null);
+            $list->addText("$naira".number_format($candidate->amount, 2), ['bold' => true], null);
+            $list->addText(' (per annum)', null, null);
 
-        //         $section->addText('3.       Please accept my hearty congratulations.', 
-        //         null, 
-        //         [ 
-        //             'align' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH 
-        //         ]);
-        //         $section->addTextBreak(1, ['size' => 14]);
-        //         $section->addTextBreak(1, ['size' => 14]);
-                
-        //         $section->addImage(storage_path().'/app/docs/SVG/cc_admin_sign.png', [
-        //             'width' => 240,
-        //             'wrappingStyle' => 'infront',
-        //             'positioning'      => \PhpOffice\PhpWord\Style\Image::POSITION_RELATIVE,
-        //             'posHorizontal'    => \PhpOffice\PhpWord\Style\Image::POSITION_HORIZONTAL_CENTER,
-        //             'posVertical'    => \PhpOffice\PhpWord\Style\Image::POSITION_VERTICAL_CENTER,
-        //             'posHorizontalRel' => \PhpOffice\PhpWord\Style\Image::POSITION_RELATIVE_TO_MARGIN,
-        //             'posVerticalRel' => \PhpOffice\PhpWord\Style\Image::POSITION_RELATIVE_TO_LINE,
-        //             'margin-top' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(-12.85)
-        //         ]);
-                
-        //         // FOOTER SIGNATURE //////////////////////////////////////////////////////////////////
-        //         $section->addText('ADAMU SALIHU', ['bold' => true], [ 'spacingLineRule' => \PhpOffice\PhpWord\SimpleType\LineSpacingRule::AUTO, 'spaceAfter' => 0, 'lineHeight' => 1, 'align' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER ]);
-        //         $section->addText('Commandant Administration', [], [ 'spacingLineRule' => \PhpOffice\PhpWord\SimpleType\LineSpacingRule::AUTO, 'spaceAfter' => 0, 'lineHeight' => 1, 'align' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER ]);
-        //         $section->addText('For: Commandant General', [], [ 'spacingLineRule' => \PhpOffice\PhpWord\SimpleType\LineSpacingRule::AUTO, 'spaceAfter' => 0, 'lineHeight' => 1, 'align' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER ]);
-        //         $section->addTextBreak(1, ['size' => 4]);
 
-        //         $section->addImage(storage_path()."/app/docs/Promotion QR Code_$candidate->svc_no.png", ['width' => 80, 'height' => 80, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END]);
+            $secondPara = $section->addTextRun($paraStyle);
+            $secondPara->addText("2.    Your appointment is subject to the Conditions of Service of ", null, null);
+            $secondPara->addText("the Nigeria Security and Civil Defence Corps, ", ['bold' => true], null);
+            $secondPara->addText("the ", null, null);
+            $secondPara->addText("Public Service Rules and Other Regulations ", ['bold' => true], null);
+            $secondPara->addText("of the ", null, null);
+            $secondPara->addText("Civil Defence, Correctional, Fire and Immigration Services Board (CDCFIB).", ['bold' => true], null);
+            // $secondPara->addTextBreak(1, null, [ 'spaceAfter' => 0, 'spaceBefore' => 0, 'lineHeight' => 1]);
+            
+            $thirdPara = $section->addTextRun($paraStyle);
+            $thirdPara->addText("3.     Your appointment may be confirmed after passing the appropriate confirmation examination and two years of satisfactory service.", null, null);
+            // $thirdPara->addTextBreak(1, ['size' => 8], [ 'spaceAfter' => 0]);
+            
+            $fouthPara = $section->addTextRun($paraStyle);
+            $fouthPara->addText("4.     Your appointment may be terminated at any time by the ", null, null);
+            $fouthPara->addText("Nigeria Security and Civil Defence Corps ", ['bold' => true], ['align' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH ]);
+            $fouthPara->addText("or the Board of ", null, null);
+            $fouthPara->addText("Civil Defence, Correctional, Fire and Immigration Services Board ", ['bold' => true], ['align' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH ]);
+            $fouthPara->addText("or yourself by giving a month notice in writing.", null, null);
+            // $fouthPara->addTextBreak(1, ['size' => 8], [ 'spaceAfter' => 0]);
+            
+            $fifthPara = $section->addTextRun($paraStyle);
+            $fifthPara->addText("5.     You are required to inform this office in writing if you accept this offer within two weeks from the date of this letter, failing which the offer will lapse.", null, null);
+            // $fifthPara->addTextBreak(1, ['size' => 8], [ 'spaceAfter' => 0]);
+            
+            $sixthPara = $section->addTextRun($paraStyle);
+            $sixthPara->addText("6.     For regularization of your appointment, you are expected to tender for sighting, originals of your credentials.", null, null);
+            // $sixthPara->addTextBreak(1, ['size' => 8], [ 'spaceAfter' => 0]);
+            
+            $seventhPara = $section->addTextRun($paraStyle);
+            $seventhPara->addText("7.     Congratulations!!!", ['bold' => true, 'italic' => true], null);
+            // $seventhPara->addTextBreak(1, ['size' => 8], [ 'spaceAfter' => 0]);
 
-                
-        //         $footer = $section->addFooter();
-        //         $footer->addText("Please ensure QR Code scanning to authenticate the genuineness of this letter.", ['name' => 'calibri', 'size' => 12, 'italic' => true, 'bold' => true], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-        //         $section->addTextBreak(1, ['size' => 8]);
+            $section->addImage(storage_path()."/app/docs/Appointment QR Code_$candidate->application_code.png", [
+                'width' => 60, 'height' => 60, 
+                'wrappingStyle' => 'infront',
+                'posHorizontal'    => \PhpOffice\PhpWord\Style\Image::POSITION_HORIZONTAL_RIGHT,
+                'positioning' => 'absolute',
+                'posHorizontalRel' => 'margin',
+                'posVerticalRel' => 'line',
+            ]);
 
-        // }
+            $section->addImage(storage_path().'/app/docs/SVG/dcg_admin_sign.png', [
+                'width' => 200,
+                'wrappingStyle' => 'behind',
+                'posHorizontal'    => \PhpOffice\PhpWord\Style\Image::POSITION_HORIZONTAL_CENTER,
+                'positioning' => 'absolute',
+                'posHorizontalRel' => 'margin',
+                'posVerticalRel' => 'line',
+            ]);
 
-        // $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        // $objWriter->save(storage_path('app/docs/junior_promotion_letter.docx'));
-        // return response()->download(storage_path('app/docs/junior_promotion_letter.docx'));
+             // FOOTER SIGNATURE //////////////////////////////////////////////////////////////////
+            $section->addText('ZAKARI IBRAHIM NINGI, fdc', ['bold' => true], [ 'spacingLineRule' => \PhpOffice\PhpWord\SimpleType\LineSpacingRule::AUTO, 'spaceAfter' => 0, 'lineHeight' => 1, 'align' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER ]);
+            $section->addText('Ag. Deputy Commandant General (Administration)', [], [ 'spacingLineRule' => \PhpOffice\PhpWord\SimpleType\LineSpacingRule::AUTO, 'spaceAfter' => 0, 'lineHeight' => 1, 'align' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER ]);
+            $section->addText('For: Commandant General', [], [ 'spacingLineRule' => \PhpOffice\PhpWord\SimpleType\LineSpacingRule::AUTO, 'spaceAfter' => 0, 'lineHeight' => 1, 'align' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER ]);
+            
+            $footer = $section->addFooter();
+            $footer->addText($candidate->id_number, [
+                'size' => 10, 'italic' => true, 'bold' => true
+            ], 
+            [
+                'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END
+            ]);
+
+        }
+
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save(storage_path('app/docs/appointment_letter.docx'));
+        return response()->download(storage_path('app/docs/appointment_letter.docx'));
     }
 
 
