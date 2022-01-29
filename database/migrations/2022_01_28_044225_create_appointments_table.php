@@ -27,7 +27,7 @@ class CreateAppointmentsTable extends Migration
             $table->string('state')->nullable();
             $table->string('lga')->nullable();
             $table->string('time')->nullable();
-            $table->string('year')->nullable();
+            $table->string('year')->nullable()->default(2019);
             $table->string('date')->nullable();
             $table->string('day')->nullable();
             $table->string('amount')->nullable();

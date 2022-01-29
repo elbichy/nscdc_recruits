@@ -115,7 +115,7 @@ class AppointmentController extends Controller
                     'position' => $position,
                     'state' => $state,
                     'lga' => $lga,
-                    'year' => $year,
+                    'year' => 2019,
                     'time' => $time,
                     'date' => $date,
                     'day' => $day,
@@ -170,7 +170,7 @@ class AppointmentController extends Controller
 
         foreach($candidates as $candidate){
 
-            $image = DNS2DFacade::getBarcodePNG("<b>Authentic!</b> find full details of <b>$candidate->name</b> here --> <br/>http://admindb.nscdc.gov.ng/verify/promotion/jnr/$candidate->year/$candidate->id_number", 'QRCODE', 50,50);
+            $image = DNS2DFacade::getBarcodePNG("<b>Authentic!</b> find full details of <b>$candidate->name</b> here --> <br/>http://admindb.nscdc.gov.ng/verify/appointment/$candidate->year/$candidate->id_number", 'QRCODE', 50,50);
             $image = str_replace('data:image/png;base64,', '', $image);
             $image = str_replace(' ', '+', $image);
             $imageName = "Appointment QR Code_$candidate->application_code.png";
@@ -271,7 +271,7 @@ class AppointmentController extends Controller
                 'posVerticalRel' => 'line',
             ]);
 
-            $section->addImage(storage_path().'/app/docs/SVG/dcg_admin_sign.png', [
+            $section->addImage(storage_path().'/app/docs/SVG/dcg_admin_sign3.png', [
                 'width' => 200,
                 'wrappingStyle' => 'behind',
                 'posHorizontal'    => \PhpOffice\PhpWord\Style\Image::POSITION_HORIZONTAL_CENTER,
