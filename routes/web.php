@@ -106,7 +106,9 @@ Route::group(['prefix' => 'dashboard'], function (){
 			Route::get('/manage/{year}', [AppointmentController::class, 'manage_appointment'])->name('manage_appointment_year');
 			Route::get('/get_all/{year}/', [AppointmentController::class, 'get_all'])->name('appointment_get_list');
 
-			// Route::get('/manage/get/{promotion}', 'PromotionController@get_junior')->name('promotion_get_single_junior');
+			Route::get('/manage/edit/{appointment}', [AppointmentController::class, 'edit'])->name('appointment_edit');
+			Route::post('/manage/update/', [AppointmentController::class, 'update'])->name('appointment_update');
+			Route::delete('/manage/delete/', [AppointmentController::class, 'delete'])->name('appointment_delete');
 
 			Route::group(['prefix' => 'import'], function () {
 				Route::post('/store', [AppointmentController::class, 'store_imported_promotion'])->name('store_imported_appointment');
@@ -114,7 +116,6 @@ Route::group(['prefix' => 'dashboard'], function (){
 
 			// // GENERATION OF LETTER
 			Route::post('/generate/letter/bulk', [AppointmentController::class, 'generate_bulk_appointment_letter'])->name('generate_bulk_appointment_letter');
-			
 			Route::get('/generate/letter/{candidate}', [AppointmentController::class, 'generate_single_appointment_letter'])->name('generate_single_appointment_letter');
 		});
 

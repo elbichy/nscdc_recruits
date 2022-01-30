@@ -53,7 +53,8 @@ class AppointmentController extends Controller
         // })
         ->addColumn('view', function($appointment) {
             return '
-                <a href="'.route('generate_single_appointment_letter', $appointment->id).'" style="margin-right:5px;" class="light-blue-text text-darken-3" title="Print promotion letter"><i class="fas fa-file-word fa-lg"></i></a>
+                <a href="'.route('generate_single_appointment_letter', $appointment->id).'" style="margin-right:5px;" class="light-blue-text text-darken-3" title="Print appointment letter"><i class="fas fa-file-word fa-lg"></i></a>
+                <a href="#" style="margin-right:5px;" class="light-blue-text text-darken-3" title="Edit appointment record" data-pro_id="'.$appointment->id.'" onclick="editAppointment(event)"><i class="fas fa-edit fa-lg"></i></a>
             ';
         })
         ->addColumn('checkbox', function($redeployment) {
@@ -74,75 +75,125 @@ class AppointmentController extends Controller
         $data = (new FastExcel)->import($path);
         // \dd($data[0]);
         if($data->count()){
+            try {
+                $candidates = (new FastExcel)->import($path, function ($line) {
+                    $line['tsa'] == '' ? $tsa = null : $tsa = $line['tsa'];
+                    $line['num'] == '' ? $num = null : $num = $line['num'];
+                    $line['application_code'] == '' ? $application_code = null : $application_code = $line['application_code'];
+                    $line['name'] == '' ? $name = null : $name = $line['name'];
+                    $line['email'] == '' ? $email = null : $email = $line['email'];
+                    // $line['date_of_birth'] == '' ? $date_of_birth = null : $date_of_birth = $line['date_of_birth'];
+                    $line['mobile_number'] == '' ? $mobile_number = null : $mobile_number = $line['mobile_number'];
+                    $line['gender'] == '' ? $gender = null : $gender = $line['gender'];
+                    $line['position'] == '' ? $position = null : $position = $line['position'];
+                    $line['state'] == '' ? $state = null : $state = $line['state'];
+                    $line['lga'] == '' ? $lga = null : $lga = $line['lga'];
+                    $line['time'] == '' ? $time = null : $time = $line['time'];
+                    // $line['date'] == '' ? $date = null : $date = $line['date'];
+                    $line['day'] == '' ? $day = null : $day = $line['day'];
+                    $line['amount'] == '' ? $amount = null : $amount = $line['amount'];
+                    $line['id_number'] == '' ? $id_number = null : $id_number = $line['id_number'];
+                    
+                    $rank_applied = Rank::where('full_title', $position)->first();
+    
+                    $dNS2D = new DNS2D();
+    
+                    $candidate = Appointment::updateOrInsert(
+                        ['id_number' => $id_number],
+                        [
+                        'tsa' => $tsa,
+                        'num' => $num,
+                        'application_code' => $application_code,
+                        'name' => ucwords($name),
+                        'email' => $email,
+                        // 'date_of_birth' => $date_of_birth,
+                        'mobile_number' => $mobile_number,
+                        'gender' => $gender,
+                        'position' => $position,
+                        'state' => $state,
+                        'lga' => $lga,
+                        'year' => 2019,
+                        'time' => $time,
+                        // 'date' => $date,
+                        'day' => $day,
+                        'amount' => $amount,
+                        'id_number' => $id_number,
+                        'barcode' => $dNS2D->getBarcodePNG("<b>Authentic!</b> find full details of <b>$name</b> here --> <br/>http://admindb.nscdc.gov.ng/verify/appointment/2019/$id_number", 'QRCODE', 50,50),
+                        ]
+                    );
+                });
+                Alert::success('Promotion records imported successfully!', 'Success!')->autoclose(222500);
+                return back();
+            } catch (\Throwable $th) {
+                $index = trim(explode(":", $th->getMessage())[1]); 
+                return back()->withErrors($index, 'import');
+            }
+        }
+    }
 
-            $candidates = (new FastExcel)->import($path, function ($line) {
-                $line['tsa'] == '' ? $tsa = null : $tsa = $line['tsa'];
-                $line['num'] == '' ? $num = null : $num = $line['num'];
-                $line['application_code'] == '' ? $application_code = null : $application_code = $line['application_code'];
-                $line['name'] == '' ? $name = null : $name = $line['name'];
-                $line['email'] == '' ? $email = null : $email = $line['email'];
-                // $line['date_of_birth'] == '' ? $date_of_birth = null : $date_of_birth = $line['date_of_birth'];
-                $line['mobile_number'] == '' ? $mobile_number = null : $mobile_number = $line['mobile_number'];
-                $line['gender'] == '' ? $gender = null : $gender = $line['gender'];
-                $line['position'] == '' ? $position = null : $position = $line['position'];
-                $line['state'] == '' ? $state = null : $state = $line['state'];
-                $line['lga'] == '' ? $lga = null : $lga = $line['lga'];
-                $line['time'] == '' ? $time = null : $time = $line['time'];
-                // $line['date'] == '' ? $date = null : $date = $line['date'];
-                $line['day'] == '' ? $day = null : $day = $line['day'];
-                $line['amount'] == '' ? $amount = null : $amount = $line['amount'];
-                $line['id_number'] == '' ? $id_number = null : $id_number = $line['id_number'];
-                
-                // $effective_date = date('d-m-Y', strtotime($date));
-                // $year = explode('-', $effective_date)[2];
+    // IMPORT UPDATE IMPORTED PROMOTION DATA
+    public function edit(Appointment $appointment)
+    {
+        return response()->json($appointment);
+    }
+    
+    // IMPORT UPDATE IMPORTED PROMOTION DATA
+    public function update(Request $request)
+    {
+        $validated = $request->validate([
+            'tsa' => 'required|integer',
+            'num' => 'required|integer',
+            'application_code' => 'required|string',
+            'name' => 'required',
+            'email' => 'required|string',
+            'position' => 'required|string',
+            'state' => 'required|string',
+            'day' => 'required|string',
+            'amount' => 'required',
+            'id_number' => 'required|string'
+        ]);
 
-                $rank_applied = Rank::where('full_title', $position)->first();
+        $dNS2D = new DNS2D();
 
+        $update = Appointment::find($request->id)->update([
+            'tsa' => $validated['tsa'],
+            'num' => $validated['num'],
+            'application_code' => $validated['application_code'],
+            'name' => ucwords($validated['name']),
+            'email' => $request->email,
+            'date_of_birth' => $request->date_of_birth,
+            'mobile_number' => $request->mobile_number,
+            'gender' => $request->gender,
+            'position' => $validated['position'],
+            'state' => $validated['state'],
+            'lga' => $request->lga,
+            'year' => 2019,
+            'time' => $request->time,
+            'date' => $request->date,
+            'day' => $validated['day'],
+            'amount' => $validated['amount'],
+            'id_number' => $validated['id_number'],
+            'barcode' => $dNS2D->getBarcodePNG("<b>Authentic!</b> find full details of <b>".$validated['name']."</b> here --> <br/>http://admindb.nscdc.gov.ng/verify/appointment/2019/".$validated['id_number']."", 'QRCODE', 50,50),
+        ]);
 
-                $dNS2D = new DNS2D();
-
-                $candidate = Appointment::updateOrInsert(
-                    ['id_number' => $id_number],
-                    [
-                    'tsa' => $tsa,
-                    'num' => $num,
-                    'application_code' => $application_code,
-                    'name' => ucwords($name),
-                    'email' => $email,
-                    // 'date_of_birth' => $date_of_birth,
-                    'mobile_number' => $mobile_number,
-                    'gender' => $gender,
-                    'position' => $position,
-                    'state' => $state,
-                    'lga' => $lga,
-                    'year' => 2019,
-                    'time' => $time,
-                    // 'date' => $date,
-                    'day' => $day,
-                    'amount' => $amount,
-                    'id_number' => $id_number,
-                    'barcode' => $dNS2D->getBarcodePNG("<b>Authentic!</b> find full details of <b>$name</b> here --> <br/>http://admindb.nscdc.gov.ng/verify/appointment/2019/$id_number", 'QRCODE', 50,50),
-                    ]
-                );
-            });
-            Alert::success('Promotion records imported successfully!', 'Success!')->autoclose(222500);
+        if($update){
+            Alert::success('Appointment record updated successfully!', 'Success!')->autoclose(2500);
             return back();
         }
+    }
+    
+    // DELETE PROMOTION DATA
+    public function delete(Request $request)
+    {
+        $delete = $request->delete_id;
+        Appointment::find($delete)->delete();
+        Alert::success('Appointment record trashed successfully!', 'Success!')->autoclose(2500);
+        return redirect()->back();
     }
 
     // GENERATE SINGLE PROMOTION LETTER
     public function generate_single_appointment_letter(Appointment $candidate){
-        // return $candidate;
-        // return "<img src=\"data:image/png;base64,$redeployment->barcode\" alt=\"barcode\" />";
-        // if(strtolower($candidate->position) == 'corps assistant i'){
-        //     $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(resource_path('docs/template-cai.docx'));
-        // }else if(strtolower($candidate->position) == 'corps assistant ii'){
-        //     $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(resource_path('docs/template-caii.docx'));
-        // }else if(strtolower($candidate->position) == 'corps assistant iii'){
-        //     $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(resource_path('docs/template-caiii.docx'));
-        // }else if(strtolower($candidate->position) == 'assistant inspector of corps'){
-        //     $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(resource_path('docs/template-aic.docx'));
-        // }
+
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(resource_path('docs/template-universal.docx'));
         $gl = Rank::where('full_title', $candidate->position)->pluck('gl')->first();
         $templateProcessor->setValue('num', $candidate->num);

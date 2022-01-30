@@ -33,7 +33,7 @@
         }
     </style>
 
-    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('js/datatable/jquery-3.5.1.js')}}"></script>
     <script src="{{asset('js/jquery-ui.min.js')}}"></script>
     {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
     <script type="text/javascript" src="{{asset('countdowntimer/src/js/jQuery.countdownTimer.js')}}"></script>
