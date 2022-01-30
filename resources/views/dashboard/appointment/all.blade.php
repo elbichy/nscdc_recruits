@@ -152,7 +152,6 @@
                     $('.personnelCheckbox').attr('checked', false);
                 }
             });
-
             $('#users-table').DataTable({
                 dom: 'lBfrtip',
                 buttons: [
@@ -161,6 +160,7 @@
                 "lengthMenu": [[10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, -1], [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, "All"]],
                 processing: true,
                 serverSide: true,
+                order: [[ 4, "asc" ]],
                 ajax:  `{!! route('appointment_get_list', $year) !!}`,
                 columns: [
 
@@ -190,7 +190,9 @@
                         $(input).attr('placeholder', 'Search');
                         $(input).appendTo($(column.footer()).empty())
                         .on('keyup', function () {
-                            column.search($(this).val(), false, false, true).draw();
+                            var searchTerm = $(this).val();
+                            regex = '\\b' + searchTerm.toLowerCase() + '\\b';
+                            column.search(regex, true, false, true).draw();
                         });
                     });
                 }
