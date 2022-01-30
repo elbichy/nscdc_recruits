@@ -14,14 +14,8 @@
 					</p>
 					<form action="{{ route('store_personnel') }}" method="POST" enctype="multipart/form-data" name="create_form" id="create_form" class="create_new_form">
 						@csrf
-						<ul class="tabs">
-							<li class="tab col s3"><a href="#personal_data">PERSONAL DATA</a></li>
-							<li class="tab col s3" :class="{disabled:isDisabled}"><a href="#contact_data">CONTACT DATA</a></li>
-							<li class="tab col s3"><a href="#official_data">OFFICIAL DATA</a></li>
-							<li class="tab col s3"><a href="#uploads">UPLOADS</a></li>
-						</ul>
-						<fieldset class="row" id="personal_data">
-							{{-- <legend>PERSONAL DATA</legend> --}}
+						<fieldset class="row">
+							<legend>PERSONAL DATA</legend>
 							{{-- Fullname --}}
 							<div class="input-field col s12 l8">
 								<input id="name" name="name" type="text" value="{{ old('name') }}" required>
@@ -57,35 +51,15 @@
 									</span>
 								@endif
 							</div>
-							{{-- Blood Group --}}
-							<div class="col s12 l4">
-								<label for="blood_group">Select Blood Group</label>
-								<select id="blood_group" name="blood_group" class=" browser-default">
-									<option disabled>Select Type</option>
-									<option value="o+" selected>O+</option>
-									<option value="o-" selected>O-</option>
-									<option value="a+" selected>A+</option>
-									<option value="a-" selected>A-</option>
-									<option value="b+" selected>B+</option>
-									<option value="b-" selected>B-</option>
-									<option value="ab+" selected>AB+</option>
-									<option value="ab-" selected>AB-</option>
-								</select>
-								@if ($errors->has('blood_group'))
-									<span class="helper-text red-text">
-										<strong>{{ $errors->first('blood_group') }}</strong>
-									</span>
-								@endif
-							</div>
 							{{-- Marital Status --}}
 							<div class="col s12 l4">
 								<label for="marital_status">Select Status</label>
 								<select id="marital_status" name="marital_status" class=" browser-default">
-									<option disabled>Select Type</option>
-									<option value="single" selected>Single</option>
-									<option value="married" selected>Married</option>
-									<option value="widowed" selected>Widowed</option>
-									<option value="divorced" selected>Divorced</option>
+									<option disabled selected>Select Type</option>
+									<option value="single" >Single</option>
+									<option value="married" >Married</option>
+									<option value="widowed" >Widowed</option>
+									<option value="divorced" >Divorced</option>
 								</select>
 								@if ($errors->has('marital_status'))
 									<span class="helper-text red-text">
@@ -93,9 +67,67 @@
 									</span>
 								@endif
 							</div>
+							{{-- Blood Group --}}
+							<div class="col s12 l4">
+								<label for="blood_group">Select Blood Group</label>
+								<select id="blood_group" name="blood_group" class=" browser-default">
+									<option disabled selected>Select Type</option>
+									<option value="o+">O+</option>
+									<option value="o-">O-</option>
+									<option value="a+">A+</option>
+									<option value="a-">A-</option>
+									<option value="b+">B+</option>
+									<option value="b-">B-</option>
+									<option value="ab+">AB+</option>
+									<option value="ab-">AB-</option>
+								</select>
+								@if ($errors->has('blood_group'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('blood_group') }}</strong>
+									</span>
+								@endif
+							</div>
+							{{-- Genotype --}}
+							<div class="col s12 l4">
+								<label for="genotype">Select Gynotype</label>
+								<select id="genotype" name="genotype" class=" browser-default">
+									<option disabled selected>Select Type</option>
+									<option value="aa">AA</option>
+									<option value="as-">AS</option>
+									<option value="ac">AC</option>
+									<option value="ss">SS</option>
+								</select>
+								@if ($errors->has('genotype'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('genotype') }}</strong>
+									</span>
+								@endif
+							</div>
+							{{-- Height --}}
+							<div class="input-field col s12 l4">
+								<input id="height" name="height" type="text" value="{{ old('height') }}">
+								@if ($errors->has('height'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('height') }}</strong>
+									</span>
+								@endif
+								<label for="height">Height</label>
+								<span class="helper-text">e.g. 6.5m</span>
+							</div>
+							{{-- Weight --}}
+							<div class="input-field col s12 l4">
+								<input id="weight" name="weight" type="text" value="{{ old('weight') }}">
+								@if ($errors->has('weight'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('weight') }}</strong>
+									</span>
+								@endif
+								<label for="weight">Weight</label>
+								<span class="helper-text">e.g. 85kg</span>
+							</div>
 						</fieldset>
-						<fieldset class="row" id="contact_data">
-							{{-- <legend>CONTACT DATA</legend> --}}
+						<fieldset class="row">
+							<legend>CONTACT DATA</legend>
 							{{-- State of Origin --}}
 							<div class="col s12 l3">
 								<label for="soo">* State of Origin</label>
@@ -167,8 +199,18 @@
 								@endif
 								<label for="residential_address">Current residential address</label>
 							</div>
+							{{-- Permanent Address --}}
+							<div class="input-field col s12 l6">
+								<input id="permanent_address" name="permanent_address" type="text" value="{{ old('permanent_address') }}" placeholder="Area, Town, State.">
+								@if ($errors->has('permanent_address'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('permanent_address') }}</strong>
+									</span>
+								@endif
+								<label for="permanent_address">Permanent address</label>
+							</div>
 							{{-- Phone --}}
-							<div class="input-field col s12 l4">
+							<div class="input-field col s12 l3">
 								<input id="phone_number" name="phone_number" type="number" value="{{ old('phone_number') }}" class="input_text" data-length="11">
 								@if ($errors->has('phone_number'))
 									<span class="helper-text red-text">
@@ -178,7 +220,7 @@
 								<label for="phone_number">Phone no.</label>
 							</div>
 							{{-- Email --}}
-							<div class="input-field col s12 l4">
+							<div class="input-field col s12 l3">
 								<input id="email" name="email" type="text" value="{{ old('email') }}">
 								@if ($errors->has('email'))
 									<span class="helper-text red-text">
@@ -188,8 +230,8 @@
 								<label for="email">Email address</label>
 							</div>
 						</fieldset>
-						<fieldset class="row" id="official_data">
-							{{-- <legend>OFFICIAL DATA</legend> --}}
+						<fieldset class="row">
+							<legend>OFFICIAL DATA</legend>
 							{{-- Service Number --}}
 							<div class="input-field col s12 l3">
 								<input id="service_number" name="service_number" type="number" value="{{ old('service_number') }}" class="input_text" data-length="5" required>
@@ -202,7 +244,7 @@
 							</div>
 							{{-- Date of 1st Appt. --}}
 							<div class="input-field col s12 l3">
-								<input id="dofa" name="dofa" type="date" value="{{ old('dofa') }}" required>
+								<input id="dofa" name="dofa" type="date" value="2019-01-01" required>
 								@if ($errors->has('dofa'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('dofa') }}</strong>
@@ -212,7 +254,7 @@
 							</div>
 							{{-- Date of Conf. --}}
 							<div class="input-field col s12 l3">
-								<input id="doc" name="doc" type="date" value="{{ old('doc') }}" required>
+								<input id="doc" name="doc" type="date" value="{{ old('doc') }}">
 								@if ($errors->has('doc'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('doc') }}</strong>
@@ -222,7 +264,7 @@
 							</div>
 							{{-- Date of Present Appt. --}}
 							<div class="input-field col s12 l3">
-								<input id="dopa" name="dopa" type="date" value="{{ old('dopa') }}" required>
+								<input id="dopa" name="dopa" type="date" value="2019-01-01" required>
 								@if ($errors->has('dopa'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('dopa') }}</strong>
@@ -234,10 +276,10 @@
 							<div class="col s12 l4">
 								<label for="cadre">* Select Cadre</label>
 								<select id="cadre" name="cadre" class="browser-default" required>
-									<option disabled selected>Select Cadre</option>
+									<option disabled>Select Cadre</option>
 									<option value="superintendent">Superintendent cadre</option>
 									<option value="inspectorate" >Inspectorate cadre</option>
-									<option value="assistant" >Assistant cadre</option>
+									<option value="assistant" selected>Assistant cadre</option>
 								</select>
 								@if ($errors->has('cadre'))
 									<span class="helper-text red-text">
@@ -261,9 +303,9 @@
 							<div class="col s12 l2">
 								<label for="step">* Select Step</label>
 								<select id="step" name="step" class="browser-default" required>
-									<option disabled selected>Select step</option>
+									<option disabled>Select step</option>
 									<option value="1">1</option>
-									<option value="2">2</option>
+									<option value="2" selected>2</option>
 									<option value="3">3</option>
 									<option value="4">4</option>
 									<option value="5">5</option>
@@ -293,9 +335,9 @@
 							<div class="col s12 l3">
 								<label for="salary_structure">* Salary structure</label>
 								<select id="salary_structure" name="salary_structure" class="browser-default" required>
-									<option disabled selected>Select a structure</option>
+									<option disabled>Select a structure</option>
 									<option value="consolidated">CONSOLIDATED</option>
-									<option value="conpass">CONPASS</option>
+									<option value="conpass" selected>CONPASS</option>
 									<option value="conhess">CONHESS</option>
 									<option value="conmess">CONMESS</option>
 									<option value="conafss">CONAFSS</option>
@@ -438,8 +480,8 @@
 								@endif
 							</div>
 						</fieldset>
-						<fieldset class="row" id="uploads" style="width:100%; margin-left: 0; margin-right: 0;">
-							{{-- <legend>PASSPORT & DOCUMENT UPLOAD</legend> --}}
+						<fieldset class="row" style="width:100%; margin-left: 0; margin-right: 0;">
+							<legend>PASSPORT & DOCUMENT UPLOAD</legend>
 							<div class="file-field col s12 l6 input-field">
 								<div class="uploadBtn">
 									<span>SELECT IMAGE</span>
@@ -485,32 +527,46 @@
 
 @push('scripts')
 	<script>
-		var new_personnel = new Vue({
-			el: '#new',
-			data: {
-				isDisabled: false
+		// var new_personnel = new Vue({
+		// 	el: '#new',
+		// 	data: {
+		// 		isDisabled: false
+		// 	}
+		// })
+
+		function loadGl() {
+			let cadreSelected = $('#cadre').value;
+			if(cadreSelected == 'superintendent'){
+				$('#gl').html('<option value="" disabled selected>Choose your option</option>');
+				$(`<option value="18">18</option>`).appendTo('#gl');
+				$(`<option value="17">17</option>`).appendTo('#gl');
+				$(`<option value="16">16</option>`).appendTo('#gl');
+				$(`<option value="15">15</option>`).appendTo('#gl');
+				$(`<option value="14">14</option>`).appendTo('#gl');
+				$(`<option value="13">13</option>`).appendTo('#gl');
+				$(`<option value="12">12</option>`).appendTo('#gl');
+				$(`<option value="11">11</option>`).appendTo('#gl');
+				$(`<option value="10">10</option>`).appendTo('#gl');
+				$(`<option value="9">9</option>`).appendTo('#gl');
+				$(`<option value="8">8</option>`).appendTo('#gl');
+			}else if(cadreSelected == 'inspectorate'){
+				$('#gl').html('<option value="" disabled selected>Choose your option</option>');
+				$(`<option value="7">7</option>`).appendTo('#gl');
+				$(`<option value="6">6</option>`).appendTo('#gl');
+			}else{
+				$('#gl').html('<option value="" disabled selected>Choose your option</option>');
+				$(`<option value="7">7</option>`).appendTo('#gl');
+				$(`<option value="6">6</option>`).appendTo('#gl');
+				$(`<option value="5">5</option>`).appendTo('#gl');
+				$(`<option value="4">4</option>`).appendTo('#gl');
+				$(`<option value="3">3</option>`).appendTo('#gl');
 			}
-		})
+		}
+
 		$(document).ready(function(){
-			$('.dob_datepicker').datepicker({
-				format: 'dd/mm/yyyy',
-				yearRange: [1930, 1999]
-			});
-			$('.dofa_datepicker').datepicker({
-				format: 'dd/mm/yyyy',
-				yearRange: [1960, 2015]
-			});
-			$('.dopa_datepicker').datepicker({
-				format: 'dd/mm/yyyy',
-				yearRange: [1960, 2021]
-			});
-			$('.doc_datepicker').datepicker({
-				format: 'dd/mm/yyyy',
-				yearRange: [2005, 2021]
-			});
-			$('.timepicker').timepicker({
-				defaultTime: 'now'
-			});
+
+			loadGl()
+			
 			$('input.input_text').characterCounter();
 			$('input.autocomplete').autocomplete({
 				data: {
@@ -564,25 +620,6 @@
 					'College of Peace, Conflic Resolution &Desaster Management, Katsina' : null,
 					'Civil Defence Academy, Sauka' : null
 				},
-			});
-
-			$('.tabs').tabs({
-				// swipeable: true
-			});
-
-			$('.contact-data').click(function(){
-				$('.tabs').tabs('select', 'contact-data');
-			});
-			$('.official-data').click(function(){
-				$('.tabs').tabs('select', 'official-data');
-			});
-			$('.docs-upload').click(function(){
-				$('.tabs').tabs('select', 'docs-upload');
-			});
-
-			$('#create_form').submit(function (e) { 
-				$('.submit').prop('disabled', true).html('ADDING RECORD...');
-				$('.progress').fadeIn();
 			});
 
 			// LOAD GL AFTER SELECTING CADRE

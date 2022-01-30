@@ -565,6 +565,7 @@ input {
     border-top: 4px solid #eee;
     padding-top: 10px;
     position: relative;
+    margin-top: 50px;
   }
   .app .my-content-wrapper .content-container .sectionWrap .sectionFormWrap #create_form fieldset legend {
     padding: 0 8px;

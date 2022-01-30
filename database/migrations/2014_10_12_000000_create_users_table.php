@@ -21,14 +21,18 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->string('blood_group')->nullable();
-            $table->string('marital_status')->nullable();
             $table->date('dob')->nullable();
             $table->string('sex')->nullable();
+            $table->string('marital_status')->nullable();
+            $table->string('blood_group')->nullable();
+            $table->string('genotype')->nullable();
+            $table->string('height')->nullable();
+            $table->string('weight')->nullable();
             $table->string('soo')->nullable();
             $table->string('lgoo')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('residential_address')->nullable();
+            $table->string('permanent_address')->nullable();
             $table->unsignedBigInteger('service_number')->index('users_service_number_index');
             $table->string('cadre')->nullable();
             $table->integer('gl')->nullable();
@@ -54,6 +58,7 @@ class CreateUsersTable extends Migration
             $table->string('specialization')->nullable();
             $table->string('status')->default('active');
             $table->string('passport')->nullable();
+            $table->integer('role')->default(0)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

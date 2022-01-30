@@ -25,6 +25,7 @@ class CreateNoksTable extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->string('name')->nullable();
             $table->string('relationship')->nullable();
+            $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->timestamps();
         });
