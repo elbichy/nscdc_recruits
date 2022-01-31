@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeploymentController;
 use App\Http\Controllers\NokController;
 use App\Http\Controllers\PersonnelController;
+use App\Http\Controllers\ProgressionController;
 use App\Http\Controllers\QualificationController;
 use App\Http\Controllers\SettingsController;
 

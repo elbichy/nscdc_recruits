@@ -70,21 +70,21 @@ class DeploymentController extends Controller
         $old_formation_type = Formation::where('formation', $personnel->current_formation)->pluck('type')->first();
         $new_formation_type = Formation::where('formation', $command)->pluck('type')->first();
 
-        $ref_number = Str::random(12);
-        $insert = auth()->user()->redeployments->create([
-            'type' => $old_formation_type == 'nhq' && $new_formation_type == 'nhq' ? 'internal' : 'external',
-            'fullname' => $personnel->name,
-            'service_number' => $personnel->service_number,
-            'ref_number' => $ref_number,
-            'rank' => $personnel->rank_full,
-            'from' => $old_formation_type == 'state' ? $personnel->current_formation.' State Command' : $personnel->current_formation,
-            'to' => $new_formation_type == 'state' ? $command.' State Command' : $command,
-            'designation' => $request->designation,
-            // 'reason' => $request->reason,
-            // 'signatory' => $request->signatory,
-            'barcode' => $dNS2D->getBarcodePNG("Kindly follow the link below to verify the document <br/>http://redeployment.nscdc.gov.ng/redeployment/$ref_number", 'QRCODE', 10,10),
-            'created_at' => Carbon::today()->format('Y-m-d'),
-        ]);
+        // $ref_number = Str::random(12);
+        // $insert = auth()->user()->redeployments->create([
+        //     'type' => $old_formation_type == 'nhq' && $new_formation_type == 'nhq' ? 'internal' : 'external',
+        //     'fullname' => $personnel->name,
+        //     'service_number' => $personnel->service_number,
+        //     'ref_number' => $ref_number,
+        //     'rank' => $personnel->rank_full,
+        //     'from' => $old_formation_type == 'state' ? $personnel->current_formation.' State Command' : $personnel->current_formation,
+        //     'to' => $new_formation_type == 'state' ? $command.' State Command' : $command,
+        //     'designation' => $request->designation,
+        //     // 'reason' => $request->reason,
+        //     // 'signatory' => $request->signatory,
+        //     'barcode' => $dNS2D->getBarcodePNG("Kindly follow the link below to verify the document <br/>http://redeployment.nscdc.gov.ng/redeployment/$ref_number", 'QRCODE', 10,10),
+        //     'created_at' => Carbon::today()->format('Y-m-d'),
+        // ]);
         
         $updated = $personnel->update([
             'current_formation' => $command,

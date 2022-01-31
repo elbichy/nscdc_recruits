@@ -17,7 +17,7 @@
 						<fieldset class="row">
 							<legend>PERSONAL DATA</legend>
 							{{-- Fullname --}}
-							<div class="input-field col s12 l8">
+							<div class="input-field col s12 l6">
 								<input id="name" name="name" type="text" value="{{ old('name') }}" required>
 								@if ($errors->has('name'))
 									<span class="helper-text red-text">
@@ -27,7 +27,7 @@
 								<label for="name">* Fullname</label>
 							</div>
 							{{-- Date of Birth --}}
-							<div class="input-field col s12 l4">
+							<div class="input-field col s12 l3">
 								<input id="dob" name="dob" type="date" value="{{ old('dob') }}" required>
 								@if ($errors->has('dob'))
 									<span class="helper-text red-text">
@@ -37,7 +37,7 @@
 								<label for="dob">* Date of Birth</label>
 							</div>
 							{{-- Gender --}}
-							<div class="col s12 l4">
+							<div class="col s12 l3">
 								<label for="sex">* Select Sex</label>
 								<select id="sex" name="sex" class=" browser-default" required>
 									<option disabled>Select Type</option>
@@ -51,11 +51,12 @@
 									</span>
 								@endif
 							</div>
+
 							{{-- Marital Status --}}
 							<div class="col s12 l4">
-								<label for="marital_status">Select Status</label>
+								<label for="marital_status">Marital status</label>
 								<select id="marital_status" name="marital_status" class=" browser-default">
-									<option disabled selected>Select Type</option>
+									<option disabled selected>Select status</option>
 									<option value="single" >Single</option>
 									<option value="married" >Married</option>
 									<option value="widowed" >Widowed</option>
@@ -64,6 +65,42 @@
 								@if ($errors->has('marital_status'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('marital_status') }}</strong>
+									</span>
+								@endif
+							</div>
+							{{-- Name of spouse --}}
+							<div class="input-field col s12 l4">
+								<input id="name_of_spouse" name="name_of_spouse" type="text" value="{{ old('name_of_spouse') }}">
+								@if ($errors->has('name'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('name_of_spouse') }}</strong>
+									</span>
+								@endif
+								<label for="name_of_spouse">Name of spouse</label>
+							</div>
+							{{-- Date of Marriage --}}
+							<div class="input-field col s12 l4">
+								<input id="date_of_marriage" name="date_of_marriage" type="date" value="{{ old('date_of_marriage') }}">
+								@if ($errors->has('name'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('date_of_marriage') }}</strong>
+									</span>
+								@endif
+								<label for="date_of_marriage">Date of marriage</label>
+							</div>
+
+							{{-- Religion --}}
+							<div class="col s12 l4">
+								<label for="religion">Select religion</label>
+								<select id="religion" name="religion" class=" browser-default">
+									<option disabled selected>Select religion</option>
+									<option value="christianity" >Christianity</option>
+									<option value="islam" >Islam</option>
+									<option value="other" >Other</option>
+								</select>
+								@if ($errors->has('religion'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('religion') }}</strong>
 									</span>
 								@endif
 							</div>
@@ -209,8 +246,18 @@
 								@endif
 								<label for="permanent_address">Permanent address</label>
 							</div>
+							{{-- Place of Birth --}}
+							<div class="input-field col s12 l2">
+								<input id="place_of_birth" name="place_of_birth" type="text" value="{{ old('place_of_birth') }}" placeholder="Area, Town or State.">
+								@if ($errors->has('place_of_birth'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('place_of_birth') }}</strong>
+									</span>
+								@endif
+								<label for="place_of_birth">Place of Birth</label>
+							</div>
 							{{-- Phone --}}
-							<div class="input-field col s12 l3">
+							<div class="input-field col s12 l2">
 								<input id="phone_number" name="phone_number" type="number" value="{{ old('phone_number') }}" class="input_text" data-length="11">
 								@if ($errors->has('phone_number'))
 									<span class="helper-text red-text">
@@ -220,7 +267,7 @@
 								<label for="phone_number">Phone no.</label>
 							</div>
 							{{-- Email --}}
-							<div class="input-field col s12 l3">
+							<div class="input-field col s12 l2">
 								<input id="email" name="email" type="text" value="{{ old('email') }}">
 								@if ($errors->has('email'))
 									<span class="helper-text red-text">
@@ -323,17 +370,17 @@
 							</div>
 							{{-- PAYPOINT --}}
 							<div class="input-field col s12 l3">
-								<input id="paypoint" name="paypoint" type="text" value="{{ old('paypoint') }}" id="autocomplete-input" class="autocomplete" required>
+								<input id="paypoint" name="paypoint" type="text" value="National Headquarters" id="autocomplete-input" class="autocomplete">
 								@if ($errors->has('paypoint'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('paypoint') }}</strong>
 									</span>
 								@endif
-								<label for="paypoint">* Paypoint</label>
+								<label for="paypoint">Paypoint</label>
 							</div>
 							{{-- SALARY STRUCTURE --}}
 							<div class="col s12 l3">
-								<label for="salary_structure">* Salary structure</label>
+								<label for="salary_structure">Salary structure</label>
 								<select id="salary_structure" name="salary_structure" class="browser-default" required>
 									<option disabled>Select a structure</option>
 									<option value="consolidated">CONSOLIDATED</option>
@@ -355,8 +402,8 @@
 							</div>
 							{{-- BANK --}}
 							<div class="col s12 l3">
-								<label for="bank">* Select Bank</label>
-								<select id="bank" name="bank" class="browser-default" required>
+								<label for="bank">Select Bank</label>
+								<select id="bank" name="bank" class="browser-default" >
 									<option disabled selected>Select Bank</option>
 									@foreach($banks as $bank)
 										<option value="{{ strtolower($bank['name']) }}">{{  $bank['name'] }}</option>
@@ -370,17 +417,17 @@
 							</div>
 							{{-- ACC NO. --}}
 							<div class="input-field col s12 l3">
-								<input id="account_number" name="account_number" type="number" value="{{ old('account_number') }}" class="input_text" data-length="10" required>
+								<input id="account_number" name="account_number" type="number" value="{{ old('account_number') }}" class="input_text" data-length="10">
 								@if ($errors->has('account_number'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('account_number') }}</strong>
 									</span>
 								@endif
-								<label for="account_number">* Account Number</label>
+								<label for="account_number"></label>Account Number</label>
 							</div>
 							{{-- BVN NO --}}
 							<div class="input-field col s12 l3">
-								<input id="bvn" name="bvn" type="number" value="{{ old('bvn') }}" class="input_text" data-length="11" required>
+								<input id="bvn" name="bvn" type="number" value="{{ old('bvn') }}" class="input_text" data-length="11">
 								@if ($errors->has('bvn'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('bvn') }}</strong>
@@ -390,13 +437,13 @@
 							</div>
 							{{-- IPPIS NO --}}
 							<div class="input-field col s12 l3">
-								<input id="ippis_number" name="ippis_number" type="number" value="{{ old('ippis_number') }}" required>
+								<input id="ippis_number" name="ippis_number" type="number" value="{{ old('ippis_number') }}">
 								@if ($errors->has('ippis_number'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('ippis_number') }}</strong>
 									</span>
 								@endif
-								<label for="ippis_number">* IPPIS No.</label>
+								<label for="ippis_number">IPPIS No.</label>
 							</div>
 							{{-- NIN NO --}}
 							<div class="input-field col s12 l3">
@@ -430,8 +477,8 @@
 							</div>
 							{{-- PFA--}}
 							<div class="col s12 l3">
-								<label for="pfa">* Select PFA</label>
-								<select id="pfa" name="pfa" class="browser-default" required>
+								<label for="pfa">Select PFA</label>
+								<select id="pfa" name="pfa" class="browser-default">
 									<option disabled selected>Select PFA</option>
 									@foreach($pfas as $pfa)
 										<option value="{{ strtolower($pfa['name']) }}">{{  $pfa['name'] }}</option>
@@ -445,13 +492,13 @@
 							</div>
 							{{-- PEN NO--}}
 							<div class="input-field col s12 l3">
-								<input id="pen_number" name="pen_number" type="number" value="{{ old('pen_number') }}" required>
+								<input id="pen_number" name="pen_number" type="number" value="{{ old('pen_number') }}">
 								@if ($errors->has('pen_number'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('pen_number') }}</strong>
 									</span>
 								@endif
-								<label for="pen_number">* PEN No.</label>
+								<label for="pen_number">PEN No.</label>
 							</div>
 							
 							{{-- SPECIALIZATION--}}
@@ -466,8 +513,8 @@
 							</div> --}}
 							{{-- Command --}}
 							<div class="col s12 l3">
-								<label for="command">* Present Formation</label>
-								<select id="command" name="command" class="browser-default" required>
+								<label for="command">Present Formation</label>
+								<select id="command" name="command" class="browser-default">
 									<option disabled selected>Select State</option>
 									@foreach($formations as $formation)
 										<option value="{{ $formation->id }}">{{ $formation->formation }}</option>
@@ -478,27 +525,6 @@
 										<strong>{{ $errors->first('command') }}</strong>
 									</span>
 								@endif
-							</div>
-						</fieldset>
-						<fieldset class="row" style="width:100%; margin-left: 0; margin-right: 0;">
-							<legend>PASSPORT & DOCUMENT UPLOAD</legend>
-							<div class="file-field col s12 l6 input-field">
-								<div class="uploadBtn">
-									<span>SELECT IMAGE</span>
-									<input type="file" name="passport" id="passport" accept="image/*">
-								</div>
-								<div class="file-path-wrapper">
-									<input class="file-path validate" type="text" placeholder="Upload personnel passport photograph">
-								</div>
-							</div>
-							<div class="file-field col s12 l6 input-field">
-								<div class="uploadBtn">
-									<span>SELECT SCANNED FILES</span>
-									<input type="file" name="file[]" id="file" accept="image/*" multiple>
-								</div>
-								<div class="file-path-wrapper">
-									<input class="file-path validate" type="text" placeholder="Upload one or more files">
-								</div>
 							</div>
 							<div class="input-field col s12 l3 right">
 								<button class="submit btn waves-effect waves-light right" type="submit">

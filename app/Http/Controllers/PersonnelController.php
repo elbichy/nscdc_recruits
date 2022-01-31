@@ -168,12 +168,16 @@ class PersonnelController extends Controller
             'dob' => $request->dob,
             'sex' => $request->sex,
             'marital_status' => $request->marital_status,
+            'date_of_marriage' => $request->date_of_marriage,
+            'name_of_spouse' => $request->name_of_spouse,
+            'religion' => $request->religion,
             'blood_group' => $request->blood_group,
             'genotype' => $request->genotype,
             'height' => $request->height,
             'weight' => $request->weight,
             'soo' => $request->soo,
             'lgoo' => $request->lgoo,
+            'place_of_birth' => $request->place_of_birth,
             'residential_address' => $request->residential_address,
             'permanent_address' => $request->permanent_address,
             'phone_number' => $request->phone_number,
@@ -199,14 +203,14 @@ class PersonnelController extends Controller
             'nhf' => $request->nhf,
             'pfa' => $request->pfa,
             'pen_number' => $request->pen_number,
-            'current_formation' => $formation_name,
-            'specialization' => $request->specialization,
+            'current_formation' => $formation_name
         ]);
         if($personnel){
 
             $rank = Rank::where('cadre', $request->cadre)->where('gl', $request->gl)->first();
 
             $personnel->progressions()->create([
+                'type' => 'Entry Rank',
                 'cadre' => $request->cadre,
                 'gl' => $request->gl,
                 'rank_full' => $rank->full_title,
@@ -617,7 +621,6 @@ class PersonnelController extends Controller
             'gl' => 'required|numeric',
             'step' => 'required|numeric',
             'dofa' => 'required|date',
-            'doc' => 'required|date',
             'dopa' => 'required|date'
         ]);
 
@@ -644,10 +647,18 @@ class PersonnelController extends Controller
             'dob' => $request->dob,
             'sex' => $request->sex,
             'blood_group' => $request->blood_group,
+            'genotype' => $request->genotype,
+            'height' => $request->height,
+            'weight' => $request->weight,
             'marital_status' => $request->marital_status,
+            'date_of_marriage' => $request->date_of_marriage,
+            'name_of_spouse' => $request->name_of_spouse,
+            'religion' => $request->religion,
             'soo' => $request->soo,
             'lgoo' => $request->lgoo,
+            'place_of_birth' => $request->place_of_birth,
             'residential_address' => $request->residential_address,
+            'permanent_address' => $request->permanent_address,
             'phone_number' => $request->phone_number,
             'email' => $request->email,
             'cadre' => $request->cadre,

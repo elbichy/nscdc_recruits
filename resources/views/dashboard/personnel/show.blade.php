@@ -121,7 +121,7 @@
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Genotype</h6>
-										<p>{{ $personnel->gynotype != null ? strtoupper($personnel->gynotype) : 'N/A' }}</p>
+										<p>{{ $personnel->genotype != null ? strtoupper($personnel->genotype) : 'N/A' }}</p>
 									</div>
 								</div>
 								<div class="col s12 l2">
@@ -143,13 +143,32 @@
 										<p>{{ $personnel->marital_status != null ? ucfirst($personnel->marital_status) : 'N/A' }}</p>
 									</div>
 								</div>
-								<div class="col s12">
+								<div class="col s12 l3">
+									<div class="detailWrap">
+										<h6>Name of Spouse</h6>
+										<p>{{ $personnel->name_of_spouse != null ? ucfirst($personnel->name_of_spouse) : 'N/A' }}</p>
+									</div>
+								</div>
+								<div class="col s12 l3">
+									<div class="detailWrap">
+										<h6>Date of Marriage</h6>
+										<p>{{ $personnel->date_of_marriage != null ? ucfirst($personnel->date_of_marriage) : 'N/A' }}</p>
+									</div>
+								</div>
+								<div class="col s6">
 									<div class="detailWrap">
 										<h6>Residential address</h6>
 										<p>{{ $personnel->residential_address !== null ? ucwords($personnel->residential_address) : 'N/A' }}</p>
 									</div>
 								</div>
-								<div class="col s12">
+
+								<div class="col s12 l3">
+									<div class="detailWrap">
+										<h6>Place of Birth</h6>
+										<p>{{ $personnel->place_of_birth !== NULL ? ucwords($personnel->place_of_birth) : 'N/A' }}</p>
+									</div>
+								</div>
+								<div class="col s12 l9">
 									<div class="detailWrap">
 										<h6>Permanent address</h6>
 										<p>{{ $personnel->permanent_address !== null ? ucwords($personnel->permanent_address) : 'N/A' }}</p>
@@ -234,13 +253,13 @@
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Salary structure</h6>
-										<p>{{ $personnel->salary_structure != null ? $personnel->salary_structure : 'N/A' }}</p>
+										<p>{{ $personnel->salary_structure != null ? strtoupper($personnel->salary_structure) : 'N/A' }}</p>
 									</div>
 								</div>
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Bank</h6>
-										<p>{{ $personnel->bank != null ? $personnel->bank : 'N/A' }}</p>
+										<p>{{ $personnel->bank != null ? ucwords($personnel->bank) : 'N/A' }}</p>
 									</div>
 								</div>
 								<div class="col s12 l3">
@@ -284,7 +303,7 @@
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>PFA</h6>
-										<p>{{ $personnel->pfa != null ? $personnel->pfa : 'N/A' }}</p>
+										<p>{{ $personnel->pfa != null ? ucwords($personnel->pfa) : 'N/A' }}</p>
 									</div>
 								</div>	
 								<div class="col s12 l3">
@@ -465,7 +484,7 @@
 										@endforeach
 									@else
 										<tr>
-											<td colspan="3">No data submitted</td>
+											<td colspan="5">No data submitted</td>
 										</tr>
 									@endif
 								</tbody>
@@ -811,7 +830,7 @@
 										@endforeach
 									@else
 										<tr>
-											<td colspan="5">No data submitted</td>
+											<td colspan="7">No data submitted</td>
 										</tr>
 									@endif
 								</tbody>
