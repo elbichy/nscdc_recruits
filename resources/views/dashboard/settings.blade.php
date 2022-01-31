@@ -273,6 +273,10 @@
 				minLength: 1
 			});
 
+			$('.modal').modal({
+				dismissible: true
+			});
+
 			// DO THE CHIPS THING
 			function chips2Input(){
 				var instance = M.Chips.getInstance(document.getElementById('chip1')), inpt = document.getElementById('myInputField');

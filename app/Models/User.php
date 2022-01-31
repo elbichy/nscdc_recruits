@@ -68,6 +68,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Nok');
     }
     
+    public function children(){
+        return $this->hasMany('App\Models\Children');
+    }
+    
     public function progressions(){
         return $this->hasMany('App\Models\Progression')->orderBy('effective_date', 'desc');
     }

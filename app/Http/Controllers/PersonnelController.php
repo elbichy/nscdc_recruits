@@ -391,7 +391,7 @@ class PersonnelController extends Controller
             $ttr = 'DOFA/DOB not valid';
         }
         
-        return view('dashboard/personnel/show', compact(['personnel', 'state', 'lga', 'all_formations', 'ttr']));
+        return view('dashboard.personnel.show', compact(['personnel', 'state', 'lga', 'all_formations', 'ttr']));
     }
     
     public function ros(User $user)

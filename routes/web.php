@@ -4,6 +4,7 @@ use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\ChildrenController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeploymentController;
 use App\Http\Controllers\NokController;
@@ -58,6 +59,12 @@ Route::group(['prefix' => 'dashboard'], function (){
 			Route::post('{personnel}/store', [NokController::class, 'store'])->name('personnel_store_nok');
 			Route::delete('/{nok}/delete', [NokController::class, 'destroy'])->name('personnel_delete_nok');
 			Route::post('/{nok}/update', [NokController::class, 'update'])->name('personnel_update_nok');
+		});
+
+		Route::group(['prefix' => 'children'], function () {
+			Route::post('{personnel}/store', [ChildrenController::class, 'store'])->name('personnel_store_child');
+			Route::delete('/{child}/delete', [ChildrenController::class, 'destroy'])->name('personnel_delete_child');
+			Route::post('/{child}/update', [ChildrenController::class, 'update'])->name('personnel_update_child');
 		});
 
 		Route::group(['prefix' => 'file'], function () {

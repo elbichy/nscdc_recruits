@@ -50,6 +50,7 @@ class QualificationController extends Controller
             'course' => 'required',
             'institution' => 'required',
             'grade' => 'required',
+            'year_commenced' => 'required',
             'year_obtained' => 'required'
         ]);
         $qualifications = $personnel->qualifications()->create([
@@ -57,6 +58,7 @@ class QualificationController extends Controller
             'course' => $request->course,
             'institution' => $request->institution,
             'grade' => $request->grade,
+            'year_commenced' => $request->year_commenced,
             'year_obtained' => $request->year_obtained
         ]);
         if($qualifications){
@@ -98,7 +100,10 @@ class QualificationController extends Controller
     {
         $update = $qualification->update([
             'qualification' => $request->qualification,
+            'course' => $request->course,
             'institution' => $request->institution,
+            'grade' => $request->grade,
+            'year_commenced' => $request->year_commenced,
             'year_obtained' => $request->year_obtained
         ]);
         if($update){

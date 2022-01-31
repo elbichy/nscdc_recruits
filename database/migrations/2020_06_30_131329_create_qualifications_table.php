@@ -20,6 +20,7 @@ class CreateQualificationsTable extends Migration
             $table->string('course')->nullable();
             $table->string('institution')->nullable();
             $table->string('grade')->nullable();
+            $table->year('year_commenced')->nullable();
             $table->year('year_obtained')->nullable();
             $table->timestamps();
 

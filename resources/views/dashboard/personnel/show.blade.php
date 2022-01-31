@@ -363,54 +363,64 @@
 							<div id="modal" class="modal nokModal">
 								<form action="" method="POST" name="create_form" id="edit_nok_form">
 									<div class="modal-content" style="padding: 24px 9px 0px;">
-											@csrf
-											<div class="formWrap">
-												<fieldset id="form" class="row" style="margin-bottom: 0px; padding: 0px; border: none;">
-													{{-- NAME --}}
-													<div class="input-field col s12 l4">
-														<input id="nok_name" name="nok_name" type="text" value="{{ old('nok_name') }}" class="fillable" placeholder="Name" required>
-														@if ($errors->has('nok_name'))
-															<span class="helper-text red-text">
-																<strong>{{ $errors->first('nok_name') }}</strong>
-															</span>
-														@endif
-														<label for="nok_name">Name</label>
-													</div>
-													{{-- RELATIONSHIP --}}
-													<div class="col s12 l4">
-														<label for="relationship">Select relationship</label>
-														<select id="relationship" name="relationship" class="browser-default" required>
-															<option disabled selected>Select relationship</option>
-															<option value="father">Father</option>
-															<option value="mother">Mother</option>
-															<option value="uncle">Uncle</option>
-															<option value="aunt">Aunt</option>
-															<option value="brother">Brother</option>
-															<option value="sister">Sister</option>
-															<option value="cousin">Cousin</option>
-															<option value="son">Son</option>
-															<option value="daughter">Daughter</option>
-															<option value="nephew">Nephew</option>
-															<option value="niece">Niece</option>
-														</select>
-														@if ($errors->has('relationship'))
-															<span class="helper-text red-text">
-																<strong>{{ $errors->first('relationship') }}</strong>
-															</span>
-														@endif
-													</div>
-													{{-- PHONE --}}
-													<div class="input-field col s12 l4">
-														<input id="nok_phone" name="nok_phone" type="number" value="{{ old('nok_phone') }}" class="fillable" placeholder="Phone" required>
-														@if ($errors->has('nok_phone'))
-															<span class="helper-text red-text">
-																<strong>{{ $errors->first('nok_phone') }}</strong>
-															</span>
-														@endif
-														<label for="nok_phone">Phone number</label>
-													</div>
-												</fieldset>
-											</div>
+										@csrf
+										<div class="formWrap">
+											<fieldset id="form" class="row" style="margin-bottom: 0px; padding: 0px; border: none;">
+												{{-- NAME --}}
+												<div class="input-field col s12 l4">
+													<input id="nok_name" name="nok_name" type="text" value="{{ old('nok_name') }}" class="fillable" placeholder="Name" required>
+													@if ($errors->has('nok_name'))
+														<span class="helper-text red-text">
+															<strong>{{ $errors->first('nok_name') }}</strong>
+														</span>
+													@endif
+													<label for="nok_name">Name</label>
+												</div>
+												{{-- RELATIONSHIP --}}
+												<div class="col s12 l4">
+													<label for="relationship">Select relationship</label>
+													<select id="relationship" name="relationship" class="browser-default" required>
+														<option disabled selected>Select relationship</option>
+														<option value="father">Father</option>
+														<option value="mother">Mother</option>
+														<option value="uncle">Uncle</option>
+														<option value="aunt">Aunt</option>
+														<option value="brother">Brother</option>
+														<option value="sister">Sister</option>
+														<option value="cousin">Cousin</option>
+														<option value="son">Son</option>
+														<option value="daughter">Daughter</option>
+														<option value="nephew">Nephew</option>
+														<option value="niece">Niece</option>
+													</select>
+													@if ($errors->has('relationship'))
+														<span class="helper-text red-text">
+															<strong>{{ $errors->first('relationship') }}</strong>
+														</span>
+													@endif
+												</div>
+												{{-- PHONE --}}
+												<div class="input-field col s12 l4">
+													<input id="nok_phone" name="nok_phone" type="number" value="{{ old('nok_phone') }}" class="fillable" placeholder="Phone" required>
+													@if ($errors->has('nok_phone'))
+														<span class="helper-text red-text">
+															<strong>{{ $errors->first('nok_phone') }}</strong>
+														</span>
+													@endif
+													<label for="nok_phone">Phone number</label>
+												</div>
+												{{-- ADDRESS --}}
+												<div class="input-field col s12">
+													<input id="nok_address" name="nok_address" type="text" value="{{ old('nok_address') }}" placeholder="Address" required>
+													@if ($errors->has('nok_address'))
+														<span class="helper-text red-text">
+															<strong>{{ $errors->first('nok_address') }}</strong>
+														</span>
+													@endif
+													<label class="active" for="nok_address">Address</label>
+												</div>
+											</fieldset>
+										</div>
 									</div>
 									<div class="modal-footer" style="padding: 0px 10px 0 0; width: 99%;">
 										<a href="#!" id="modal-close" class="modal-close waves-effect waves-green btn-flat">Close</a>
@@ -423,6 +433,7 @@
 									<tr>
 										<th>Name</th>
 										<th>Relationship</th>
+										<th>Address</th>
 										<th>Phone</th>
 										<th></th>
 									</tr>
@@ -433,10 +444,11 @@
 											<tr>
 												<td>{{ ucwords($nok->name) }}</td>
 												<td>{{ ucwords($nok->relationship) }}</td>
+												<td>{{ ucwords($nok->address) }}</td>
 												<td>{{ $nok->phone }}</td>
 												{{-- @canany(['isGlobalAdmin', 'isStateAdmin']) --}}
 												<td>
-													<button data-nok_id="{{ $nok->id }}" data-nok_name="{{ $nok->name }}" data-nok_relationship="{{ $nok->relationship }}" data-nok_phone="{{ $nok->phone }}" class="edit_nok" class="red-text" title="Edit record" style="background: transparent; border: none; cursor: pointer; margin-right: 10px;">
+													<button data-nok_id="{{ $nok->id }}" data-nok_name="{{ $nok->name }}" data-nok_relationship="{{ $nok->relationship }}" data-nok_phone="{{ $nok->phone }}" data-nok_address="{{ $nok->address }}" class="edit_nok" class="red-text" title="Edit record" style="background: transparent; border: none; cursor: pointer; margin-right: 10px;">
 														<i class="blue-text fas fa-edit"></i>
 													</button>
 													<a href="#" class="delete_nok" class="red-text" title="Delete record">
@@ -464,7 +476,7 @@
 								@csrf
 								<div class="row">
 									{{-- NAME --}}
-									<div class="input-field col s12 l4">
+									<div class="input-field col s12 l6">
 										<input id="nok_name" name="nok_name" type="text" value="{{ old('nok_name') }}" class="fillable" required>
 										@if ($errors->has('nok_name'))
 											<span class="helper-text red-text">
@@ -497,7 +509,7 @@
 										@endif
 									</div>
 									{{-- PHONE --}}
-									<div class="input-field col s12 l2">
+									<div class="input-field col s12 l3">
 										<input id="nok_phone" name="nok_phone" type="number" value="{{ old('nok_phone') }}" class="fillable" required>
 										@if ($errors->has('nok_phone'))
 											<span class="helper-text red-text">
@@ -506,10 +518,168 @@
 										@endif
 										<label for="nok_phone">Phone number</label>
 									</div>
+									{{-- ADDRESS --}}
+									<div class="input-field col s12 l9">
+										<input id="address" name="address" type="text" value="{{ old('address') }}" class="fillable" required>
+										@if ($errors->has('address'))
+											<span class="helper-text red-text">
+												<strong>{{ $errors->first('address') }}</strong>
+											</span>
+										@endif
+										<label for="address">Address</label>
+									</div>
 
 									{{-- BUTTON --}}
 									<div class="input-field col s12 l3 right">
 										<button class="submit_nok btn waves-effect waves-light right" type="submit">
+											<i class="material-icons right">send</i>ADD RECORD
+										</button>
+									</div>
+								</div>
+							</form>
+							@endhasanyrole
+						</div>
+					</div>
+
+					{{-- PERSONNEL PARTICULARS OF CHILDREN --}}
+					<div class="fieldset">
+						<legend><p>PARTICULARS OF CHILDREN</p></legend>
+						<div class="table_form_wrapper">
+							<!-- Modal Structure for cloud upload -->
+							<div id="modal" class="modal childModal">
+								<form action="" method="POST" name="create_form" id="edit_child_form">
+									<div class="modal-content" style="padding: 24px 9px 0px;">
+										@csrf
+										<div class="formWrap">
+											<fieldset id="form" class="row" style="margin-bottom: 0px; padding: 0px; border: none;">
+												{{-- NAME --}}
+												<div class="input-field col s12 l6">
+													<input id="child_name" name="child_name" type="text" value="{{ old('child_name') }}" class="fillable" required>
+													@if ($errors->has('nok_name'))
+														<span class="helper-text red-text">
+															<strong>{{ $errors->first('child_name') }}</strong>
+														</span>
+													@endif
+													<label for="child_name">Name</label>
+												</div>
+												{{-- SEX --}}
+												<div class="col s12 l3">
+													<label for="child_sex">Select sex</label>
+													<select id="child_sex" name="child_sex" class="browser-default" required>
+														<option disabled selected>Select sex</option>
+														<option value="male">Male</option>
+														<option value="female">Female</option>
+														<option value="other">Other</option>
+													</select>
+													@if ($errors->has('child_sex'))
+														<span class="helper-text red-text">
+															<strong>{{ $errors->first('child_sex') }}</strong>
+														</span>
+													@endif
+												</div>
+												{{-- DATE OF BIRTH --}}
+												<div class="input-field col s12 l3">
+													<input id="child_dob" name="child_dob" type="date" value="{{ old('child_dob') }}" class="fillable" required>
+													@if ($errors->has('child_dob'))
+														<span class="helper-text red-text">
+															<strong>{{ $errors->first('child_dob') }}</strong>
+														</span>
+													@endif
+													<label for="child_dob">Date of Birth</label>
+												</div>
+											</fieldset>
+										</div>
+									</div>
+									<div class="modal-footer" style="padding: 0px 10px 0 0; width: 99%;">
+										<a href="#!" id="modal-close" class="modal-close waves-effect waves-green btn-flat">Close</a>
+										<button class="submit btn waves-effect waves-light right" type="submit"><i class="material-icons right">send</i>UPDATE RECORD</button>
+									</div>
+								</form>
+							</div>
+							<table class="striped responsive-table centered highlight">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Sex</th>
+										<th>Date of Birth</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									@if($personnel->children->count() > 0)
+										@foreach($personnel->children as $child)
+											<tr>
+												<td>{{ ucwords($child->name) }}</td>
+												<td>{{ ucwords($child->sex) }}</td>
+												<td>{{ ucwords($child->dob) }}</td>
+												{{-- @canany(['isGlobalAdmin', 'isStateAdmin']) --}}
+												<td>
+													<button data-child_id="{{ $child->id }}" data-child_name="{{ $child->name }}" data-child_sex="{{ $child->sex }}" data-child_dob="{{ $child->dob }}" class="edit_child" class="red-text" title="Edit record" style="background: transparent; border: none; cursor: pointer; margin-right: 10px;">
+														<i class="blue-text fas fa-edit"></i>
+													</button>
+													<a href="#" class="delete_child" class="red-text" title="Delete record">
+														<i class="red-text fas fa-trash-alt"></i>
+													</a>
+													{{-- DELETE NOK FORM --}}
+													<form action="{{ route('personnel_delete_child', $child->id) }}" method="post" id="delete_child">
+														@method('delete')
+														@csrf
+													</form>
+												</td>
+												{{-- @endcanany --}}
+											</tr>
+										@endforeach
+									@else
+										<tr>
+											<td colspan="4">No data submitted</td>
+										</tr>
+									@endif
+								</tbody>
+								
+							</table>
+							@hasanyrole('super admin|state admin')
+							<form action="{{ route('personnel_store_child', $personnel->id) }}" method="POST" class="card add_record_form" id="child_form">
+								@csrf
+								<div class="row">
+									{{-- NAME --}}
+									<div class="input-field col s12 l6">
+										<input id="child_name" name="child_name" type="text" value="{{ old('child_name') }}" class="fillable" required>
+										@if ($errors->has('nok_name'))
+											<span class="helper-text red-text">
+												<strong>{{ $errors->first('child_name') }}</strong>
+											</span>
+										@endif
+										<label for="child_name">Name</label>
+									</div>
+									{{-- SEX --}}
+									<div class="col s12 l3">
+										<label for="child_sex">Select sex</label>
+										<select id="child_sex" name="child_sex" class="browser-default" required>
+											<option disabled selected>Select sex</option>
+											<option value="male">Male</option>
+											<option value="female">Female</option>
+											<option value="other">Other</option>
+										</select>
+										@if ($errors->has('child_sex'))
+											<span class="helper-text red-text">
+												<strong>{{ $errors->first('child_sex') }}</strong>
+											</span>
+										@endif
+									</div>
+									{{-- DATE OF BIRTH --}}
+									<div class="input-field col s12 l3">
+										<input id="child_dob" name="child_dob" type="date" value="{{ old('child_dob') }}" class="fillable" required>
+										@if ($errors->has('child_dob'))
+											<span class="helper-text red-text">
+												<strong>{{ $errors->first('child_dob') }}</strong>
+											</span>
+										@endif
+										<label for="child_dob">Date of Birth</label>
+									</div>
+
+									{{-- BUTTON --}}
+									<div class="input-field col s12 l3 right">
+										<button class="submit_child btn waves-effect waves-light right" type="submit">
 											<i class="material-icons right">send</i>ADD RECORD
 										</button>
 									</div>
@@ -570,15 +740,26 @@
 														@endif
 														<label for="grade">Grade</label>
 													</div>
+													{{-- YEAR COMMENCED --}}
+													<div class="input-field col s12 l3">
+														<input id="year_commenced" name="year_commenced" type="text" value="{{ old('year_commenced') }}" class="fillable" placeholder="Year Commenced" required>
+														@if ($errors->has('year_commenced'))
+															<span class="helper-text red-text">
+																<strong>{{ $errors->first('year_commenced') }}</strong>
+															</span>
+														@endif
+														<label for="year_commenced">Year Commenced</label>
+													</div>
+													
 													{{-- YEAR OBTAINED --}}
 													<div class="input-field col s12 l3">
-														<input id="year_obtained" name="year_obtained" type="text" value="{{ old('year_obtained') }}" class="fillable" placeholder="Yr Obt." required>
+														<input id="year_obtained" name="year_obtained" type="text" value="{{ old('year_obtained') }}" class="fillable" placeholder="Year Completed" required>
 														@if ($errors->has('year_obtained'))
 															<span class="helper-text red-text">
 																<strong>{{ $errors->first('year_obtained') }}</strong>
 															</span>
 														@endif
-														<label for="year_obtained">Year Obtained</label>
+														<label for="year_obtained">Year Completed</label>
 													</div>
 												</fieldset>
 											</div>
@@ -593,8 +774,11 @@
 								<thead>
 									<tr>
 										<th>Qualification</th>
-										<th>School/Institution</th>
-										<th>Year Obtained</th>
+										<th>Program</th>
+										<th>Institution</th>
+										<th>Grade</th>
+										<th>From</th>
+										<th>To</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -603,7 +787,10 @@
 										@foreach($personnel->qualifications as $qualification)
 											<tr>
 												<td>{{ $qualification->qualification }}</td>
+												<td>{{ $qualification->course }}</td>
 												<td>{{ $qualification->institution }}</td>
+												<td>{{ $qualification->grade }}</td>
+												<td>{{ $qualification->year_commenced }}</td>
 												<td>{{ $qualification->year_obtained }}</td>
 												{{-- @canany(['isGlobalAdmin', 'isStateAdmin']) --}}
 												<td>
@@ -624,7 +811,7 @@
 										@endforeach
 									@else
 										<tr>
-											<td colspan="4">No data submitted</td>
+											<td colspan="5">No data submitted</td>
 										</tr>
 									@endif
 								</tbody>
@@ -665,7 +852,7 @@
 										<label for="institution">School/Institution</label>
 									</div>
 									{{-- GRADE --}}
-									<div class="input-field col s12 l4">
+									<div class="input-field col s12 l3">
 										<input id="grade" name="grade" type="text" value="{{ old('grade') }}" id="autocomplete-input" class="fillable autocomplete" placeholder="e.g Distinction, Credit, First Class, etc." required>
 										@if ($errors->has('grade'))
 											<span class="helper-text red-text">
@@ -674,19 +861,30 @@
 										@endif
 										<label for="grade">Grade</label>
 									</div>
+									{{-- YEAR COMMENCED --}}
+									<div class="input-field col s12 l3">
+										<input id="year_commenced" name="year_commenced" type="text" value="{{ old('year_commenced') }}" class="fillable" placeholder="Year Commenced" required>
+										@if ($errors->has('year_commenced'))
+											<span class="helper-text red-text">
+												<strong>{{ $errors->first('year_commenced') }}</strong>
+											</span>
+										@endif
+										<label for="year_commenced">Year Commenced</label>
+									</div>
+									
 									{{-- YEAR OBTAINED --}}
 									<div class="input-field col s12 l3">
-										<input id="year_obtained" name="year_obtained" type="text" value="{{ old('year_obtained') }}" class="fillable" placeholder="Year Obtained" required>
+										<input id="year_obtained" name="year_obtained" type="text" value="{{ old('year_obtained') }}" class="fillable" placeholder="Year Completed" required>
 										@if ($errors->has('year_obtained'))
 											<span class="helper-text red-text">
 												<strong>{{ $errors->first('year_obtained') }}</strong>
 											</span>
 										@endif
-										<label for="year_obtained">Year Obtained</label>
+										<label for="year_obtained">Year Completed</label>
 									</div>
 
 									{{-- BUTTON --}}
-									<div class="input-field col s12 l5 right">
+									<div class="input-field col s12 l3 right">
 										<button class="submit_qualification btn waves-effect waves-light right" type="submit">
 											<i class="material-icons right">send</i>ADD RECORD
 										</button>
@@ -1219,282 +1417,311 @@
 @endsection
 
 @push('scripts')
-@if ($errors->any())
-<script>
-	$(function() {
-		$('.changePassModal').modal('open');
-	});
-</script>
-@endif
-
-<script>
-	lightbox.option({
-		'resizeDuration': 200,
-		'wrapAround': true,
-		'fitImagesInViewport': true,
-		'maxHeight': 800,
-		'disableScrolling': false,
-	});
-	$(function() {
-
-		$("#label_timer").countdowntimer({
-			dateAndTime : "{{ $ttr }}",
-			labelsFormat : true,
-			displayFormat : "YODHMS",
-			borderColor : "#0e75a7",
-			fontColor : "#FFFFFF",
-			backgroundColor : "#164f6b",
-			size : "xl",
+	@if ($errors->any())
+    <script>
+        $(function() {
+            $('.changePassModal').modal('open');
+        });
+    </script>
+	@endif
+	
+    <script>
+		lightbox.option({
+			'resizeDuration': 200,
+			'wrapAround': true,
+			'fitImagesInViewport': true,
+			'maxHeight': 800,
+			'disableScrolling': false,
 		});
+        $(function() {
 
-		$('.fixed-action-btn').floatingActionButton({
-			direction: 'left'
-		});
-		
+			M.updateTextFields()
 
-		// $('.dofa_datepicker').datepicker({
-		// 	container: 'body',
-		// 	format: 'yyyy-mm-dd',
-		// 	yearRange: [2004, (new Date).getFullYear()]
-		// });
+			$("#label_timer").countdowntimer({
+				dateAndTime : "{{ $ttr }}",
+				labelsFormat : true,
+				displayFormat : "YODHMS",
+				borderColor : "#0e75a7",
+				fontColor : "#FFFFFF",
+				backgroundColor : "#164f6b",
+				size : "xl",
+			});
 
-		// COMMANDS
-		$('input.autocomplete_commands').autocomplete({
-			data: {
-				'National Headquarters' : null,
-				'Abia State Command' : null,
-				'Adamawa State Command' : null,
-				'Akwa-ibom State Command' : null,
-				'Anambra State Command' : null,
-				'Bauchi State Command' : null,
-				'Bayelsa State Command' : null,
-				'Benue State Command' : null,
-				'Borno State Command' : null,
-				'Cross-river State Command' : null,
-				'Delta State Command' : null,
-				'Ebonyi State Command' : null,
-				'Edo State Command' : null,
-				'Ekiti State Command' : null,
-				'Enugu State Command' : null,
-				'FCT Command' : null,
-				'Gombe State Command' : null,
-				'Imo State Command' : null,
-				'Jigawa State Command' : null,
-				'Kaduna State Command' : null,
-				'Kano State Command' : null,
-				'Katsina State Command' : null,
-				'Kebbi State Command' : null,
-				'Kogi State Command' : null,
-				'Kwara State Command' : null,
-				'Lagos State Command' : null,
-				'Nasarawa State Command' : null,
-				'Niger State Command' : null,
-				'Ogun State Command' : null,
-				'Ondo State Command' : null,
-				'Osun State Command' : null,
-				'Oyo State Command' : null,
-				'Plateau State Command' : null,
-				'Rivers State Command' : null,
-				'Sokoto State Command' : null,
-				'Taraba State Command' : null,
-				'Yobe State Command' : null,
-				'Zamfara State Command' : null,
-				'Zone A HQ, Lagos' : null,
-				'Zone B HQ, Kaduna' : null,
-				'Zone C HQ, Bauchi' : null,
-				'Zone D HQ, Minna' : null,
-				'Zone E HQ, Oweri' : null,
-				'Zone F HQ, Abeokuta' : null,
-				'Zone G HQ, Benin' : null,
-				'Zone H HQ, Makurdi' : null,
-				'College of Security Management, Abeokuta' : null,
-				'College of Peace, Conflic Resolution &Desaster Management, Katsina' : null,
-				'Civil Defence Academy, Sauka' : null,
-				'Education Liason Office Ibadan' : null
-			},
-		});
-		
-		// QUALIFICATIONS
-		$('input.autocomplete_qualifications').autocomplete({
-			data: {
-				'FSLC' : null,
-				'SSCE' : null,
-				'WAEC' : null,
-				'NECO' : null,
-				'B.Sc' : null,
-				'M.Sc' : null,
-				'PGD' : null,
-				'NCE' : null,
-				'DIPLOMA' : null,
-				'ND' : null,
-				'HND' : null,
-				'RN' : null,
-				'RM' : null,
-			},
-		});
-
-		// PASSPORT UPLOAD
-		$('#passport_upload').submit(function(){
-			$('.upload_file').html(`Uploading <i class="fas fa-circle-notch fa-spin"></i>`);
-		});
-
-		// DOCS UPLOAD
-		$('#document_upload').submit(function(){
-			$('.document_upload').html(`Uploading <i class="fas fa-circle-notch fa-spin"></i>`);
-		});
-		
-		//DELETE PERSONNEL
-		$(document).on('click', '.deletePersonnel', function(event) {
-			event.preventDefault();
-			$('.deletePersonnelModal').modal('open');
-		});
-		
-		//EDIT PASSWORD 
-		$(document).on('click', '.changePassword', function(event) {
-			event.preventDefault();
-			$('.changePassModal').modal('open');
-		});
-		$('#change_pass_form').submit(function(){
-			$('.submit_pass').html(`Updating record...`);
-		});
-
-
-
-		//NEXT OF KIN UPDATE/DELETE 
-		$(document).on('click', '.edit_nok', function(event) {
-			event.preventDefault();
+			$('.fixed-action-btn').floatingActionButton({
+				direction: 'left'
+			});
 			
-			let relationship = this.dataset.nok_relationship == '' ? 'promotion' : this.dataset.nok_relationship;
-			$('#edit_nok_form').prop('action', `/administration/dashboard/personnel/nok/${this.dataset.nok_id}/update`);
-			$('#nok_name').prop('value', `${this.dataset.nok_name}`);
-			$('#relationship option[value='+relationship+']').prop('selected', true);
-			$('#nok_phone').prop('value', `${this.dataset.nok_phone}`);
-			$('.nokModal').modal('open');
-		});
-		$('#nok_form').submit(function(){
-			$('.submit_nok').html(`Adding record...`);
-		});
-		$('.delete_nok').click(function(event){
-			event.preventDefault();
-			if(confirm("Are you sure you want to delete this record?")){
-				event.currentTarget.nextElementSibling.submit();
-			}
-		});
+			$('.modal').modal({
+				dismissible: true
+			});
+
+			
+
+			// $('.dofa_datepicker').datepicker({
+			// 	container: 'body',
+			// 	format: 'yyyy-mm-dd',
+			// 	yearRange: [2004, (new Date).getFullYear()]
+			// });
+
+			// COMMANDS
+			$('input.autocomplete_commands').autocomplete({
+				data: {
+					'National Headquarters' : null,
+					'Abia State Command' : null,
+					'Adamawa State Command' : null,
+					'Akwa-ibom State Command' : null,
+					'Anambra State Command' : null,
+					'Bauchi State Command' : null,
+					'Bayelsa State Command' : null,
+					'Benue State Command' : null,
+					'Borno State Command' : null,
+					'Cross-river State Command' : null,
+					'Delta State Command' : null,
+					'Ebonyi State Command' : null,
+					'Edo State Command' : null,
+					'Ekiti State Command' : null,
+					'Enugu State Command' : null,
+					'FCT Command' : null,
+					'Gombe State Command' : null,
+					'Imo State Command' : null,
+					'Jigawa State Command' : null,
+					'Kaduna State Command' : null,
+					'Kano State Command' : null,
+					'Katsina State Command' : null,
+					'Kebbi State Command' : null,
+					'Kogi State Command' : null,
+					'Kwara State Command' : null,
+					'Lagos State Command' : null,
+					'Nasarawa State Command' : null,
+					'Niger State Command' : null,
+					'Ogun State Command' : null,
+					'Ondo State Command' : null,
+					'Osun State Command' : null,
+					'Oyo State Command' : null,
+					'Plateau State Command' : null,
+					'Rivers State Command' : null,
+					'Sokoto State Command' : null,
+					'Taraba State Command' : null,
+					'Yobe State Command' : null,
+					'Zamfara State Command' : null,
+					'Zone A HQ, Lagos' : null,
+					'Zone B HQ, Kaduna' : null,
+					'Zone C HQ, Bauchi' : null,
+					'Zone D HQ, Minna' : null,
+					'Zone E HQ, Oweri' : null,
+					'Zone F HQ, Abeokuta' : null,
+					'Zone G HQ, Benin' : null,
+					'Zone H HQ, Makurdi' : null,
+					'College of Security Management, Abeokuta' : null,
+					'College of Peace, Conflic Resolution &Desaster Management, Katsina' : null,
+					'Civil Defence Academy, Sauka' : null,
+					'Education Liason Office Ibadan' : null
+				},
+			});
+			
+			// QUALIFICATIONS
+			$('input.autocomplete_qualifications').autocomplete({
+				data: {
+					'FSLC' : null,
+					'SSCE' : null,
+					'WAEC' : null,
+					'NECO' : null,
+					'B.Sc' : null,
+					'M.Sc' : null,
+					'PGD' : null,
+					'NCE' : null,
+					'DIPLOMA' : null,
+					'ND' : null,
+					'HND' : null,
+					'RN' : null,
+					'RM' : null,
+				},
+			});
+
+			// PASSPORT UPLOAD
+			$('#passport_upload').submit(function(){
+				$('.upload_file').html(`Uploading <i class="fas fa-circle-notch fa-spin"></i>`);
+			});
+
+			// DOCS UPLOAD
+			$('#document_upload').submit(function(){
+				$('.document_upload').html(`Uploading <i class="fas fa-circle-notch fa-spin"></i>`);
+			});
+			
+			//DELETE PERSONNEL
+			$(document).on('click', '.deletePersonnel', function(event) {
+				event.preventDefault();
+				$('.deletePersonnelModal').modal('open');
+            });
+			
+			//EDIT PASSWORD 
+			$(document).on('click', '.changePassword', function(event) {
+				event.preventDefault();
+				$('.changePassModal').modal('open');
+            });
+			$('#change_pass_form').submit(function(){
+				$('.submit_pass').html(`Updating record...`);
+			});
 
 
-		// QUALIFICATION UPDATE/DELETE
-		$(document).on('click', '.edit_qualification', function(event) {
-			event.preventDefault();
-			// $(this).prop('disabled', true).html('Adding record...');\
-			// this.dataset.qual_id
-			$('#edit_qual_form').prop('action', `/administration/dashboard/personnel/qualification/${this.dataset.qual_id}/update`);
-			$('#qualification').prop('value', `${this.dataset.qual_qual}`);
-			$('#institution').prop('value', `${this.dataset.qual_inst}`);
-			$('#year_obtained').prop('value', `${this.dataset.qual_yr}`);
-			$('.qualModal').modal('open');
-		});
-		$('#qualification_form').submit(function(){
-			$('.submit_qualification').html(`Adding record...`);
-		});
-		$('.delete_qualification').click(function(event){
-			event.preventDefault();
-			if(confirm("Are you sure you want to delete this record?")){
-				event.currentTarget.nextElementSibling.submit();
-			}
-		});
-		
 
-		// DEPLOYMENT UPDATE/DELETE
-		$(document).on('click', '.edit_deployment', function(event) {
-			event.preventDefault();
-			// $(this).prop('disabled', true).html('Adding record...');\
-			// this.dataset.qual_id
-			$('#edit_deploy_form').prop('action', `/administration/dashboard/personnel/deployment/${this.dataset.deploy_id}/update`);
+			//NEXT OF KIN UPDATE/DELETE 
+			$(document).on('click', '.edit_nok', function(event) {
+				event.preventDefault();
+				
+				let relationship = this.dataset.nok_relationship == '' ? 'promotion' : this.dataset.nok_relationship;
+				$('#edit_nok_form').prop('action', `/dashboard/personnel/nok/${this.dataset.nok_id}/update`);
+				$('#nok_name').prop('value', `${this.dataset.nok_name}`);
+				$('#relationship option[value='+relationship+']').prop('selected', true);
+				$('#nok_phone').prop('value', `${this.dataset.nok_phone}`);
+				$('#nok_address').prop('value', `${this.dataset.nok_address}`);
+				$('.nokModal').modal('open');
+            });
+			$('#nok_form').submit(function(){
+				$('.submit_nok').html(`Adding record...`);
+			});
+			$('.delete_nok').click(function(event){
+				event.preventDefault();
+				if(confirm("Are you sure you want to delete this record?")){
+					event.currentTarget.nextElementSibling.submit();
+				}
+			});
 
-			let cmnd = this.dataset.deploy_cmnd == '' ? '1' : this.dataset.deploy_cmnd;
-			// console.log(cmnd);
-			$('.command').prop('value', `${this.dataset.deploy_cmnd}`);
-			$('#command option[value='+cmnd+']').prop('selected', true);
-
-			$('#department').prop('value', `${this.dataset.deploy_dept}`);
-			$('#designation').prop('value', `${this.dataset.deploy_desig}`);
-			$('#from').prop('value', `${this.dataset.deploy_from}`);
-			$('#to').prop('value', `${this.dataset.deploy_to}`);
-			$('.deployModal').modal('open');
-		});
-		$('#deployment_form').submit(function(){
-			$('.submit_deployment').html(`Adding record...`);
-		});
-		$('.delete_deployment').click(function(event){
-			event.preventDefault();
-			if(confirm("Are you sure you want to delete this record?")){
-				event.currentTarget.nextElementSibling.submit();
-			}
-		});
-		
-
-		// PROGRESSION UPDATE/DELETE
-		$(document).on('click', '.edit_progression', function(event) {
-			event.preventDefault();
-			// $(this).prop('disabled', true).html('Adding record...');\
-			// this.dataset.qual_id
-			// console.log(this.dataset.progress_type);
-			let type = this.dataset.progress_type == '' ? 'promotion' : this.dataset.progress_type;
-			$('#edit_progress_form').prop('action', `/administration/dashboard/personnel/progression/${this.dataset.progress_id}/update`);
-			$('#type option[value='+type+']').prop('selected', true);
-			$('#cadre option[value='+`${this.dataset.progress_cadre}`+']').prop('selected', true);
-			$('#gl option[value='+`${this.dataset.progress_gl}`+']').prop('selected', true);
-			$('#effective_date').prop('value', `${this.dataset.progress_effective_date}`);
-			$('.progressModal').modal('open');
-		});
-		$('#progression_form').submit(function(){
-			$('.submit_progression').html(`Adding record...`);
-		});
-		$('.delete_progression').click(function(event){
-			event.preventDefault();
-			if(confirm("Are you sure you want to delete this record?")){
-				event.currentTarget.nextElementSibling.submit();
-			}
-		});
+			//CHILD UPDATE/DELETE 
+			$(document).on('click', '.edit_child', function(event) {
+				event.preventDefault();
+				
+				let child_sex = this.dataset.child_sex == '' ? 'male' : this.dataset.child_sex;
+				$('#edit_child_form').prop('action', `/dashboard/personnel/children/${this.dataset.child_id}/update`);
+				$('#child_name').prop('value', `${this.dataset.child_name}`);
+				$('#child_sex option[value='+child_sex+']').prop('selected', true);
+				$('#child_dob').prop('value', `${this.dataset.child_dob}`);
+				$('.childModal').modal('open');
+            });
+			$('#child_form').submit(function(){
+				$('.submit_child').html(`Adding record...`);
+			});
+			$('.delete_child').click(function(event){
+				event.preventDefault();
+				if(confirm("Are you sure you want to delete this record?")){
+					event.currentTarget.nextElementSibling.submit();
+				}
+			});
 
 
+			// QUALIFICATION UPDATE/DELETE
+			$(document).on('click', '.edit_qualification', function(event) {
+				event.preventDefault();
+                // $(this).prop('disabled', true).html('Adding record...');\
+				// this.dataset.qual_id
+				$('#edit_qual_form').prop('action', `/dashboard/personnel/qualification/${this.dataset.qual_id}/update`);
+				$('#qualification').prop('value', `${this.dataset.qual_qual}`);
+				$('#institution').prop('value', `${this.dataset.qual_inst}`);
+				$('#year_obtained').prop('value', `${this.dataset.qual_yr}`);
+                $('.qualModal').modal('open');
+            });
+			$('#qualification_form').submit(function(){
+				$('.submit_qualification').html(`Adding record...`);
+			});
+			$('.delete_qualification').click(function(event){
+				event.preventDefault();
+				if(confirm("Are you sure you want to delete this record?")){
+					event.currentTarget.nextElementSibling.submit();
+				}
+			});
+			
 
-		$('.deleteDocument').click(function(event){
-			event.preventDefault();
-			if(confirm("Are you sure you want to delete document?")){
-				event.currentTarget.nextElementSibling.submit();
-			}
-		});
+			// DEPLOYMENT UPDATE/DELETE
+			$(document).on('click', '.edit_deployment', function(event) {
+				event.preventDefault();
+                // $(this).prop('disabled', true).html('Adding record...');\
+				// this.dataset.qual_id
+				$('#edit_deploy_form').prop('action', `/dashboard/personnel/deployment/${this.dataset.deploy_id}/update`);
 
-		// LOAD LGAs AFTER SELECTING STATE OF ORIGIN
-		$('#soo').change(function() {
-			let stateSelected = $(this).val();
-			// GET ALL LOCAL GOVERNMENT AREAS IN NIGERIA
-			axios.get(`${base_url}/get-lgoo/${stateSelected}`)
-				.then(function(response) {
-					// console.log(response.data);
-					let lgaArray = response.data;
-					$('#lgoo').html('<option value="" disabled selected>Choose your option</option>');
-					lgaArray.map(function(lga) {
-						$(`<option value="${lga.id}">${lga.lg_name}</option>`).appendTo('#lgoo');
+				let cmnd = this.dataset.deploy_cmnd == '' ? '1' : this.dataset.deploy_cmnd;
+				// console.log(cmnd);
+				$('.command').prop('value', `${this.dataset.deploy_cmnd}`);
+				$('#command option[value='+cmnd+']').prop('selected', true);
+
+				$('#department').prop('value', `${this.dataset.deploy_dept}`);
+				$('#designation').prop('value', `${this.dataset.deploy_desig}`);
+				$('#from').prop('value', `${this.dataset.deploy_from}`);
+				$('#to').prop('value', `${this.dataset.deploy_to}`);
+                $('.deployModal').modal('open');
+            });
+			$('#deployment_form').submit(function(){
+				$('.submit_deployment').html(`Adding record...`);
+			});
+			$('.delete_deployment').click(function(event){
+				event.preventDefault();
+				if(confirm("Are you sure you want to delete this record?")){
+					event.currentTarget.nextElementSibling.submit();
+				}
+			});
+			
+
+			// PROGRESSION UPDATE/DELETE
+			$(document).on('click', '.edit_progression', function(event) {
+				event.preventDefault();
+                // $(this).prop('disabled', true).html('Adding record...');\
+				// this.dataset.qual_id
+				// console.log(this.dataset.progress_type);
+				let type = this.dataset.progress_type == '' ? 'promotion' : this.dataset.progress_type;
+				$('#edit_progress_form').prop('action', `/dashboard/personnel/progression/${this.dataset.progress_id}/update`);
+				$('#type option[value='+type+']').prop('selected', true);
+				$('#cadre option[value='+`${this.dataset.progress_cadre}`+']').prop('selected', true);
+				$('#gl option[value='+`${this.dataset.progress_gl}`+']').prop('selected', true);
+				$('#effective_date').prop('value', `${this.dataset.progress_effective_date}`);
+                $('.progressModal').modal('open');
+            });
+			$('#progression_form').submit(function(){
+				$('.submit_progression').html(`Adding record...`);
+			});
+			$('.delete_progression').click(function(event){
+				event.preventDefault();
+				if(confirm("Are you sure you want to delete this record?")){
+					event.currentTarget.nextElementSibling.submit();
+				}
+			});
+
+
+
+			$('.deleteDocument').click(function(event){
+				event.preventDefault();
+				if(confirm("Are you sure you want to delete document?")){
+					event.currentTarget.nextElementSibling.submit();
+				}
+			});
+
+			// LOAD LGAs AFTER SELECTING STATE OF ORIGIN
+			$('#soo').change(function() {
+				let stateSelected = $(this).val();
+				// GET ALL LOCAL GOVERNMENT AREAS IN NIGERIA
+				axios.get(`${base_url}/get-lgoo/${stateSelected}`)
+					.then(function(response) {
+						// console.log(response.data);
+						let lgaArray = response.data;
+						$('#lgoo').html('<option value="" disabled selected>Choose your option</option>');
+						lgaArray.map(function(lga) {
+							$(`<option value="${lga.id}">${lga.lg_name}</option>`).appendTo('#lgoo');
+						});
+					})
+					.catch(function(error) {
+						// handle error
+						console.log(error.data);
+					})
+					.finally(function() {
+						// always executed
 					});
-				})
-				.catch(function(error) {
-					// handle error
-					console.log(error.data);
-				})
-				.finally(function() {
-					// always executed
-				});
-		});
+			});
 
-		// $('.deletePersonnel').click(function(event){
-		// 	event.preventDefault();
-		// 	if(confirm("Are you sure you want to delete personnel?")){
-		// 		$('#deletePersonnel').submit();
-		// 	}
-		// });
-		
-	});
-</script>
+			// $('.deletePersonnel').click(function(event){
+			// 	event.preventDefault();
+			// 	if(confirm("Are you sure you want to delete personnel?")){
+			// 		$('#deletePersonnel').submit();
+			// 	}
+			// });
+			
+        });
+    </script>
 @endpush

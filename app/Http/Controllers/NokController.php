@@ -84,7 +84,8 @@ class NokController extends Controller
         $update = $nok->update([
             'name' => $request->nok_name,
             'relationship' => $request->relationship,
-            'phone' => $request->nok_phone
+            'phone' => $request->nok_phone,
+            'address' => $request->nok_address
         ]);
         if($update){
             Alert::success('Next of Kin record updated successfully!', 'Success!')->autoclose(2500);

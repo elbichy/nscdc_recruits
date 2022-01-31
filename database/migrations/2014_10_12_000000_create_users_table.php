@@ -24,11 +24,15 @@ class CreateUsersTable extends Migration
             $table->date('dob')->nullable();
             $table->string('sex')->nullable();
             $table->string('marital_status')->nullable();
+            $table->string('date_of_marriage')->nullable();
+            $table->string('name_of_spouse')->nullable();
+            $table->string('religion')->nullable();
             $table->string('blood_group')->nullable();
             $table->string('genotype')->nullable();
             $table->string('height')->nullable();
             $table->string('weight')->nullable();
             $table->string('soo')->nullable();
+            $table->string('place_of_birth')->nullable();
             $table->string('lgoo')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('residential_address')->nullable();
