@@ -35,11 +35,13 @@ class NokController extends Controller
         $validation = $request->validate([
             'nok_name' => 'required',
             'relationship' => 'required',
+            'address' => 'required',
             'nok_phone' => 'required'
         ]);
         $nok = $personnel->noks()->create([
             'name' => $request->nok_name,
             'relationship' => $request->relationship,
+            'address' => $request->address,
             'phone' => $request->nok_phone
         ]);
         if($nok){

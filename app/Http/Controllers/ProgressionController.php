@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Progression;
-use App\Rank;
-use App\User;
+use App\Models\Progression;
+use App\Models\Rank;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -14,7 +14,7 @@ class ProgressionController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', 'role:super admin']);
+        $this->middleware(['auth']);
     }
 
     /**

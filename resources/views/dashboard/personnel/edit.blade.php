@@ -53,6 +53,22 @@
 									</span>
 								@endif
 							</div>
+							{{-- Marital Status --}}
+							<div class="col s12 l4">
+								<label for="marital_status">Select Status</label>
+								<select id="marital_status" name="marital_status" class=" browser-default">
+									<option disabled>Select Type</option>
+									<option value="single" {{ $personnel->marital_status == 'single' ? 'selected' : '' }}>Single</option>
+									<option value="married" {{ $personnel->marital_status == 'married' ? 'selected' : '' }}>Married</option>
+									<option value="widowed" {{ $personnel->marital_status == 'widowed' ? 'selected' : '' }}>Widowed</option>
+									<option value="divorced" {{ $personnel->marital_status == 'divorced' ? 'selected' : '' }}>Divorced</option>
+								</select>
+								@if ($errors->has('marital_status'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('marital_status') }}</strong>
+									</span>
+								@endif
+							</div>
 							{{-- Blood Group --}}
 							<div class="col s12 l4">
 								<label for="blood_group">Select Blood Group</label>
@@ -73,21 +89,43 @@
 									</span>
 								@endif
 							</div>
-							{{-- Marital Status --}}
+							{{-- Genotype --}}
 							<div class="col s12 l4">
-								<label for="marital_status">Select Status</label>
-								<select id="marital_status" name="marital_status" class=" browser-default">
-									<option disabled>Select Type</option>
-									<option value="single" {{ $personnel->marital_status == 'single' ? 'selected' : '' }}>Single</option>
-									<option value="married" {{ $personnel->marital_status == 'married' ? 'selected' : '' }}>Married</option>
-									<option value="widowed" {{ $personnel->marital_status == 'widowed' ? 'selected' : '' }}>Widowed</option>
-									<option value="divorced" {{ $personnel->marital_status == 'divorced' ? 'selected' : '' }}>Divorced</option>
+								<label for="genotype">Select Gynotype</label>
+								<select id="genotype" name="genotype" class=" browser-default">
+									<option disabled selected>Select Type</option>
+									<option value="aa" {{ $personnel->genotype == 'o+' ? 'selected' : '' }}>AA</option>
+									<option value="as-" {{ $personnel->genotype == 'o+' ? 'selected' : '' }}>AS</option>
+									<option value="ac" {{ $personnel->genotype == 'o+' ? 'selected' : '' }}>AC</option>
+									<option value="ss" {{ $personnel->genotype == 'o+' ? 'selected' : '' }}>SS</option>
 								</select>
-								@if ($errors->has('marital_status'))
+								@if ($errors->has('genotype'))
 									<span class="helper-text red-text">
-										<strong>{{ $errors->first('marital_status') }}</strong>
+										<strong>{{ $errors->first('genotype') }}</strong>
 									</span>
 								@endif
+							</div>
+							{{-- Height --}}
+							<div class="input-field col s12 l4">
+								<input id="height" name="height" type="text" value="{{ $personnel->height }}">
+								@if ($errors->has('height'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('height') }}</strong>
+									</span>
+								@endif
+								<label for="height">Height</label>
+								<span class="helper-text">e.g. 6.5m</span>
+							</div>
+							{{-- Weight --}}
+							<div class="input-field col s12 l4">
+								<input id="weight" name="weight" type="text" value="{{ $personnel->weight }}">
+								@if ($errors->has('weight'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('weight') }}</strong>
+									</span>
+								@endif
+								<label for="weight">Weight</label>
+								<span class="helper-text">e.g. 85kg</span>
 							</div>
 						</fieldset>
 						<fieldset class="row">
@@ -154,6 +192,26 @@
 									</span>
 								@endif
 							</div>
+							{{-- Residential Address --}}
+							<div class="input-field col s12 l6">
+								<input id="residential_address" name="residential_address" type="text" value="{{ $personnel->residential_address }}" placeholder="Area, Town, State." required>
+								@if ($errors->has('residential_address'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('residential_address') }}</strong>
+									</span>
+								@endif
+								<label for="residential_address">* Present residential address</label>
+							</div>
+							{{-- Permanent Address --}}
+							<div class="input-field col s12 l6">
+								<input id="permanent_address" name="permanent_address" type="text" value="{{ $personnel->permanent_address }}" placeholder="Area, Town, State.">
+								@if ($errors->has('permanent_address'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('permanent_address') }}</strong>
+									</span>
+								@endif
+								<label for="permanent_address">Permanent address</label>
+							</div>
 							{{-- Phone --}}
 							<div class="input-field col s12 l3">
 								<input id="phone_number" name="phone_number" type="number" value="{{ $personnel->phone_number }}" class="input_text" data-length="11">
@@ -173,16 +231,6 @@
 									</span>
 								@endif
 								<label for="email">Email address</label>
-							</div>
-							{{-- Residential Address --}}
-							<div class="input-field col s12 l12">
-								<input id="residential_address" name="residential_address" type="text" value="{{ $personnel->residential_address }}" placeholder="Area, Town, State." required>
-								@if ($errors->has('residential_address'))
-									<span class="helper-text red-text">
-										<strong>{{ $errors->first('residential_address') }}</strong>
-									</span>
-								@endif
-								<label for="residential_address">* Present residential address</label>
 							</div>
 							
 						</fieldset>
@@ -275,7 +323,7 @@
 							</div>
 							{{-- Date of Conf. --}}
 							<div class="input-field col s12 l3">
-								<input id="doc" name="doc" type="date" value="{{ $personnel->doc }}" required>
+								<input id="doc" name="doc" type="date" value="{{ $personnel->doc != null ? $personnel->doc : 'dd/mm/yyyy' }}" required>
 								@if ($errors->has('doc'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('doc') }}</strong>
@@ -426,7 +474,7 @@
 								<label for="pen_number">* PEN No.</label>
 							</div>
 							{{-- SPECIALIZATION--}}
-							<div class="input-field col s12 l3">
+							{{-- <div class="input-field col s12 l3">
 								<input id="specialization" name="specialization" type="text" value="{{ $personnel->specialization }}">
 								@if ($errors->has('specialization'))
 									<span class="helper-text red-text">
@@ -434,7 +482,7 @@
 									</span>
 								@endif
 								<label for="specialization">Specialization</label>
-							</div>
+							</div> --}}
 							{{-- Command
 							<div class="col s12 l3">
 								<label for="command">* Present Formation</label>

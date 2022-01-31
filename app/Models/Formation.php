@@ -10,6 +10,6 @@ class Formation extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User')->using('App\FormationUser')->withPivot('id', 'command', 'department', 'designation', 'from', 'to', 'created_at', 'updated_at');
+        return $this->belongsToMany('App\Models\User')->using('App\Models\FormationUser')->withPivot('id', 'command', 'department', 'designation', 'from', 'to', 'created_at', 'updated_at');
     }
 }

@@ -455,7 +455,7 @@
 							</div>
 							
 							{{-- SPECIALIZATION--}}
-							<div class="input-field col s12 l3">
+							{{-- <div class="input-field col s12 l3">
 								<input id="specialization" name="specialization" type="text" value="{{ old('specialization') }}">
 								@if ($errors->has('specialization'))
 									<span class="helper-text red-text">
@@ -463,7 +463,7 @@
 									</span>
 								@endif
 								<label for="specialization">Specialization</label>
-							</div>
+							</div> --}}
 							{{-- Command --}}
 							<div class="col s12 l3">
 								<label for="command">* Present Formation</label>

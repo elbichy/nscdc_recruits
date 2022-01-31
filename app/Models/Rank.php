@@ -9,6 +9,6 @@ class Rank extends Model
     protected $guarded = [];
 
     public function users(){
-        return $this->hasMany('App\User', 'gl', 'gl');
+        return $this->hasMany('App\Models\User', 'gl', 'gl');
     }
 }

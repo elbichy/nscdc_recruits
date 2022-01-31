@@ -8,21 +8,6 @@
         {{ env('APP_NAME') }}@isset($title) - {{ $title }}@endisset
     </title>
     <link rel="shortcut icon" href="{{ asset('storage/fav.png') }}">
-    <link href="{{ asset('fontawesome/css/all.css') }}" rel="stylesheet"> <!-- font-awesome -->
-    <link rel="stylesheet" type="text/css" href="{{asset('countdowntimer/src/css/jQuery.countdownTimer.css')}}" />
-    <link rel="stylesheet" href="{{asset('css/material-icons.css')}}">
-    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
-    <script src="{{asset('js/jquery-ui.min.js')}}"></script>
-    <script src="{{asset('js/axios.min.js')}}"></script>
-    <script src="{{asset('js/wnoty.js')}}"></script>
-    <script type="text/javascript" src="{{asset('countdowntimer/src/js/jQuery.countdownTimer.js')}}"></script>
-
-    <script src="{{asset('materialize-css/js/materialize.min.js')}}"></script>
-    <link rel="stylesheet" charset="utf-8" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" charset="utf-8" href="{{asset('materialize-css/css/materialize.min.css')}}">
-
-    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
-    <script type="text/javascript" src="{{asset('js/custom.js')}}"></script>
 
     <style>
         :root {
@@ -47,6 +32,21 @@
             --button-secondary: #8d1003;
         }
     </style>
+
+    <script src="{{asset('js/datatable/jquery-3.5.1.js')}}"></script>
+    <script src="{{asset('js/jquery-ui.min.js')}}"></script>
+    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
+    <script type="text/javascript" src="{{asset('countdowntimer/src/js/jQuery.countdownTimer.js')}}"></script>
+    <script src="{{asset('js/lightbox.js')}}"></script>
+    <script src="{{asset('materialize-css/js/materialize.min.js')}}"></script>
+    <script src="{{ asset('js/vue.min.js') }}"></script>
+    
+
+    <link href="{{ asset('fontawesome/css/all.css') }}" rel="stylesheet"> <!-- font-awesome -->
+    <link rel="stylesheet" type="text/css" href="{{asset('countdowntimer/src/css/jQuery.countdownTimer.css')}}" />
+    <link rel="stylesheet" href="{{asset('css/material-icons.css')}}">
+    <link rel="stylesheet" charset="utf-8" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" charset="utf-8" href="{{asset('materialize-css/css/materialize.min.css')}}">
     <link rel="stylesheet" href="{{ asset('css/datatable/jquery.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/datatable/buttons.dataTables.min.css') }}">
     <link rel="stylesheet"  href="{{asset('css/lightbox.css')}}"/>
@@ -64,7 +64,7 @@
         
     </div>
     @include('sweetalert::alert')
-    {{-- <script type="text/javascript" src="{{asset('js/app.js')}}"></script> --}}
+    <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
     <script>
         function checkScreenSize() {
             let window_size = parseInt($(window).width());

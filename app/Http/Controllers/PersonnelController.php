@@ -143,7 +143,6 @@ class PersonnelController extends Controller
             'step' => 'required|numeric',
             'service_number' => 'required|numeric',
             'dofa' => 'required|date',
-            'doc' => 'required|date',
             'dopa' => 'required|date',
             'command' => 'required|string'
         ]);
@@ -162,6 +161,7 @@ class PersonnelController extends Controller
             // $image->storeAs('public/documents/'.$request->service_number.'/passport/', $image->getClientOriginalName());
         }
         $formation_name = Formation::where('id', $request->command)->first('formation')->formation;
+        $rank = Rank::where('cadre', $request->cadre)->where('gl', $request->gl)->first();
         $personnel = User::create([
             'username' => $request->service_number,
             'name' => $request->name,
@@ -178,7 +178,11 @@ class PersonnelController extends Controller
             'permanent_address' => $request->permanent_address,
             'phone_number' => $request->phone_number,
             'email' => $request->email,
+            'cadre' => $request->cadre,
+            'gl' => $request->gl,
             'step' => $request->step,
+            'rank_full' => $rank->full_title,
+            'rank_short' => $rank->short_title,
             'service_number' => $request->service_number,
             'password' => Hash::make($request->service_number.$request->phone),
             'dofa' => $request->dofa,

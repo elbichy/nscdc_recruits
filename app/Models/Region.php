@@ -12,7 +12,7 @@ class Region extends Model
     ];
 
     public function states(){
-        return $this->hasMany('App\State', 'region_id');
+        return $this->hasMany('App\Models\State', 'region_id');
     }
 
 }

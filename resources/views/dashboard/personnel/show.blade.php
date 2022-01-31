@@ -118,6 +118,24 @@
 										<p>{{ $personnel->blood_group != null ? strtoupper($personnel->blood_group) : 'N/A' }}</p>
 									</div>
 								</div>
+								<div class="col s12 l3">
+									<div class="detailWrap">
+										<h6>Genotype</h6>
+										<p>{{ $personnel->gynotype != null ? strtoupper($personnel->gynotype) : 'N/A' }}</p>
+									</div>
+								</div>
+								<div class="col s12 l2">
+									<div class="detailWrap">
+										<h6>Height</h6>
+										<p>{{ $personnel->height != null ? strtoupper($personnel->height) : 'N/A' }}</p>
+									</div>
+								</div>
+								<div class="col s12 l2">
+									<div class="detailWrap">
+										<h6>Weight</h6>
+										<p>{{ $personnel->weight != null ? strtoupper($personnel->weight) : 'N/A' }}</p>
+									</div>
+								</div>
 								
 								<div class="col s12 l3">
 									<div class="detailWrap">
@@ -125,10 +143,16 @@
 										<p>{{ $personnel->marital_status != null ? ucfirst($personnel->marital_status) : 'N/A' }}</p>
 									</div>
 								</div>
-								<div class="col s12 l7">
+								<div class="col s12">
 									<div class="detailWrap">
 										<h6>Residential address</h6>
 										<p>{{ $personnel->residential_address !== null ? ucwords($personnel->residential_address) : 'N/A' }}</p>
+									</div>
+								</div>
+								<div class="col s12">
+									<div class="detailWrap">
+										<h6>Permanent address</h6>
+										<p>{{ $personnel->permanent_address !== null ? ucwords($personnel->permanent_address) : 'N/A' }}</p>
 									</div>
 								</div>
 								<div class="col s12 l3">
@@ -313,20 +337,20 @@
 							</form>
 							{{-- @hasanyrole --}}
 
-							{{-- @canany(['isGlobalAdmin', 'isStateAdmin']) --}}
-							{{-- <a href="{{ route('personnel_edit', $personnel->id) }}" class="edit waves-effect waves-light btn"><i class="fal fa-user-edit"></i> EDIT RECORD</a> --}}
-							{{-- @endcanany --}}
-							{{-- @canany(['isGlobalAdmin']) --}}
-							{{-- <a href="#" class="delete waves-effect waves-light btn"><i class="fal fa-user-times"></i> DELETE RECORD</a> --}}
-							 {{-- DELETE PERSONNEL FORM --}}
+							@canany(['isGlobalAdmin', 'isStateAdmin'])
+							<a href="{{ route('personnel_edit', $personnel->id) }}" class="edit waves-effect waves-light btn"><i class="fal fa-user-edit"></i> EDIT RECORD</a>
+							@endcanany
+							@canany(['isGlobalAdmin'])
+							<a href="#" class="delete waves-effect waves-light btn"><i class="fal fa-user-times"></i> DELETE RECORD</a>
+							{{-- DELETE PERSONNEL FORM --}}
 							 <form action="{{ route('personnel_delete', $personnel->id) }}" method="post" id="deletePersonnel">
 								@method('delete')
 								@csrf
 							</form>
-							{{-- @endcanany --}}
-							{{-- @canany(['isGlobalAdmin', 'isStateAdmin']) --}}
-							{{-- <a href="#" class="changePassword waves-effect waves-light btn blue darken-4"><i class="fal fa-key"></i>Edit Password</a> --}}
-							{{-- @endcanany --}}
+							@endcanany
+							@canany(['isGlobalAdmin', 'isStateAdmin'])
+							<a href="#" class="changePassword waves-effect waves-light btn blue darken-4"><i class="fal fa-key"></i>Edit Password</a>
+							@endcanany
 							
 						</div>
 					</div>
@@ -1195,282 +1219,282 @@
 @endsection
 
 @push('scripts')
-	@if ($errors->any())
-    <script>
-        $(function() {
-            $('.changePassModal').modal('open');
-        });
-    </script>
-	@endif
-	
-    <script>
-		lightbox.option({
-			'resizeDuration': 200,
-			'wrapAround': true,
-			'fitImagesInViewport': true,
-			'maxHeight': 800,
-			'disableScrolling': false,
+@if ($errors->any())
+<script>
+	$(function() {
+		$('.changePassModal').modal('open');
+	});
+</script>
+@endif
+
+<script>
+	lightbox.option({
+		'resizeDuration': 200,
+		'wrapAround': true,
+		'fitImagesInViewport': true,
+		'maxHeight': 800,
+		'disableScrolling': false,
+	});
+	$(function() {
+
+		$("#label_timer").countdowntimer({
+			dateAndTime : "{{ $ttr }}",
+			labelsFormat : true,
+			displayFormat : "YODHMS",
+			borderColor : "#0e75a7",
+			fontColor : "#FFFFFF",
+			backgroundColor : "#164f6b",
+			size : "xl",
 		});
-        $(function() {
 
-			$("#label_timer").countdowntimer({
-				dateAndTime : "{{ $ttr }}",
-				labelsFormat : true,
-				displayFormat : "YODHMS",
-				borderColor : "#0e75a7",
-				fontColor : "#FFFFFF",
-				backgroundColor : "#164f6b",
-				size : "xl",
-			});
+		$('.fixed-action-btn').floatingActionButton({
+			direction: 'left'
+		});
+		
 
-			$('.fixed-action-btn').floatingActionButton({
-				direction: 'left'
-			});
+		// $('.dofa_datepicker').datepicker({
+		// 	container: 'body',
+		// 	format: 'yyyy-mm-dd',
+		// 	yearRange: [2004, (new Date).getFullYear()]
+		// });
+
+		// COMMANDS
+		$('input.autocomplete_commands').autocomplete({
+			data: {
+				'National Headquarters' : null,
+				'Abia State Command' : null,
+				'Adamawa State Command' : null,
+				'Akwa-ibom State Command' : null,
+				'Anambra State Command' : null,
+				'Bauchi State Command' : null,
+				'Bayelsa State Command' : null,
+				'Benue State Command' : null,
+				'Borno State Command' : null,
+				'Cross-river State Command' : null,
+				'Delta State Command' : null,
+				'Ebonyi State Command' : null,
+				'Edo State Command' : null,
+				'Ekiti State Command' : null,
+				'Enugu State Command' : null,
+				'FCT Command' : null,
+				'Gombe State Command' : null,
+				'Imo State Command' : null,
+				'Jigawa State Command' : null,
+				'Kaduna State Command' : null,
+				'Kano State Command' : null,
+				'Katsina State Command' : null,
+				'Kebbi State Command' : null,
+				'Kogi State Command' : null,
+				'Kwara State Command' : null,
+				'Lagos State Command' : null,
+				'Nasarawa State Command' : null,
+				'Niger State Command' : null,
+				'Ogun State Command' : null,
+				'Ondo State Command' : null,
+				'Osun State Command' : null,
+				'Oyo State Command' : null,
+				'Plateau State Command' : null,
+				'Rivers State Command' : null,
+				'Sokoto State Command' : null,
+				'Taraba State Command' : null,
+				'Yobe State Command' : null,
+				'Zamfara State Command' : null,
+				'Zone A HQ, Lagos' : null,
+				'Zone B HQ, Kaduna' : null,
+				'Zone C HQ, Bauchi' : null,
+				'Zone D HQ, Minna' : null,
+				'Zone E HQ, Oweri' : null,
+				'Zone F HQ, Abeokuta' : null,
+				'Zone G HQ, Benin' : null,
+				'Zone H HQ, Makurdi' : null,
+				'College of Security Management, Abeokuta' : null,
+				'College of Peace, Conflic Resolution &Desaster Management, Katsina' : null,
+				'Civil Defence Academy, Sauka' : null,
+				'Education Liason Office Ibadan' : null
+			},
+		});
+		
+		// QUALIFICATIONS
+		$('input.autocomplete_qualifications').autocomplete({
+			data: {
+				'FSLC' : null,
+				'SSCE' : null,
+				'WAEC' : null,
+				'NECO' : null,
+				'B.Sc' : null,
+				'M.Sc' : null,
+				'PGD' : null,
+				'NCE' : null,
+				'DIPLOMA' : null,
+				'ND' : null,
+				'HND' : null,
+				'RN' : null,
+				'RM' : null,
+			},
+		});
+
+		// PASSPORT UPLOAD
+		$('#passport_upload').submit(function(){
+			$('.upload_file').html(`Uploading <i class="fas fa-circle-notch fa-spin"></i>`);
+		});
+
+		// DOCS UPLOAD
+		$('#document_upload').submit(function(){
+			$('.document_upload').html(`Uploading <i class="fas fa-circle-notch fa-spin"></i>`);
+		});
+		
+		//DELETE PERSONNEL
+		$(document).on('click', '.deletePersonnel', function(event) {
+			event.preventDefault();
+			$('.deletePersonnelModal').modal('open');
+		});
+		
+		//EDIT PASSWORD 
+		$(document).on('click', '.changePassword', function(event) {
+			event.preventDefault();
+			$('.changePassModal').modal('open');
+		});
+		$('#change_pass_form').submit(function(){
+			$('.submit_pass').html(`Updating record...`);
+		});
+
+
+
+		//NEXT OF KIN UPDATE/DELETE 
+		$(document).on('click', '.edit_nok', function(event) {
+			event.preventDefault();
 			
+			let relationship = this.dataset.nok_relationship == '' ? 'promotion' : this.dataset.nok_relationship;
+			$('#edit_nok_form').prop('action', `/administration/dashboard/personnel/nok/${this.dataset.nok_id}/update`);
+			$('#nok_name').prop('value', `${this.dataset.nok_name}`);
+			$('#relationship option[value='+relationship+']').prop('selected', true);
+			$('#nok_phone').prop('value', `${this.dataset.nok_phone}`);
+			$('.nokModal').modal('open');
+		});
+		$('#nok_form').submit(function(){
+			$('.submit_nok').html(`Adding record...`);
+		});
+		$('.delete_nok').click(function(event){
+			event.preventDefault();
+			if(confirm("Are you sure you want to delete this record?")){
+				event.currentTarget.nextElementSibling.submit();
+			}
+		});
 
-			// $('.dofa_datepicker').datepicker({
-			// 	container: 'body',
-			// 	format: 'yyyy-mm-dd',
-			// 	yearRange: [2004, (new Date).getFullYear()]
-			// });
 
-			// COMMANDS
-			$('input.autocomplete_commands').autocomplete({
-				data: {
-					'National Headquarters' : null,
-					'Abia State Command' : null,
-					'Adamawa State Command' : null,
-					'Akwa-ibom State Command' : null,
-					'Anambra State Command' : null,
-					'Bauchi State Command' : null,
-					'Bayelsa State Command' : null,
-					'Benue State Command' : null,
-					'Borno State Command' : null,
-					'Cross-river State Command' : null,
-					'Delta State Command' : null,
-					'Ebonyi State Command' : null,
-					'Edo State Command' : null,
-					'Ekiti State Command' : null,
-					'Enugu State Command' : null,
-					'FCT Command' : null,
-					'Gombe State Command' : null,
-					'Imo State Command' : null,
-					'Jigawa State Command' : null,
-					'Kaduna State Command' : null,
-					'Kano State Command' : null,
-					'Katsina State Command' : null,
-					'Kebbi State Command' : null,
-					'Kogi State Command' : null,
-					'Kwara State Command' : null,
-					'Lagos State Command' : null,
-					'Nasarawa State Command' : null,
-					'Niger State Command' : null,
-					'Ogun State Command' : null,
-					'Ondo State Command' : null,
-					'Osun State Command' : null,
-					'Oyo State Command' : null,
-					'Plateau State Command' : null,
-					'Rivers State Command' : null,
-					'Sokoto State Command' : null,
-					'Taraba State Command' : null,
-					'Yobe State Command' : null,
-					'Zamfara State Command' : null,
-					'Zone A HQ, Lagos' : null,
-					'Zone B HQ, Kaduna' : null,
-					'Zone C HQ, Bauchi' : null,
-					'Zone D HQ, Minna' : null,
-					'Zone E HQ, Oweri' : null,
-					'Zone F HQ, Abeokuta' : null,
-					'Zone G HQ, Benin' : null,
-					'Zone H HQ, Makurdi' : null,
-					'College of Security Management, Abeokuta' : null,
-					'College of Peace, Conflic Resolution &Desaster Management, Katsina' : null,
-					'Civil Defence Academy, Sauka' : null,
-					'Education Liason Office Ibadan' : null
-				},
-			});
-			
-			// QUALIFICATIONS
-			$('input.autocomplete_qualifications').autocomplete({
-				data: {
-					'FSLC' : null,
-					'SSCE' : null,
-					'WAEC' : null,
-					'NECO' : null,
-					'B.Sc' : null,
-					'M.Sc' : null,
-					'PGD' : null,
-					'NCE' : null,
-					'DIPLOMA' : null,
-					'ND' : null,
-					'HND' : null,
-					'RN' : null,
-					'RM' : null,
-				},
-			});
+		// QUALIFICATION UPDATE/DELETE
+		$(document).on('click', '.edit_qualification', function(event) {
+			event.preventDefault();
+			// $(this).prop('disabled', true).html('Adding record...');\
+			// this.dataset.qual_id
+			$('#edit_qual_form').prop('action', `/administration/dashboard/personnel/qualification/${this.dataset.qual_id}/update`);
+			$('#qualification').prop('value', `${this.dataset.qual_qual}`);
+			$('#institution').prop('value', `${this.dataset.qual_inst}`);
+			$('#year_obtained').prop('value', `${this.dataset.qual_yr}`);
+			$('.qualModal').modal('open');
+		});
+		$('#qualification_form').submit(function(){
+			$('.submit_qualification').html(`Adding record...`);
+		});
+		$('.delete_qualification').click(function(event){
+			event.preventDefault();
+			if(confirm("Are you sure you want to delete this record?")){
+				event.currentTarget.nextElementSibling.submit();
+			}
+		});
+		
 
-			// PASSPORT UPLOAD
-			$('#passport_upload').submit(function(){
-				$('.upload_file').html(`Uploading <i class="fas fa-circle-notch fa-spin"></i>`);
-			});
+		// DEPLOYMENT UPDATE/DELETE
+		$(document).on('click', '.edit_deployment', function(event) {
+			event.preventDefault();
+			// $(this).prop('disabled', true).html('Adding record...');\
+			// this.dataset.qual_id
+			$('#edit_deploy_form').prop('action', `/administration/dashboard/personnel/deployment/${this.dataset.deploy_id}/update`);
 
-			// DOCS UPLOAD
-			$('#document_upload').submit(function(){
-				$('.document_upload').html(`Uploading <i class="fas fa-circle-notch fa-spin"></i>`);
-			});
-			
-			//DELETE PERSONNEL
-			$(document).on('click', '.deletePersonnel', function(event) {
-				event.preventDefault();
-				$('.deletePersonnelModal').modal('open');
-            });
-			
-			//EDIT PASSWORD 
-			$(document).on('click', '.changePassword', function(event) {
-				event.preventDefault();
-				$('.changePassModal').modal('open');
-            });
-			$('#change_pass_form').submit(function(){
-				$('.submit_pass').html(`Updating record...`);
-			});
+			let cmnd = this.dataset.deploy_cmnd == '' ? '1' : this.dataset.deploy_cmnd;
+			// console.log(cmnd);
+			$('.command').prop('value', `${this.dataset.deploy_cmnd}`);
+			$('#command option[value='+cmnd+']').prop('selected', true);
+
+			$('#department').prop('value', `${this.dataset.deploy_dept}`);
+			$('#designation').prop('value', `${this.dataset.deploy_desig}`);
+			$('#from').prop('value', `${this.dataset.deploy_from}`);
+			$('#to').prop('value', `${this.dataset.deploy_to}`);
+			$('.deployModal').modal('open');
+		});
+		$('#deployment_form').submit(function(){
+			$('.submit_deployment').html(`Adding record...`);
+		});
+		$('.delete_deployment').click(function(event){
+			event.preventDefault();
+			if(confirm("Are you sure you want to delete this record?")){
+				event.currentTarget.nextElementSibling.submit();
+			}
+		});
+		
+
+		// PROGRESSION UPDATE/DELETE
+		$(document).on('click', '.edit_progression', function(event) {
+			event.preventDefault();
+			// $(this).prop('disabled', true).html('Adding record...');\
+			// this.dataset.qual_id
+			// console.log(this.dataset.progress_type);
+			let type = this.dataset.progress_type == '' ? 'promotion' : this.dataset.progress_type;
+			$('#edit_progress_form').prop('action', `/administration/dashboard/personnel/progression/${this.dataset.progress_id}/update`);
+			$('#type option[value='+type+']').prop('selected', true);
+			$('#cadre option[value='+`${this.dataset.progress_cadre}`+']').prop('selected', true);
+			$('#gl option[value='+`${this.dataset.progress_gl}`+']').prop('selected', true);
+			$('#effective_date').prop('value', `${this.dataset.progress_effective_date}`);
+			$('.progressModal').modal('open');
+		});
+		$('#progression_form').submit(function(){
+			$('.submit_progression').html(`Adding record...`);
+		});
+		$('.delete_progression').click(function(event){
+			event.preventDefault();
+			if(confirm("Are you sure you want to delete this record?")){
+				event.currentTarget.nextElementSibling.submit();
+			}
+		});
 
 
 
-			//NEXT OF KIN UPDATE/DELETE 
-			$(document).on('click', '.edit_nok', function(event) {
-				event.preventDefault();
-				
-				let relationship = this.dataset.nok_relationship == '' ? 'promotion' : this.dataset.nok_relationship;
-				$('#edit_nok_form').prop('action', `/administration/dashboard/personnel/nok/${this.dataset.nok_id}/update`);
-				$('#nok_name').prop('value', `${this.dataset.nok_name}`);
-				$('#relationship option[value='+relationship+']').prop('selected', true);
-				$('#nok_phone').prop('value', `${this.dataset.nok_phone}`);
-				$('.nokModal').modal('open');
-            });
-			$('#nok_form').submit(function(){
-				$('.submit_nok').html(`Adding record...`);
-			});
-			$('.delete_nok').click(function(event){
-				event.preventDefault();
-				if(confirm("Are you sure you want to delete this record?")){
-					event.currentTarget.nextElementSibling.submit();
-				}
-			});
+		$('.deleteDocument').click(function(event){
+			event.preventDefault();
+			if(confirm("Are you sure you want to delete document?")){
+				event.currentTarget.nextElementSibling.submit();
+			}
+		});
 
-
-			// QUALIFICATION UPDATE/DELETE
-			$(document).on('click', '.edit_qualification', function(event) {
-				event.preventDefault();
-                // $(this).prop('disabled', true).html('Adding record...');\
-				// this.dataset.qual_id
-				$('#edit_qual_form').prop('action', `/administration/dashboard/personnel/qualification/${this.dataset.qual_id}/update`);
-				$('#qualification').prop('value', `${this.dataset.qual_qual}`);
-				$('#institution').prop('value', `${this.dataset.qual_inst}`);
-				$('#year_obtained').prop('value', `${this.dataset.qual_yr}`);
-                $('.qualModal').modal('open');
-            });
-			$('#qualification_form').submit(function(){
-				$('.submit_qualification').html(`Adding record...`);
-			});
-			$('.delete_qualification').click(function(event){
-				event.preventDefault();
-				if(confirm("Are you sure you want to delete this record?")){
-					event.currentTarget.nextElementSibling.submit();
-				}
-			});
-			
-
-			// DEPLOYMENT UPDATE/DELETE
-			$(document).on('click', '.edit_deployment', function(event) {
-				event.preventDefault();
-                // $(this).prop('disabled', true).html('Adding record...');\
-				// this.dataset.qual_id
-				$('#edit_deploy_form').prop('action', `/administration/dashboard/personnel/deployment/${this.dataset.deploy_id}/update`);
-
-				let cmnd = this.dataset.deploy_cmnd == '' ? '1' : this.dataset.deploy_cmnd;
-				// console.log(cmnd);
-				$('.command').prop('value', `${this.dataset.deploy_cmnd}`);
-				$('#command option[value='+cmnd+']').prop('selected', true);
-
-				$('#department').prop('value', `${this.dataset.deploy_dept}`);
-				$('#designation').prop('value', `${this.dataset.deploy_desig}`);
-				$('#from').prop('value', `${this.dataset.deploy_from}`);
-				$('#to').prop('value', `${this.dataset.deploy_to}`);
-                $('.deployModal').modal('open');
-            });
-			$('#deployment_form').submit(function(){
-				$('.submit_deployment').html(`Adding record...`);
-			});
-			$('.delete_deployment').click(function(event){
-				event.preventDefault();
-				if(confirm("Are you sure you want to delete this record?")){
-					event.currentTarget.nextElementSibling.submit();
-				}
-			});
-			
-
-			// PROGRESSION UPDATE/DELETE
-			$(document).on('click', '.edit_progression', function(event) {
-				event.preventDefault();
-                // $(this).prop('disabled', true).html('Adding record...');\
-				// this.dataset.qual_id
-				// console.log(this.dataset.progress_type);
-				let type = this.dataset.progress_type == '' ? 'promotion' : this.dataset.progress_type;
-				$('#edit_progress_form').prop('action', `/administration/dashboard/personnel/progression/${this.dataset.progress_id}/update`);
-				$('#type option[value='+type+']').prop('selected', true);
-				$('#cadre option[value='+`${this.dataset.progress_cadre}`+']').prop('selected', true);
-				$('#gl option[value='+`${this.dataset.progress_gl}`+']').prop('selected', true);
-				$('#effective_date').prop('value', `${this.dataset.progress_effective_date}`);
-                $('.progressModal').modal('open');
-            });
-			$('#progression_form').submit(function(){
-				$('.submit_progression').html(`Adding record...`);
-			});
-			$('.delete_progression').click(function(event){
-				event.preventDefault();
-				if(confirm("Are you sure you want to delete this record?")){
-					event.currentTarget.nextElementSibling.submit();
-				}
-			});
-
-
-
-			$('.deleteDocument').click(function(event){
-				event.preventDefault();
-				if(confirm("Are you sure you want to delete document?")){
-					event.currentTarget.nextElementSibling.submit();
-				}
-			});
-
-			// LOAD LGAs AFTER SELECTING STATE OF ORIGIN
-			$('#soo').change(function() {
-				let stateSelected = $(this).val();
-				// GET ALL LOCAL GOVERNMENT AREAS IN NIGERIA
-				axios.get(`${base_url}/get-lgoo/${stateSelected}`)
-					.then(function(response) {
-						// console.log(response.data);
-						let lgaArray = response.data;
-						$('#lgoo').html('<option value="" disabled selected>Choose your option</option>');
-						lgaArray.map(function(lga) {
-							$(`<option value="${lga.id}">${lga.lg_name}</option>`).appendTo('#lgoo');
-						});
-					})
-					.catch(function(error) {
-						// handle error
-						console.log(error.data);
-					})
-					.finally(function() {
-						// always executed
+		// LOAD LGAs AFTER SELECTING STATE OF ORIGIN
+		$('#soo').change(function() {
+			let stateSelected = $(this).val();
+			// GET ALL LOCAL GOVERNMENT AREAS IN NIGERIA
+			axios.get(`${base_url}/get-lgoo/${stateSelected}`)
+				.then(function(response) {
+					// console.log(response.data);
+					let lgaArray = response.data;
+					$('#lgoo').html('<option value="" disabled selected>Choose your option</option>');
+					lgaArray.map(function(lga) {
+						$(`<option value="${lga.id}">${lga.lg_name}</option>`).appendTo('#lgoo');
 					});
-			});
+				})
+				.catch(function(error) {
+					// handle error
+					console.log(error.data);
+				})
+				.finally(function() {
+					// always executed
+				});
+		});
 
-			// $('.deletePersonnel').click(function(event){
-			// 	event.preventDefault();
-			// 	if(confirm("Are you sure you want to delete personnel?")){
-			// 		$('#deletePersonnel').submit();
-			// 	}
-			// });
-			
-        });
-    </script>
+		// $('.deletePersonnel').click(function(event){
+		// 	event.preventDefault();
+		// 	if(confirm("Are you sure you want to delete personnel?")){
+		// 		$('#deletePersonnel').submit();
+		// 	}
+		// });
+		
+	});
+</script>
 @endpush

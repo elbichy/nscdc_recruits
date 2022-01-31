@@ -1,4 +1,4 @@
-@extends('administration.layouts.app', ['title' => 'Add New Records'])
+@extends('layouts.app', ['title' => 'Add New Records'])
 
 @section('content')
     <div class="my-content-wrapper">
