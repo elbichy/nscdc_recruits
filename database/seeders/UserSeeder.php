@@ -28,7 +28,10 @@ class UserSeeder extends Seeder
             array('id' => '3','formation_id' => '1','user_id' => '1','command' => 'National Headquarters','department' => 'ICT Unit','designation' => 'Web Developer','from' => '2017-05-15','to' => '2019-08-21','created_at' => '2021-03-14 07:33:40','updated_at' => '2021-03-14 07:33:40')
         );
         $formation_user2 = array(
-            array('id' => '1','formation_id' => '1','user_id' => '2','command' => 'National Headquarters','department' => 'Procurement','designation' => 'Secretary','from' => '2019-08-21','to' => '2021-03-14','created_at' => '2021-03-13 19:45:21','updated_at' => '2021-03-14 07:21:32'),
+            array('id' => '4','formation_id' => '1','user_id' => '2','command' => 'National Headquarters','department' => 'Procurement','designation' => 'Secretary','from' => '2019-08-21','to' => '2021-03-14','created_at' => '2021-03-13 19:45:21','updated_at' => '2021-03-14 07:21:32'),
+        );
+        $formation_user3 = array(
+            array('id' => '5','formation_id' => '1','user_id' => '3','command' => 'National Headquarters','department' => 'PRS','designation' => 'Secretary','from' => '2019-08-21','to' => '2021-03-14','created_at' => '2021-03-13 19:45:21','updated_at' => '2021-03-14 07:21:32'),
         );
 
         $qualifications = array(
@@ -127,36 +130,86 @@ class UserSeeder extends Seeder
             'specialization' => 'Database Administrator'
         ]);
 
+        User::insert([
+            'name' => 'Oyibo Jonah Uruemuohwo',
+            'username' => '14141',
+            'email' => 'oj@gmail.com',
+            'email_verified_at' => NULL,
+            'password' => Hash::make('08033633470'),
+            'remember_token' => NULL,
+            'blood_group' => 'a+',
+            'marital_status' => 'single',
+            'dob' => '1992-01-27',
+            'sex' => 'male',
+            'soo' => '20',
+            'lgoo' => '374',
+            'phone_number' => '08033633470',
+            'residential_address' => '',
+            'service_number' => 14141,
+            'cadre' => 'superintendent',
+            'gl' => '9',
+            'step' => '4',
+            'rank_full' => 'Deputy Superintendent of Corps',
+            'rank_short' => 'DSC',
+            'dofa' => '2015-12-22',
+            'doc' => '2015-01-01',
+            'dopa' => '2018-01-01',
+            'paypoint' => 'National Headquarters',
+            'salary_structure' => 'conpass',
+            'bank' => 'Standard Chatered Bank',
+            'account_number' => '0001680036',
+            'bvn' => '22170422895',
+            'ippis_number' => 'CD54545554',
+            'nin_number' => '44825576415',
+            'nhis_number' => '01642155',
+            'nhf' => NULL,
+            'pfa' => 'Premium Pension Limited',
+            'pen_number' => '100345454545',
+            'current_formation' => 'National Headquarters',
+            'current_department' => 'N/A',
+            'specialization' => 'Database Administrator'
+        ]);
+
    
 
         $user1 = User::where('service_number', 66818)->first();
         $user2 = User::where('service_number', 36024)->first();
+        $user3 = User::where('service_number', 14141)->first();
 
         foreach ($formation_user1 as $key => $deployment) {
+            FormationUser::insert($deployment);
+        }
+        foreach ($formation_user2 as $key => $deployment) {
+            FormationUser::insert($deployment);
+        }
+        foreach ($formation_user3 as $key => $deployment) {
             FormationUser::insert($deployment);
         }
 
         foreach ($qualifications as $key => $qualification) {
             Qualification::insert($qualification);
         }
-        
         foreach ($progressions as $key => $progression) {
             Progression::insert($progression);
         }
-
         foreach ($noks as $key => $nok) {
             Nok::insert($nok);
         }
 
-        $role = Role::create(['name' => 'super admin']);
-        $permission = Permission::create(['name' => 'all privilages']);
-        $role->givePermissionTo($permission);
+        $permission1 = Permission::create(['name' => 'manage appointment']);
+        $permission2 = Permission::create(['name' => 'manage personnel']);
 
-        $role2 = Role::create(['name' => 'state admin']);
-        $permission2 = Permission::create(['name' => 'create', 'name'=>'update']);
-        $role2->givePermissionTo($permission2);
+        $sa = Role::create(['name' => 'super admin']);
+        $am = Role::create(['name' => 'appointment manager']);
+        $pm = Role::create(['name' => 'personnel manager']);
+        
+        $sa->givePermissionTo($permission1);
+        $sa->givePermissionTo($permission2);
+        $am->givePermissionTo($permission1);
+        $pm->givePermissionTo($permission2);
 
-        $user1->assignRole('super admin');
-        $user2->assignRole('super admin');
+        $user1->assignRole($sa);
+        $user2->assignRole($am);
+        $user3->assignRole($pm);
     }
 }

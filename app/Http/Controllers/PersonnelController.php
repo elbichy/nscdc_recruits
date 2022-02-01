@@ -2,44 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Candidate;
-use App\Charts\FormationChart;
-use App\Charts\GenderChart;
-use App\Charts\MaritalStatusChart;
-use App\Charts\RankChart;
-use App\Conversion;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-// use Alert;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Models\Deployment;
-use App\Models\Nok;
 use App\Models\Document;
-use App\Exports\UsersExport;
 use App\Models\Formation;
 use App\Models\Lga;
-use App\Models\Promotion;
-use App\Models\Qualification;
 use App\Models\Rank;
-use App\Models\Redeployment;
-use App\Models\Region;
 use App\Models\State;
 use Illuminate\Support\Facades\Storage;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Session;
-use Maatwebsite\Excel\Facades\Excel;
-use Spatie\QueryBuilder;
-use Spatie\QueryBuilder\QueryBuilder as QueryBuilderQueryBuilder;
-use Spatie\QueryBuilder\AllowedFilter;
-use PDF;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class PersonnelController extends Controller
 {
@@ -47,7 +22,7 @@ class PersonnelController extends Controller
     // CONSTRUCTOR
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth']);
     }
 
 
@@ -513,6 +488,10 @@ class PersonnelController extends Controller
     // EDIT A PERSONNEL
     public function edit($user)
     {
+        if($user != auth()->user()->id && !auth()->user()->hasPermissionTo('manage personnel')){
+            return back();
+        }
+
         $personnel = User::where('id', $user)->with(['formations' => function($query){
             $query->latest()->first();
         }])->first();

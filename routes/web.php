@@ -36,8 +36,8 @@ Route::group(['prefix' => 'dashboard'], function (){
 	// PERSONNEL
 	Route::group(['prefix' => 'personnel'], function () {
 		Route::get('/', [PersonnelController::class, 'index'])->name('personnel_all');
-		Route::get('/new', [PersonnelController::class, 'create'])->name('personnel_create');
-		Route::get('/all', [PersonnelController::class, 'index'])->name('personnel_all');
+		Route::get('/new', [PersonnelController::class, 'create'])->name('personnel_create')->middleware(['role:super admin|personnel manager']);
+		Route::get('/all', [PersonnelController::class, 'index'])->name('personnel_all')->middleware(['role:super admin|personnel manager']);
 		Route::get('/get_all', [PersonnelController::class, 'get_all'])->name('personnel_get_all');
 		
 		Route::get('/{user}', [PersonnelController::class, 'show'])->name('personnel_show');
@@ -52,7 +52,7 @@ Route::group(['prefix' => 'dashboard'], function (){
 		Route::post('/delete', [PersonnelController::class, 'destroy'])->name('personnel_delete');
 		
 		Route::group(['prefix' => 'import'], function () {
-			Route::get('/data', [PersonnelController::class, 'import_data'])->name('import_data');
+			Route::get('/data', [PersonnelController::class, 'import_data'])->name('import_data')->middleware(['role:super admin|personnel manager']);
 			Route::post('/users/store', [PersonnelController::class, 'store_imported_users'])->name('store_imported_users');
 		});
 
@@ -109,9 +109,10 @@ Route::group(['prefix' => 'dashboard'], function (){
 		// APPOINTMENT
 		Route::group(['prefix' => 'appointment'], function () {
 
-			Route::get('/manage', [AppointmentController::class, 'manage'])->name('manage_appointment');
+			Route::get('/', [AppointmentController::class, 'manage'])->name('manage_appointment')->middleware(['role:super admin|appointment manager']);
+			Route::get('/manage', [AppointmentController::class, 'manage'])->name('manage_appointment')->middleware(['role:super admin|appointment manager']);
 
-			Route::get('/manage/{year}', [AppointmentController::class, 'manage_appointment'])->name('manage_appointment_year');
+			Route::get('/manage/{year}', [AppointmentController::class, 'manage_appointment'])->name('manage_appointment_year')->middleware(['role:super admin|appointment manager']);
 			Route::get('/get_all/{year}/', [AppointmentController::class, 'get_all'])->name('appointment_get_list');
 
 			Route::get('/manage/edit/{appointment}', [AppointmentController::class, 'edit'])->name('appointment_edit');
@@ -123,8 +124,8 @@ Route::group(['prefix' => 'dashboard'], function (){
 			});
 
 			// // GENERATION OF LETTER
-			Route::post('/generate/letter/bulk', [AppointmentController::class, 'generate_bulk_appointment_letter'])->name('generate_bulk_appointment_letter');
-			Route::get('/generate/letter/{candidate}', [AppointmentController::class, 'generate_single_appointment_letter'])->name('generate_single_appointment_letter');
+			Route::post('/generate/letter/bulk', [AppointmentController::class, 'generate_bulk_appointment_letter'])->name('generate_bulk_appointment_letter')->middleware(['role:super admin|appointment manager']);
+			Route::get('/generate/letter/{candidate}', [AppointmentController::class, 'generate_single_appointment_letter'])->name('generate_single_appointment_letter')->middleware(['role:super admin|appointment manager']);
 		});
 
 		

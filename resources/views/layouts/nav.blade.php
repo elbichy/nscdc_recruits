@@ -22,7 +22,13 @@
 
                 {{-- <a href="/{{request()->segment(1)}}/{{request()->segment(2)}}/{{request()->segment(3)}}" class="breadcrumb">{{(request()->segment(3) == '') ? 'Dashbord' : ucfirst(request()->segment(3))}}</a> --}}
 
+                @if(request()->segment(2) != '' && request()->segment(3) == '')
+                    <a href="/{{request()->segment(1)}}/{{ request()->segment(2) }}" class="breadcrumb">{{ strtoupper(request()->segment(2)) }}</a>
+            
+                @endif
+
                 @if(request()->segment(3) != '')
+                    <a href="/{{request()->segment(1)}}/{{ request()->segment(2) }}" class="breadcrumb">{{ strtoupper(request()->segment(2)) }}</a>
                     <a href="/{{request()->segment(1)}}/{{ request()->segment(2) }}/{{request()->segment(3)}}" class="breadcrumb">{{ strtoupper(request()->segment(3)) }}</a>
                 @endif
                 
@@ -44,9 +50,7 @@
             @auth
             <!-- Dropdown Structure -->
             <ul id="dropdown1" class="dropdown-content">
-                @if (auth()->user()->service_number == 66818)
-                    <li><a href="{{ route('personnel_show', auth()->user()->id) }}"><i class="material-icons left">person</i> Profile</a></li>
-                @endif
+                <li><a href="{{ route('personnel_show', auth()->user()->id) }}"><i class="material-icons left">person</i> Profile</a></li>
                 <li class="divider"></li>
                 <li>
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -89,7 +93,7 @@
             <a href="/dashboard"><i class="fal fa-tachometer-alt fa-2x"></i>DASHBOARD</a>
         </li>
         {{-- PERSONNEL --}}
-        @if (auth()->user()->service_number == 66818)
+        @hasanyrole('super admin|personnel manager')
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
                 <li class="{{ request()->segment(2) == 'personnel' ? 'active' :  ''}}">
@@ -109,7 +113,8 @@
                 </li>
             </ul>
         </li>
-        @endif
+        @endhasanyrole
+        @hasanyrole('super admin|appointment manager')
         {{-- PROGRESSION --}}
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
@@ -128,12 +133,13 @@
             </li>
             </ul>
         </li>
-        @if (auth()->user()->service_number == 66818)
+        @endhasanyrole
+        @hasanyrole('super admin')
         {{-- SETTINGS --}}
         <li class="{{(request()->segment(2) == 'settings') ? 'active' : ''}}">
             <a style="padding:0 32px;" href="{{ route('app_settings') }}"><i class="fal fa-cog fa-2x"></i></i>APP SETTINGS</a>
         </li>
-        @endif
+        @endhasanyrole
         {{-- OTHER MENU RIGHT FOR MOBILE DEVICES --}}
         <li class="hide-on-med-and-up col s12" style="justify-self: flex-end; margin-top: auto;">
             <ul class="mobileLogout">

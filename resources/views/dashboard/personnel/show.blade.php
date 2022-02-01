@@ -158,33 +158,33 @@
 								<div class="col s6">
 									<div class="detailWrap">
 										<h6>Residential address</h6>
-										<p>{{ $personnel->residential_address !== null ? ucwords($personnel->residential_address) : 'N/A' }}</p>
+										<p>{{ $personnel->residential_address != null ? ucwords($personnel->residential_address) : 'N/A' }}</p>
 									</div>
 								</div>
 
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Place of Birth</h6>
-										<p>{{ $personnel->place_of_birth !== NULL ? ucwords($personnel->place_of_birth) : 'N/A' }}</p>
+										<p>{{ $personnel->place_of_birth != NULL ? ucwords($personnel->place_of_birth) : 'N/A' }}</p>
 									</div>
 								</div>
 								<div class="col s12 l9">
 									<div class="detailWrap">
 										<h6>Permanent address</h6>
-										<p>{{ $personnel->permanent_address !== null ? ucwords($personnel->permanent_address) : 'N/A' }}</p>
+										<p>{{ $personnel->permanent_address != null ? ucwords($personnel->permanent_address) : 'N/A' }}</p>
 									</div>
 								</div>
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>State of origin</h6>
-										<p>{{ $state !== NULL ? ucwords($state->state_name) : 'N/A' }}</p>
+										<p>{{ $state != NULL ? ucwords($state->state_name) : 'N/A' }}</p>
 									</div>
 								</div>
 
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>LGA</h6>
-										<p>{{ $lga !== NULL ? ucwords($lga->lg_name) : 'N/A' }}</p>
+										<p>{{ $lga != NULL ? ucwords($lga->lg_name) : 'N/A' }}</p>
 									</div>
 								</div>
 								<div class="col s12 l2">
@@ -341,7 +341,7 @@
 									@endif
 								@endif
 							</div>
-							{{-- @hasanyrole('super admin|state admin') --}}
+							{{-- @hasanyrole('super admin|personnel manager') --}}
 							<form action="{{ route('personnel_upload_file', $personnel->id) }}" method="POST" enctype="multipart/form-data" id="passport_upload">
 								@csrf
 									<div class="input-field col s12 l12" style="margin-bottom: 4px;">
@@ -356,21 +356,7 @@
 							</form>
 							{{-- @hasanyrole --}}
 
-							@canany(['isGlobalAdmin', 'isStateAdmin'])
-							<a href="{{ route('personnel_edit', $personnel->id) }}" class="edit waves-effect waves-light btn"><i class="fal fa-user-edit"></i> EDIT RECORD</a>
-							@endcanany
-							@canany(['isGlobalAdmin'])
-							<a href="#" class="delete waves-effect waves-light btn"><i class="fal fa-user-times"></i> DELETE RECORD</a>
-							{{-- DELETE PERSONNEL FORM --}}
-							 <form action="{{ route('personnel_delete', $personnel->id) }}" method="post" id="deletePersonnel">
-								@method('delete')
-								@csrf
-							</form>
-							@endcanany
-							@canany(['isGlobalAdmin', 'isStateAdmin'])
-							<a href="#" class="changePassword waves-effect waves-light btn blue darken-4"><i class="fal fa-key"></i>Edit Password</a>
-							@endcanany
-							
+					
 						</div>
 					</div>
 
@@ -490,7 +476,7 @@
 								</tbody>
 								
 							</table>
-							@hasanyrole('super admin|state admin')
+							@hasanyrole('super admin|personnel manager')
 							<form action="{{ route('personnel_store_nok', $personnel->id) }}" method="POST" class="card add_record_form" id="nok_form">
 								@csrf
 								<div class="row">
@@ -656,7 +642,7 @@
 								</tbody>
 								
 							</table>
-							@hasanyrole('super admin|state admin')
+							@hasanyrole('super admin|personnel manager')
 							<form action="{{ route('personnel_store_child', $personnel->id) }}" method="POST" class="card add_record_form" id="child_form">
 								@csrf
 								<div class="row">
@@ -836,7 +822,7 @@
 								</tbody>
 								
 							</table>
-							@hasanyrole('super admin|state admin')
+							@hasanyrole('super admin|personnel manager')
 							<form action="{{ route('personnel_store_qualification', $personnel->id) }}" method="POST" class="card add_record_form" id="qualification_form">
 								@csrf
 								<div class="row">
@@ -1042,7 +1028,7 @@
 								</tbody>
 								
 							</table>
-							@hasanyrole('super admin|state admin')
+							@hasanyrole('super admin|personnel manager')
 							<form action="{{ route('personnel_store_deployment', $personnel->id) }}" method="POST" class="card add_record_form" id="deployment_form">
 								@csrf
 								<div class="row">
@@ -1261,7 +1247,7 @@
 								</tbody>
 								
 							</table>
-							@hasanyrole('super admin|state admin')
+							@hasanyrole('super admin|personnel manager')
 							<form action="{{ route('personnel_store_progression', $personnel->id) }}" method="POST" class="card add_record_form" id="progression_form">
 								@csrf
 								<div class="row">
@@ -1358,7 +1344,7 @@
 							@if(!$personnel->documents->isEmpty())
 								@foreach($personnel->documents as $document)
 									<ul>
-										@hasanyrole('super admin|state admin')
+										@hasanyrole('super admin|personnel manager')
 										<a href="#" class="deleteDocument" id="delete"><i class="tiny material-icons">close</i></a>
 										@endhasanyrole
 										{{-- DELETE DOCUMENT FORM --}}
@@ -1389,7 +1375,7 @@
 								</tr>
 							@endif
 						</div>
-						@hasanyrole('super admin|state admin')
+						@hasanyrole('super admin|personnel manager')
 						<div class="table_form_wrapper">
 							<form action="{{ route('personnel_upload_file', $personnel->id) }}" method="POST" class="card add_record_form" enctype="multipart/form-data" id="document_upload">
 								@csrf
@@ -1418,10 +1404,10 @@
 							<li><a href="{{ route('personnel_ros', $personnel->id) }}" title="Print Record of Service" class="btn-floating green"><i style="font-size: 1.33333em;" class="fas fa-print fa-lg"></i></a></li>
 
 							<li><a class="changePassword btn-floating purple" title="Change Password"><i style="font-size: 1.33333em;" class="fas fa-key fa-lg"></i></a></li>
-							@hasanyrole('super admin|state admin')
+							@hasanyrole('super admin|personnel manager')
 							<li><a href="{{ route('personnel_edit', $personnel->id) }}" title="Edit Records" class="btn-floating blue"><i style="font-size: 1.33333em;" class="fas fa-user-edit fa-lg"></i></a></li>
 							@endhasanyrole
-							@hasanyrole('super admin')
+							@hasanyrole('super admin|personnel manager')
 							<li><a class="deletePersonnel btn-floating red" title="Delete Personnel"><i style="font-size: 1.33333em;" class="fas fa-user-minus fa-lg"></i></a></li>
 							@endhasanyrole
 						</ul>
