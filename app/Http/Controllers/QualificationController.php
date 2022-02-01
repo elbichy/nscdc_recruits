@@ -47,9 +47,7 @@ class QualificationController extends Controller
     {
         $validation = $request->validate([
             'qualification' => 'required',
-            'course' => 'required',
             'institution' => 'required',
-            'grade' => 'required',
             'year_commenced' => 'required',
             'year_obtained' => 'required'
         ]);
