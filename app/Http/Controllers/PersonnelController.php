@@ -119,8 +119,10 @@ class PersonnelController extends Controller
             'service_number' => 'required|numeric',
             'dofa' => 'required|date',
             'dopa' => 'required|date',
+            'email' => 'required|email',
             'command' => 'required|string'
         ]);
+
         $image_name = NULL;
         if($request->has('passport')){
 
@@ -135,6 +137,7 @@ class PersonnelController extends Controller
             $file->storeAs('public/documents/'.$request->service_number.'/passport/', $image_name);
             // $image->storeAs('public/documents/'.$request->service_number.'/passport/', $image->getClientOriginalName());
         }
+
         $formation_name = Formation::where('id', $request->command)->first('formation')->formation;
         $rank = Rank::where('cadre', $request->cadre)->where('gl', $request->gl)->first();
         $personnel = User::create([
@@ -415,7 +418,7 @@ class PersonnelController extends Controller
             $image_name = $user->passport;
             if($request->has('passport')){
                 $val = $request->validate([
-                    'passport' => 'required|image|mimes:jpeg,png,jpg,|max:800',
+                    'passport' => 'required|image|mimes:jpeg,png,jpg,|max:300|dimensions:max_width=200,max_height=200',
                 ]);
                 $file = $request->file('passport');
                 $image = $file->getClientOriginalName();
@@ -451,8 +454,8 @@ class PersonnelController extends Controller
             // LOCAL FILE STORAGE GOES HERE //
             $image_name = $user->passport;
             if($request->has('passport')){
-                $val = $request->validate([
-                    'passport' => 'required|image|mimes:jpeg,png,jpg,|max:800',
+                $request->validate([
+                    'passport' => 'required|image|mimes:jpeg,png,jpg,|max:300|dimensions:max_width=200,max_height=200',
                 ]);
                 $file = $request->file('passport');
                 $image = $file->getClientOriginalName();
@@ -600,7 +603,8 @@ class PersonnelController extends Controller
             'gl' => 'required|numeric',
             'step' => 'required|numeric',
             'dofa' => 'required|date',
-            'dopa' => 'required|date'
+            'dopa' => 'required|date',
+            'email' => 'required|email'
         ]);
 
         $image_name = $user->passport;

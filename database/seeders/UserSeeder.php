@@ -45,6 +45,9 @@ class UserSeeder extends Seeder
         $formation_user7 = array(
             array('id' => '9','formation_id' => '1','user_id' => '7','command' => 'National Headquarters','department' => 'A&P','designation' => 'Secretary','from' => '2019-08-21','to' => '2021-03-14','created_at' => '2021-03-13 19:45:21','updated_at' => '2021-03-14 07:21:32'),
         );
+        $formation_user8 = array(
+            array('id' => '10','formation_id' => '1','user_id' => '8','command' => 'National Headquarters','department' => 'D&A','designation' => 'Secretary','from' => '2019-08-21','to' => '2021-03-14','created_at' => '2021-03-13 19:45:21','updated_at' => '2021-03-14 07:21:32'),
+        );
 
         $qualifications = array(
             array('id' => '2','user_id' => '1','qualification' => 'WAEC','course' => 'WAEC','institution' => 'G.S.S Jibi, FCT Abuja','grade' => 'WAEC','year_obtained' => '2009','created_at' => '2021-03-14 09:24:57','updated_at' => '2021-03-14 09:24:57'),
@@ -342,6 +345,46 @@ class UserSeeder extends Seeder
             'specialization' => 'Database Administrator'
         ]);
 
+        User::insert([
+            'name' => 'Aremu Modupe Rachael',
+            'username' => '43839',
+            'email' => 'amr@gmail.com',
+            'email_verified_at' => NULL,
+            'password' => Hash::make('08062446611'),
+            'remember_token' => NULL,
+            'blood_group' => 'a+',
+            'marital_status' => 'single',
+            'dob' => '1992-01-27',
+            'sex' => 'male',
+            'soo' => '20',
+            'lgoo' => '374',
+            'phone_number' => '08062446611',
+            'residential_address' => '',
+            'service_number' => 43839,
+            'cadre' => 'superintendent',
+            'gl' => '9',
+            'step' => '4',
+            'rank_full' => 'Deputy Superintendent of Corps',
+            'rank_short' => 'DSC',
+            'dofa' => '2015-12-22',
+            'doc' => '2015-01-01',
+            'dopa' => '2018-01-01',
+            'paypoint' => 'National Headquarters',
+            'salary_structure' => 'conpass',
+            'bank' => 'Standard Chatered Bank',
+            'account_number' => '0001680036',
+            'bvn' => '22170422895',
+            'ippis_number' => 'CD54545554',
+            'nin_number' => '44825576415',
+            'nhis_number' => '01642155',
+            'nhf' => NULL,
+            'pfa' => 'Premium Pension Limited',
+            'pen_number' => '100345454545',
+            'current_formation' => 'National Headquarters',
+            'current_department' => 'N/A',
+            'specialization' => 'Database Administrator'
+        ]);
+
    
 
         $user1 = User::where('service_number', 66818)->first();
@@ -351,6 +394,7 @@ class UserSeeder extends Seeder
         $yabagi = User::where('service_number', 67572)->first();
         $empire = User::where('service_number', 57854)->first();
         $banke = User::where('service_number', 61005)->first();
+        $dupe = User::where('service_number', 43839)->first();
 
         foreach ($formation_user1 as $key => $deployment) {
             FormationUser::insert($deployment);
@@ -371,6 +415,9 @@ class UserSeeder extends Seeder
             FormationUser::insert($deployment);
         }
         foreach ($formation_user7 as $key => $deployment) {
+            FormationUser::insert($deployment);
+        }
+        foreach ($formation_user8 as $key => $deployment) {
             FormationUser::insert($deployment);
         }
 
@@ -403,5 +450,6 @@ class UserSeeder extends Seeder
         $yabagi->assignRole($pm);
         $empire->assignRole($pm);
         $banke->assignRole($pm);
+        $dupe->assignRole($pm);
     }
 }
