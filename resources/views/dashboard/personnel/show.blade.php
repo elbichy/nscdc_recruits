@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<!-- Modal Structure for cloud upload -->
+	<!-- DELETE PERSONNEL MODAL -->
 	<div id="modal" class="modal deletePersonnelModal">
 		<form action="{{ route('personnel_delete') }}" method="POST" name="create_form" id="delete_personnel_form">
 			<div class="modal-content" style="padding: 24px 9px 0px;">
@@ -36,7 +36,7 @@
 		</form>
 	</div>
 
-	<!-- Modal Structure for cloud upload -->
+	<!-- CHANGE PERSONNEL MODAL -->
 	<div id="modal" class="modal changePassModal">
 		<form action="{{ route('personnel_change_password', $personnel->id) }}" method="POST" name="create_form" id="change_pass_form">
 			<div class="modal-content" style="padding: 24px 9px 0px;">
@@ -45,7 +45,7 @@
 						<fieldset id="form" class="row" style="margin-bottom: 0px; padding: 0px; border: none;">
 							{{-- OLD PASSWORD --}}
 							<div class="input-field col s12 l4">
-								<input id="old_pass" name="old_pass" type="text" value="{{ old('old_pass') }}" class="fillable" placeholder="Old password"  required>
+								<input id="old_pass" name="old_pass" type="password" value="{{ old('old_pass') }}" class="fillable" placeholder="Old password"  required>
 								@if ($errors->has('old_pass'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('old_pass') }}</strong>
@@ -55,7 +55,7 @@
 							</div>
 							{{-- NEW PASSWORD --}}
 							<div class="input-field col s12 l4">
-								<input id="password" name="password" type="text" value="{{ old('password') }}" class="fillable" placeholder="New password" required>
+								<input id="password" name="password" type="password" value="{{ old('password') }}" class="fillable" placeholder="New password" required>
 								@if ($errors->has('password'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('password') }}</strong>
@@ -65,7 +65,7 @@
 							</div>
 							{{-- CONFIRM NEW PASSWORD --}}
 							<div class="input-field col s12 l4">
-								<input id="password_confirmation" name="password_confirmation" type="text" value="{{ old('password_confirmation') }}" class="fillable" placeholder="Confirm new password" required>
+								<input id="password_confirmation" name="password_confirmation" type="password" value="{{ old('password_confirmation') }}" class="fillable" placeholder="Confirm new password" required>
 								@if ($errors->has('password_confirmation'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('password_confirmation') }}</strong>
