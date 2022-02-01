@@ -182,7 +182,7 @@ class UserSeeder extends Seeder
         User::insert([
             'name' => 'Agbo Benjamin',
             'username' => '41552',
-            'email' => 'oj@gmail.com',
+            'email' => 'ab@gmail.com',
             'email_verified_at' => NULL,
             'password' => Hash::make('08072079038'),
             'remember_token' => NULL,
@@ -222,7 +222,7 @@ class UserSeeder extends Seeder
         User::insert([
             'name' => 'Mohammed Yabagi Zulkarnain',
             'username' => '67572',
-            'email' => 'oj@gmail.com',
+            'email' => 'myz@gmail.com',
             'email_verified_at' => NULL,
             'password' => Hash::make('08069314050'),
             'remember_token' => NULL,
@@ -262,7 +262,7 @@ class UserSeeder extends Seeder
         User::insert([
             'name' => 'Orgi Empire',
             'username' => '57854',
-            'email' => 'oj@gmail.com',
+            'email' => 'oe@gmail.com',
             'email_verified_at' => NULL,
             'password' => Hash::make('08063130535'),
             'remember_token' => NULL,
