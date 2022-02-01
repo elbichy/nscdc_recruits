@@ -393,6 +393,7 @@
 														<option value="brother">Brother</option>
 														<option value="sister">Sister</option>
 														<option value="cousin">Cousin</option>
+														<option value="spouse">Spouse</option>
 														<option value="son">Son</option>
 														<option value="daughter">Daughter</option>
 														<option value="nephew">Nephew</option>
@@ -502,6 +503,7 @@
 											<option value="brother">Brother</option>
 											<option value="sister">Sister</option>
 											<option value="cousin">Cousin</option>
+											<option value="spouse">Spouse</option>
 											<option value="son">Son</option>
 											<option value="daughter">Daughter</option>
 											<option value="nephew">Nephew</option>
@@ -838,7 +840,7 @@
 									</div>
 									{{-- COURSE --}}
 									<div class="input-field col s12 l4">
-										<input id="course" name="course" type="text" value="{{ old('course') }}" id="autocomplete-input" class="fillable autocomplete" placeholder="e.g Public Administration" required>
+										<input id="course" name="course" type="text" value="{{ old('course') }}" id="autocomplete-input" class="fillable autocomplete" placeholder="e.g Public Administration">
 										@if ($errors->has('course'))
 											<span class="helper-text red-text">
 												<strong>{{ $errors->first('course') }}</strong>
@@ -858,7 +860,7 @@
 									</div>
 									{{-- GRADE --}}
 									<div class="input-field col s12 l3">
-										<input id="grade" name="grade" type="text" value="{{ old('grade') }}" id="autocomplete-input" class="fillable autocomplete" placeholder="e.g Distinction, Credit, First Class, etc." required>
+										<input id="grade" name="grade" type="text" value="{{ old('grade') }}" id="autocomplete-input" class="fillable autocomplete" placeholder="e.g Distinction, Credit, First Class, etc." >
 										@if ($errors->has('grade'))
 											<span class="helper-text red-text">
 												<strong>{{ $errors->first('grade') }}</strong>

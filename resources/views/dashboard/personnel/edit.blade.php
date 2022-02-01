@@ -60,6 +60,7 @@
 									<option disabled>Select Type</option>
 									<option value="single" {{ $personnel->marital_status == 'single' ? 'selected' : '' }}>Single</option>
 									<option value="married" {{ $personnel->marital_status == 'married' ? 'selected' : '' }}>Married</option>
+									<option value="separated" {{ $personnel->marital_status == 'separated' ? 'selected' : '' }}>Separated</option>
 									<option value="widowed" {{ $personnel->marital_status == 'widowed' ? 'selected' : '' }}>Widowed</option>
 									<option value="divorced" {{ $personnel->marital_status == 'divorced' ? 'selected' : '' }}>Divorced</option>
 								</select>
@@ -487,7 +488,7 @@
 							</div>
 							{{-- NHF NO --}}
 							<div class="input-field col s12 l3">
-								<input id="nhf" name="nhf" type="number" value="{{ $personnel->nhf }}">
+								<input id="nhf" name="nhf" type="text" value="{{ $personnel->nhf }}">
 								@if ($errors->has('nhf'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('nhf') }}</strong>
@@ -659,7 +660,7 @@
 			$('#soo').change(function() {
 				let stateSelected = $(this).val();
 				// GET ALL LOCAL GOVERNMENT AREAS IN NIGERIA
-				axios.get(`/get-lgoo/${stateSelected}`)
+				axios.get(`/api/get-lgoo/${stateSelected}`)
 					.then(function(response) {
 						// console.log(response.data);
 						let lgaArray = response.data;

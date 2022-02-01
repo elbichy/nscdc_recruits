@@ -59,6 +59,7 @@
 									<option disabled selected>Select status</option>
 									<option value="single" >Single</option>
 									<option value="married" >Married</option>
+									<option value="separated" >Separated</option>
 									<option value="widowed" >Widowed</option>
 									<option value="divorced" >Divorced</option>
 								</select>
@@ -467,7 +468,7 @@
 							</div>
 							{{-- NHF NO --}}
 							<div class="input-field col s12 l3">
-								<input id="nhf" name="nhf" type="number" value="{{ old('nhf') }}">
+								<input id="nhf" name="nhf" type="text" value="{{ old('nhf') }}">
 								@if ($errors->has('nhf'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('nhf') }}</strong>
