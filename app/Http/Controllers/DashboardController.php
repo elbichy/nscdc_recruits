@@ -24,11 +24,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $total_personnel = User::count();
-        $total_formations = Formation::count();
-        $commissioned_officers = User::where('cadre', 'superintendent')->count();
-        $other_rank = User::where('cadre', 'assistant')->where('cadre', 'inspectorate')->count();
-        return view('dashboard.dashboard', compact(['total_personnel', 'total_formations', 'commissioned_officers', 'other_rank']));
+        $total_personnel = User::whereDate('dofa', '2019-01-01')->count();
+        $synched = User::whereDate('dofa', '2019-01-01')->where('synched', 1)->count();
+        $unsynched = User::whereDate('dofa', '2019-01-01')->where('synched', 0)->count();
+        $admin =User::whereDate('dofa', '!=', '2019-01-01')->count();
+        return view('dashboard.dashboard', compact(['total_personnel', 'synched', 'unsynched', 'admin']));
     }
 
 }
