@@ -7,12 +7,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\Permission\Traits\HasPermissions;
 
 class User extends Authenticatable
 {
     use HasRoles;
-    use HasPermissions;
     use Notifiable;
     use SoftDeletes;
 
