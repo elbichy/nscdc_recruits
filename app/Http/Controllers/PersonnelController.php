@@ -491,7 +491,6 @@ class PersonnelController extends Controller
     // EDIT A PERSONNEL
     public function edit($user)
     {
-        return auth()->user()->hasPermissionTo('manage personnel');
         if($user != auth()->user()->id && !auth()->user()->hasPermissionTo('managee personnel')){
             return back();
         }
