@@ -20,6 +20,6 @@ Route::get('/get-lgoo/{id}', function($id) {
 	return response()->json($data);
 })->name('get_lgas');
 
-Route::get('/personnel/sync', function(){
-    return 'It works!';
+Route::post('/personnel/sync', function($user){
+    return response()->json($user);
 });
