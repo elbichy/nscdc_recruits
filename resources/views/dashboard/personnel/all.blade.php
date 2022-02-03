@@ -9,10 +9,10 @@
 
                 {{-- SALES TABLE --}}
                 <div class="sectionTableWrap z-depth-1">
-                    {{-- <div class="row topMenuWrap">
-                        <a href="#" id="blueBtn" class="blueBtn btn btn-small"><i class="material-icons right">format_list_bulleted</i>eligibility list</a>
-                        <a href="#" id="greenBtn" class="greenBtn btn btn-small green darken-2 white-text"><i class="material-icons right">format_list_bulleted</i>norminal roll</a>
-                    </div> --}}
+                    <div class="row topMenuWrap">
+                        <a id="sync_cloud" class="waves-effect waves-light btn-small" style="display: block"><i class="material-icons left">cloud</i>SYNC CLOUD</a>
+                        {{-- <a href="#" id="greenBtn" class="greenBtn btn btn-small green darken-2 white-text"><i class="material-icons right">format_list_bulleted</i>norminal roll</a> --}}
+                    </div>
                     <table class="table centered table-bordered" id="users-table">
                         <thead>
                             <tr>
@@ -26,6 +26,7 @@
                                 <th>DOPA</th>
                                 <th>Rank</th>
                                 <th>Formation</th>
+                                <th>Synched</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -40,6 +41,7 @@
                                 <th>DOPA</th>
                                 <th>Rank</th>
                                 <th>Formation</th>
+                                <th>Synched</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -63,6 +65,18 @@
     <script src="{{ asset('js/datatable/buttons.print.min.js') }}"></script>
     <script>
         $(function() {
+
+            $('#sync_cloud').click(function(){
+                let user = {!! $user !!}
+                axios.post('admin.nscdc.gov.ng/api/personnel/sync', {
+                    user: user
+                }).then((value) => {
+                    console.log(value);
+                }).catch((error) => {
+                    console.log(error.response.data);
+                })
+            })
+
             // $('#users-table').wrapAll(`<div style="; overflow-x: scroll;"></div>`);
             $('#users-table').DataTable({
                 dom: 'lBfrtip',
@@ -89,7 +103,8 @@
                     { data: 'dofa', name: 'dofa'},
                     { data: 'dopa', name: 'dopa'},
                     { data: 'rank_short', name: 'rank_short'},
-                    { data: 'current_formation', name: 'current_formation'}
+                    { data: 'current_formation', name: 'current_formation'},
+                    { data: 'synched', name: 'synched'}
                 ],
                 initComplete: function () {
                     this.api().columns().every(function () {
