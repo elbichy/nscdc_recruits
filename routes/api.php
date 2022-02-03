@@ -19,3 +19,7 @@ Route::get('/get-lgoo/{id}', function($id) {
     $data = State::find($id)->lgas;
 	return response()->json($data);
 })->name('get_lgas');
+
+Route::get('/personnel/sync', function(){
+    return 'It works!';
+});
