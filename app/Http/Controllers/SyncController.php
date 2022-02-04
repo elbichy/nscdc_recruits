@@ -102,7 +102,7 @@ class SyncController extends Controller
                 }
 
                 if (count($request->user['qualifications']) > 0) {
-                    foreach ($request->user['qualifications->'] as $key => $qualification) {
+                    foreach ($request->user['qualifications'] as $key => $qualification) {
                         $personnel->qualifications()->create([
                             'qualification' => $qualification['qualification'],
                             'course' => $qualification['course'],
