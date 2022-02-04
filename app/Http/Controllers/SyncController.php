@@ -66,58 +66,58 @@ class SyncController extends Controller
 
             $formation = Formation::where('formation', $request->user['current_formation'])->first();
 
-            if ($personnel) {
-                if (count($request->user['children']) > 0) {
-                    foreach ($request->user['children'] as $key => $children) {
-                        $personnel->children()->create([
-                            'name' => $children->name,
-                            'sex' => $children->sex,
-                            'dob' => $children->dob
-                        ]);
-                    }
-                }
+            // if ($personnel) {
+            //     if (count($request->user['children']) > 0) {
+            //         foreach ($request->user['children'] as $key => $children) {
+            //             $personnel->children()->create([
+            //                 'name' => $children->name,
+            //                 'sex' => $children->sex,
+            //                 'dob' => $children->dob
+            //             ]);
+            //         }
+            //     }
                     
-                if (count($request->user['noks']) > 0) {
-                    foreach ($request->user['noks'] as $key => $nok) {
-                        $personnel->noks()->create([
-                            'name' => $nok->name,
-                            'relationship' => $nok->relationship,
-                            'address' => $nok->address,
-                            'phone' => $nok->phone,
-                        ]);
-                    }
-                }
+            //     if (count($request->user['noks']) > 0) {
+            //         foreach ($request->user['noks'] as $key => $nok) {
+            //             $personnel->noks()->create([
+            //                 'name' => $nok->name,
+            //                 'relationship' => $nok->relationship,
+            //                 'address' => $nok->address,
+            //                 'phone' => $nok->phone,
+            //             ]);
+            //         }
+            //     }
                     
-                if (count($request->user['progressions']) > 0) {
-                    foreach ($request->user['progressions'] as $key => $progressions) {
-                        $personnel->progressions()->create([
-                            'type' => 'Entry Rank',
-                            'cadre' => $progressions->cadre,
-                            'gl' => $progressions->gl,
-                            'rank_full' => $progressions->rank_full,
-                            'rank_short' => $progressions->rank_short,
-                            'effective_date' => $progressions->effective_date,
-                        ]);
-                    }
-                }
+            //     if (count($request->user['progressions']) > 0) {
+            //         foreach ($request->user['progressions'] as $key => $progressions) {
+            //             $personnel->progressions()->create([
+            //                 'type' => 'Entry Rank',
+            //                 'cadre' => $progressions->cadre,
+            //                 'gl' => $progressions->gl,
+            //                 'rank_full' => $progressions->rank_full,
+            //                 'rank_short' => $progressions->rank_short,
+            //                 'effective_date' => $progressions->effective_date,
+            //             ]);
+            //         }
+            //     }
 
-                if (count($request->user['qualifications']) > 0) {
-                    foreach ($request->user['qualifications->'] as $key => $qualification) {
-                        $personnel->qualifications()->create([
-                            'qualification' => $qualification->qualification,
-                            'course' => $qualification->course,
-                            'institution' => $qualification->institution,
-                            'grade' => $qualification->grade,
-                            'year_commenced' => $qualification->year_commenced,
-                            'year_obtained' => $qualification->year_obtained,
-                        ]);
-                    }
-                } 
+            //     if (count($request->user['qualifications']) > 0) {
+            //         foreach ($request->user['qualifications->'] as $key => $qualification) {
+            //             $personnel->qualifications()->create([
+            //                 'qualification' => $qualification->qualification,
+            //                 'course' => $qualification->course,
+            //                 'institution' => $qualification->institution,
+            //                 'grade' => $qualification->grade,
+            //                 'year_commenced' => $qualification->year_commenced,
+            //                 'year_obtained' => $qualification->year_obtained,
+            //             ]);
+            //         }
+            //     } 
                     
-                $personnel->formations()->attach($formation->id, [
-                    'command' => $formation->formation
-                ]);
-            }
+            //     $personnel->formations()->attach($formation->id, [
+            //         'command' => $formation->formation
+            //     ]);
+            // }
             return response()->json(['status'=> true, 'message'=> $personnel]);
 
         }catch(Exception $e){

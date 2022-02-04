@@ -95,7 +95,7 @@
                 let user = {!! $user !!}
                 $('#modal1 > .modal-content > .progress > .determinate').attr('class', 'indeterminate')
                 user.forEach((value, index, array) => {
-                    axios.post('/api/personnel/sync', {
+                    axios.post('http://admin.nscdc.gov.ng/api/personnel/sync', {
                     user: value
                     }).then((res) => {
                         console.log(res);
