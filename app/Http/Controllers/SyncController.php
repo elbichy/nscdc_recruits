@@ -69,6 +69,7 @@ class SyncController extends Controller
             if ($personnel) {
                 if (count($request->user['children']) > 0) {
                     foreach ($request->user['children'] as $key => $children) {
+                        return $children;
                         $personnel->children()->create([
                             'name' => $children->name,
                             'sex' => $children->sex,
