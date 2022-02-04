@@ -2,6 +2,22 @@
 
 @section('content')
     <div class="my-content-wrapper">
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <h4>Synchronize records to cloud server</h4>
+                <p class="row"></p>
+                <span class="row"></span>
+                <div class="progress">
+                    <div class="determinate" style="width: 0%"></div>
+                </div>
+                <div class="row count" style="display: flex; justify-content: center"></div>
+            </div>
+            <div class="modal-footer">
+                <a id="sync" class="waves-effect waves-light btn-small"><i class="material-icons left">cloud_upload</i>PUSH</a>
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
+        </div>
         <div class="content-container">
             <div class="sectionWrap">
                 {{-- SALES HEADING --}}
@@ -55,6 +71,7 @@
 @endsection
 
 @push('scripts')
+
     <script src="{{ asset('js/datatable/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/datatable/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('js/datatable/buttons.flash.min.js') }}"></script>
@@ -65,16 +82,33 @@
     <script src="{{ asset('js/datatable/buttons.print.min.js') }}"></script>
     <script>
         $(function() {
+            
+            $('.modal').modal();
 
             $('#sync_cloud').click(function(){
                 let user = {!! $user !!}
-                axios.post('admin.nscdc.gov.ng/api/personnel/sync', {
-                    user: user
-                }).then((value) => {
-                    console.log(value);
-                }).catch((error) => {
-                    console.log(error.response.data);
+                $('#modal1 > .modal-content > p').html(`${user.length} total records to be syncronized.`)
+                $('#modal1 > .modal-content > .count').html(`0/${user.length}`)
+                $('#modal1').modal('open')
+            })
+            $('#sync').click(function(){
+                let user = {!! $user !!}
+                $('#modal1 > .modal-content > .progress > .determinate').attr('class', 'indeterminate')
+                user.forEach((value, index, array) => {
+                    axios.post('/api/personnel/sync', {
+                    user: value
+                    }).then((value) => {
+                        console.log(value);
+                        $('#modal1 > .modal-content > .count').html(`${index+1}/${user.length}`)
+                        if(user.length == index+1){
+                            $('#modal1 > .modal-content > .progress > .indeterminate').attr('class', 'determinate')
+                        }
+                        
+                    }).catch((error) => {
+                        console.log(error.response.data);
+                    })
                 })
+               
             })
 
             // $('#users-table').wrapAll(`<div style="; overflow-x: scroll;"></div>`);
