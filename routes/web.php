@@ -105,7 +105,7 @@ Route::group(['prefix' => 'dashboard'], function (){
 		Route::get('/', function(){
 			return redirect()->back();
 		});
-
+		
 		// APPOINTMENT
 		Route::group(['prefix' => 'appointment'], function () {
 
