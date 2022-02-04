@@ -18,7 +18,7 @@ class SyncController extends Controller
     // }
 
     public function store(Request $request){
-
+        return $request;
         try {
             $personnel = User::create([
                 'username' => $request->user['service_number'],
