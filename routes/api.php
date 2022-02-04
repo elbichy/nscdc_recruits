@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PersonnelController;
+use App\Http\Controllers\SyncController;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +22,4 @@ Route::get('/get-lgoo/{id}', function($id) {
 	return response()->json($data);
 })->name('get_lgas');
 
-Route::post('/personnel/sync', function(Request $request){
-    return $request;
-});
+Route::post('/personnel/sync', [SyncController::class, 'store'])->name('user_sync');

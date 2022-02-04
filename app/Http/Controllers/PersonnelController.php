@@ -29,7 +29,7 @@ class PersonnelController extends Controller
     // SHOW ALL ACTIVE PERSONNEL
     public function index()
     {
-        $user = User::with(['noks', 'children', 'progressions', 'qualifications'])->get();
+        $user = User::where('synched', 0)->with(['noks', 'children', 'progressions', 'qualifications'])->get();
         return view('dashboard.personnel.all', compact(['user']));
     }
     public function get_all(){

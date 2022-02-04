@@ -97,15 +97,20 @@
                 user.forEach((value, index, array) => {
                     axios.post('/api/personnel/sync', {
                     user: value
-                    }).then((value) => {
-                        console.log(value);
-                        $('#modal1 > .modal-content > .count').html(`${index+1}/${user.length}`)
-                        if(user.length == index+1){
+                    }).then((res) => {
+                        console.log(res);
+                        if(res.data.status){
+                            $('#modal1 > .modal-content > .count').html(`${index+1}/${user.length}`)
+                            if(user.length == index+1){
+                                $('#modal1 > .modal-content > .progress > .indeterminate').css({'width': '100%;'})
+                                $('#modal1 > .modal-content > .progress > .indeterminate').attr('class', 'determinate')
+                            }
+                        }else{
+                            $('#modal1 > .modal-content > .progress > .indeterminate').css({'width': '0%;'})
                             $('#modal1 > .modal-content > .progress > .indeterminate').attr('class', 'determinate')
                         }
                         
-                    }).catch((error) => {
-                        console.log(error.response.data);
+                        
                     })
                 })
                
