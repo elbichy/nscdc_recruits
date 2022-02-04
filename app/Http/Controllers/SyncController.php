@@ -76,7 +76,7 @@ class SyncController extends Controller
                         ]);
                     }
                 }
-                    
+
                 if (count($request->user['noks']) > 0) {
                     foreach ($request->user['noks'] as $key => $nok) {
                         $personnel->noks()->create([
@@ -87,7 +87,7 @@ class SyncController extends Controller
                         ]);
                     }
                 }
-                    
+
                 if (count($request->user['progressions']) > 0) {
                     foreach ($request->user['progressions'] as $key => $progressions) {
                         $personnel->progressions()->create([
@@ -112,8 +112,8 @@ class SyncController extends Controller
                             'year_obtained' => $qualification['year_obtained'],
                         ]);
                     }
-                } 
-                    
+                }
+
                 $personnel->formations()->attach($formation->id, [
                     'command' => $formation->formation
                 ]);
