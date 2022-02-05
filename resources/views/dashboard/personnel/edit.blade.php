@@ -403,7 +403,7 @@
 							<div class="col s12 l3">
 								<label for="bank">Select Bank</label>
 								<select id="bank" name="bank" class="browser-default">
-									<option disabled selected>Select Bank</option>
+									<option selected>Select Bank</option>
 									@foreach($banks as $bank)
 										<option value="{{ $bank['name'] }}" {{ $personnel->bank == $bank['name'] ? 'selected' : '' }}>{{  $bank['name'] }}</option>
 									@endforeach
@@ -500,7 +500,7 @@
 							<div class="col s12 l6">
 								<label for="pfa">Select PFA</label>
 								<select id="pfa" name="pfa" class="browser-default" required>
-									<option disabled selected>Select PFA</option>
+									<option selected>Select PFA</option>
 									@foreach($pfas as $pfa)
 										<option value="{{ $pfa['name'] }}" {{ $personnel->pfa == $pfa['name'] ? 'selected' : '' }}>{{  $pfa['name'] }}</option>
 									@endforeach

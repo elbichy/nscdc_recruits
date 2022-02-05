@@ -504,7 +504,22 @@
 								@endif
 								<label for="pen_number">PEN No.</label>
 							</div>
-							<div class="input-field col s12 l6 right">
+							{{-- FORMATION --}}
+							<div class="col s12 l3">
+								<label for="command">* Present Formation</label>
+								<select id="command" name="command" class="browser-default" required>
+									<option disabled selected>Select State</option>
+									@foreach($formations as $formation)
+										<option value="{{ $formation->id }}">{{ $formation->formation }}</option>
+									@endforeach
+								</select>
+								@if ($errors->has('command'))
+									<span class="helper-text red-text">
+										<strong>{{ $errors->first('command') }}</strong>
+									</span>
+								@endif
+							</div>
+							<div class="input-field col s12 l3 right">
 								<button class="submit btn waves-effect waves-light right" type="submit">
 									<i class="material-icons right">send</i>ADD RECORD
 								</button>
