@@ -603,8 +603,7 @@ class PersonnelController extends Controller
             'gl' => 'required|numeric',
             'step' => 'required|numeric',
             'dofa' => 'required|date',
-            'dopa' => 'required|date',
-            'email' => 'required|email|unique:users,email'
+            'dopa' => 'required|date'
         ]);
 
         $image_name = $user->passport;
