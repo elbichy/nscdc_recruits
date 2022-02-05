@@ -419,7 +419,7 @@ class PersonnelController extends Controller
             $image_name = $user->passport;
             if($request->has('passport')){
                 $val = $request->validate([
-                    'passport' => 'required|image|mimes:jpeg,png,jpg,|max:300|dimensions:max_width=200,max_height=200',
+                    'passport' => 'required|image|mimes:jpeg,png,jpg,|max:300|dimensions:max_width=800,max_height=800',
                 ]);
                 $file = $request->file('passport');
                 $image = $file->getClientOriginalName();
@@ -456,7 +456,7 @@ class PersonnelController extends Controller
             $image_name = $user->passport;
             if($request->has('passport')){
                 $request->validate([
-                    'passport' => 'required|image|mimes:jpeg,png,jpg,|max:300|dimensions:max_width=200,max_height=200',
+                    'passport' => 'required|image|mimes:jpeg,png,jpg,|max:300|dimensions:max_width=800,max_height=800',
                 ]);
                 $file = $request->file('passport');
                 $image = $file->getClientOriginalName();
