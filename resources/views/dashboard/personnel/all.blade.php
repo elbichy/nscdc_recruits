@@ -107,7 +107,7 @@
                             axios.post(`{!! route('synched_personnel') !!}`, {
                                 peronnel: res.data.user
                             }).then((value) => {
-                                // console.log('Locally '+value);
+                                console.log('Locally '+value);
                                 $('#modal1 > .modal-content > .count').html(`${index+1}/${user.length}`)
                                 if(user.length == index+1){
                                     $('#modal1 > .modal-content > .progress > .indeterminate').attr('class', 'determinate')
