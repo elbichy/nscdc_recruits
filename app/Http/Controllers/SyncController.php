@@ -119,7 +119,7 @@ class SyncController extends Controller
                     'command' => $formation->formation
                 ]);
             }
-            return response()->json(['status'=> true, 'message'=> $personnel]);
+            return response()->json(['status'=> true, 'user'=> $personnel]);
 
         }
         catch(Exception $e){

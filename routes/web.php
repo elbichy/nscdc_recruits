@@ -94,8 +94,10 @@ Route::group(['prefix' => 'dashboard'], function (){
 			Route::post('/{progression}/update', [ProgressionController::class, 'update'])->name('personnel_update_progression');
 			Route::get('/appointment',  [AppointmentController::class, 'generate_appointment'])->name('generate_appointment');
 		});
-
+		
 		Route::get('export/{type}',  [PersonnelController::class, 'export']);
+		
+		Route::post('/synched', [ProgressionController::class, 'synched'])->name('synched_personnel');
 
 	});
 

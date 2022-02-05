@@ -98,16 +98,26 @@
                     axios.post('http://admin.nscdc.gov.ng/api/personnel/sync', {
                     user: value
                     }).then((res) => {
+                        
                         console.log(res);
+                        
                         if(res.data.status){
-                            $('#modal1 > .modal-content > .count').html(`${index+1}/${user.length}`)
-                            if(user.length == index+1){
-                                $('#modal1 > .modal-content > .progress > .indeterminate').css({'width': '100%;'})
-                                $('#modal1 > .modal-content > .progress > .indeterminate').attr('class', 'determinate')
-                            }
+
+                            // MARK LOCAL RECORD AS SYNCHED
+                            axios.post(`{!! route('synched_personnel') !!}`, {
+                                peronnel: res.data.user
+                            }).then((value) => {
+                                $('#modal1 > .modal-content > .count').html(`${index+1}/${user.length}`)
+                                if(user.length == index+1){
+                                    $('#modal1 > .modal-content > .progress > .indeterminate').attr('class', 'determinate')
+                                    $('#modal1 > .modal-content > .progress > .indeterminate').css({'width': '100%;'})
+                                }
+                            })
+
+
                         }else{
-                            $('#modal1 > .modal-content > .progress > .indeterminate').css({'width': '0%;'})
                             $('#modal1 > .modal-content > .progress > .indeterminate').attr('class', 'determinate')
+                            $('#modal1 > .modal-content > .progress > .indeterminate').css({'width': '0%;'})
                         }
                         
                         
