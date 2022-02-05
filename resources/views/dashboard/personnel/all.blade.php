@@ -105,20 +105,21 @@
 
                             // MARK LOCAL RECORD AS SYNCHED
                             axios.post(`{!! route('synched_personnel') !!}`, {
-                                peronnel: res.data.user
+                                user: res.data.user
                             }).then((value) => {
-                                console.log('Locally '+value);
-                                $('#modal1 > .modal-content > .count').html(`${index+1}/${user.length}`)
-                                if(user.length == index+1){
-                                    $('#modal1 > .modal-content > .progress > .indeterminate').attr('class', 'determinate')
-                                    $('#modal1 > .modal-content > .progress > .indeterminate').css({'width': '100%;'})
+                                if(value){
+                                    $('#modal1 > .modal-content > .count').html(`${index+1}/${user.length}`)
+                                    if(user.length == index+1){
+                                        $('#modal1 > .modal-content > .progress > .indeterminate').attr('class', 'determinate')
+                                        $('#modal1 > .modal-content > .progress > .indeterminate').attr({'style': 'width:100%'})
+                                    }
                                 }
                             })
 
 
                         }else{
                             $('#modal1 > .modal-content > .progress > .indeterminate').attr('class', 'determinate')
-                            $('#modal1 > .modal-content > .progress > .indeterminate').css({'width': '0%;'})
+                            $('#modal1 > .modal-content > .progress > .indeterminate').attr({'style': 'width:0%'})
                         }
                         
                         

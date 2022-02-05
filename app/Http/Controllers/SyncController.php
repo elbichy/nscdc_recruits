@@ -128,6 +128,7 @@ class SyncController extends Controller
     }
 
     public function synched(Request $request){
-        return $request->service_number;
+        $user = User::where('service_number', $request->user['service_number'])->first();
+        return $user->update(['synched' => 1]);
     }
 }
