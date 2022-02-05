@@ -128,6 +128,6 @@ class SyncController extends Controller
     }
 
     public function synched(Request $request){
-        return $request->synched;
+        return $request;
     }
 }
