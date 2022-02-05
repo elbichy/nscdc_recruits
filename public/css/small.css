@@ -1015,7 +1015,7 @@
         max-height: 250px;
         margin-bottom: 6px;
         overflow: hidden;
-        /* border-radius: 50%; */
+        border-radius: 50%;
         position: relative;
         border: 10px solid #eee;
         padding: 0;
