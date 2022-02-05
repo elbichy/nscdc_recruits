@@ -379,6 +379,7 @@
 								@endif
 								<label for="paypoint">Paypoint</label>
 							</div>
+
 							{{-- SALARY STRUCTURE --}}
 							<div class="col s12 l3">
 								<label for="salary_structure">Salary structure</label>
@@ -418,13 +419,13 @@
 							</div>
 							{{-- ACC NO. --}}
 							<div class="input-field col s12 l3">
-								<input id="account_number" name="account_number" type="number" value="{{ old('account_number') }}" class="input_text" data-length="10">
+								<input id="account_number" name="account_number" type="number" value="{{ old('account_number') }}" class="input_text" data-length="11">
 								@if ($errors->has('account_number'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('account_number') }}</strong>
 									</span>
 								@endif
-								<label for="account_number"></label>Account Number</label>
+								<label for="account_number">Account No.</label>
 							</div>
 							{{-- BVN NO --}}
 							<div class="input-field col s12 l3">
@@ -436,6 +437,7 @@
 								@endif
 								<label for="bvn">BVN</label>
 							</div>
+
 							{{-- IPPIS NO --}}
 							<div class="input-field col s12 l3">
 								<input id="ippis_number" name="ippis_number" type="number" value="{{ old('ippis_number') }}">
@@ -476,6 +478,7 @@
 								@endif
 								<label for="nhf">NHF No.</label>
 							</div>
+
 							{{-- PFA--}}
 							<div class="col s12 l3">
 								<label for="pfa">Select PFA</label>
@@ -501,33 +504,7 @@
 								@endif
 								<label for="pen_number">PEN No.</label>
 							</div>
-							
-							{{-- SPECIALIZATION--}}
-							{{-- <div class="input-field col s12 l3">
-								<input id="specialization" name="specialization" type="text" value="{{ old('specialization') }}">
-								@if ($errors->has('specialization'))
-									<span class="helper-text red-text">
-										<strong>{{ $errors->first('specialization') }}</strong>
-									</span>
-								@endif
-								<label for="specialization">Specialization</label>
-							</div> --}}
-							{{-- Command --}}
-							<div class="col s12 l3">
-								<label for="command">Present Formation</label>
-								<select id="command" name="command" class="browser-default">
-									<option disabled selected>Select State</option>
-									@foreach($formations as $formation)
-										<option value="{{ $formation->id }}">{{ $formation->formation }}</option>
-									@endforeach
-								</select>
-								@if ($errors->has('command'))
-									<span class="helper-text red-text">
-										<strong>{{ $errors->first('command') }}</strong>
-									</span>
-								@endif
-							</div>
-							<div class="input-field col s12 l3 right">
+							<div class="input-field col s12 l6 right">
 								<button class="submit btn waves-effect waves-light right" type="submit">
 									<i class="material-icons right">send</i>ADD RECORD
 								</button>

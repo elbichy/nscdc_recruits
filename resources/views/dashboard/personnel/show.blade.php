@@ -155,7 +155,7 @@
 										<p>{{ $personnel->date_of_marriage != null ? ucfirst($personnel->date_of_marriage) : 'N/A' }}</p>
 									</div>
 								</div>
-								<div class="col s6">
+								<div class="col s12 l6">
 									<div class="detailWrap">
 										<h6>Residential address</h6>
 										<p>{{ $personnel->residential_address != null ? ucwords($personnel->residential_address) : 'N/A' }}</p>

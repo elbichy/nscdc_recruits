@@ -618,12 +618,15 @@
                                         color: #000;
                                     }
                                     input {
-                                        border-bottom: 2px solid #ccc!important;
+                                        // border-bottom: 2px solid #bbb!important;
                                     }
                                 }
                                 select {
                                     background-color: rgba(255, 255, 255, 0);
-                                    border: 2px solid #ccc;
+                                    border: 1px solid #999;
+                                    &:focus {
+                                        outline: 1px solid #26a69a
+                                    }
                                 }
                             }
                         }
