@@ -117,10 +117,10 @@ class PersonnelController extends Controller
             'cadre' => 'required|string',
             'gl' => 'required|numeric',
             'step' => 'required|numeric',
-            'service_number' => 'required|numeric',
+            'service_number' => 'required|numeric|unique:users,service_number',
             'dofa' => 'required|date',
             'dopa' => 'required|date',
-            'email' => 'required|email'
+            'email' => 'required|email|unique:users,email'
         ]);
 
         $image_name = NULL;
@@ -604,7 +604,7 @@ class PersonnelController extends Controller
             'step' => 'required|numeric',
             'dofa' => 'required|date',
             'dopa' => 'required|date',
-            'email' => 'required|email'
+            'email' => 'required|email|unique:users,email'
         ]);
 
         $image_name = $user->passport;

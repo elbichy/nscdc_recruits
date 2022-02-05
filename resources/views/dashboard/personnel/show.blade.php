@@ -1400,7 +1400,7 @@
 					{{-- MENU COLLECTION --}}
 					<div class="fixed-action-btn">
 						<a class="btn-floating btn-large waves-effect waves-light blue darken-3">
-							<i class="large material-icons">mode_edit</i>
+							<i class="large material-icons">more_vert</i>
 						</a>
 						<ul>
 							<li><a href="{{ route('personnel_ros', $personnel->id) }}" title="Print Record of Service" class="btn-floating green"><i style="font-size: 1.33333em;" class="fas fa-print fa-lg"></i></a></li>
