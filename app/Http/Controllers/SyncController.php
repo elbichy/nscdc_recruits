@@ -126,4 +126,8 @@ class SyncController extends Controller
             return response()->json(['status'=> false, 'message'=> $e->getMessage()]);
         }
     }
+
+    public function synched(Request $request){
+        return $request;
+    }
 }

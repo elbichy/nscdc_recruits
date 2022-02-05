@@ -12,6 +12,7 @@ use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\ProgressionController;
 use App\Http\Controllers\QualificationController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SyncController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,7 +98,7 @@ Route::group(['prefix' => 'dashboard'], function (){
 		
 		Route::get('export/{type}',  [PersonnelController::class, 'export']);
 		
-		Route::post('/synched', [ProgressionController::class, 'synched'])->name('synched_personnel');
+		Route::post('/synched', [SyncController::class, 'synched'])->name('synched_personnel');
 
 	});
 
