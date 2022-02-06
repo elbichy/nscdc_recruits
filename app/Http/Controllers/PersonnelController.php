@@ -29,11 +29,10 @@ class PersonnelController extends Controller
     // SHOW ALL ACTIVE PERSONNEL
     public function index()
     {
-        $user = User::where('synched', 0)->with(['noks', 'children', 'progressions', 'qualifications'])->get();
-        return view('dashboard.personnel.all', compact(['user']));
+        return view('dashboard.personnel.all');
     }
     public function get_all(){
-        $personnel = User::where('synched', 0)->whereDate('dofa', '2019-01-01')->orderByRaw("FIELD(rank_full, 'Commandant General of Corps', 'Deputy Commandant General of Corps', 'Assistant Commandant General of Corps', 'Commandant of Corps', 'Deputy Commandant of Corps', 'Assistant Commandant of Corps', 'Chief Superintendent of Corps', 'Superintendent of Corps', 'Deputy Superintendent of Corps', 'Assistant Superintendent of Corps I', 'Assistant Superintendent of Corps II', 'Chief Inspector of Corps', 'Deputy Chief Inspector of Corps', 'Assistant Chief Inspector of Corps', 'Principal Inspector of Corps I', 'Principal Inspector of Corps II', 'Senior Inspector of Corps', 'Inspector of Corps', 'Assistant Inspector of Corps', 'Chief Corps Assistant', 'Senior Corps Assistant', 'Corps Assistant I', 'Corps Assistant II', 'Corps Assistant III')")->orderBy('service_number', 'ASC');
+        $personnel = User::whereDate('dofa', '2019-01-01')->orderByRaw("FIELD(rank_full, 'Commandant General of Corps', 'Deputy Commandant General of Corps', 'Assistant Commandant General of Corps', 'Commandant of Corps', 'Deputy Commandant of Corps', 'Assistant Commandant of Corps', 'Chief Superintendent of Corps', 'Superintendent of Corps', 'Deputy Superintendent of Corps', 'Assistant Superintendent of Corps I', 'Assistant Superintendent of Corps II', 'Chief Inspector of Corps', 'Deputy Chief Inspector of Corps', 'Assistant Chief Inspector of Corps', 'Principal Inspector of Corps I', 'Principal Inspector of Corps II', 'Senior Inspector of Corps', 'Inspector of Corps', 'Assistant Inspector of Corps', 'Chief Corps Assistant', 'Senior Corps Assistant', 'Corps Assistant I', 'Corps Assistant II', 'Corps Assistant III')")->orderBy('service_number', 'ASC');
         return DataTables::of($personnel)
             ->editColumn('name', function ($personnel) {
                 return "<b><a href=\"/dashboard/personnel/$personnel->id\">$personnel->name</a></b>";
@@ -43,6 +42,10 @@ class PersonnelController extends Controller
             })
             ->rawColumns(['name', 'checkbox'])
             ->make();
+    }
+    public function unsynched(){
+        $users = User::whereDate('dofa', '2019-01-01')->where('synched', 0)->with(['noks', 'children', 'progressions', 'qualifications'])->get();
+        return response()->json($users);
     }
     
 

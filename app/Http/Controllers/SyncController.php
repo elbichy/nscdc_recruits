@@ -17,10 +17,19 @@ class SyncController extends Controller
     //     $this->middleware(['auth']);
     // }
 
+    // GET ALL UNSYNCHED PERSONNEL
+    public function unsynched()
+    {
+        return 'Hi';
+    }
+
+
     public function store(Request $request){
 
         try {
-            $personnel = User::create([
+            $personnel = User::updateOrCreate(
+                ['service_number' => $request->user['service_number']],
+                [
                 'username' => $request->user['service_number'],
                 'name' => $request->user['name'],
                 'dob' => $request->user['dob'],

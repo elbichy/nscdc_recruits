@@ -36,11 +36,13 @@ Route::group(['prefix' => 'dashboard'], function (){
 	
 	// PERSONNEL
 	Route::group(['prefix' => 'personnel'], function () {
+		
 		Route::get('/', [PersonnelController::class, 'index'])->name('personnel_all');
 		Route::get('/new', [PersonnelController::class, 'create'])->name('personnel_create')->middleware(['role:super admin|personnel manager']);
 		Route::get('/all', [PersonnelController::class, 'index'])->name('personnel_all')->middleware(['role:super admin|personnel manager']);
 		Route::get('/get_all', [PersonnelController::class, 'get_all'])->name('personnel_get_all');
-		
+		Route::get('/unsynched', [PersonnelController::class, 'unsynched'])->name('personnel_unsynched');
+		// Route::get('/unsynched', [SyncController::class, 'unsynched'])->name('unsynched_personnel');
 		Route::get('/{user}', [PersonnelController::class, 'show'])->name('personnel_show');
 		Route::get('/{user}/ros', [PersonnelController::class, 'ros'])->name('personnel_ros');
 		Route::post('/store', [PersonnelController::class, 'store'])->name('store_personnel');
@@ -87,7 +89,7 @@ Route::group(['prefix' => 'dashboard'], function (){
 			Route::delete('/{deployment}/delete',  [DeploymentController::class, 'destroy'])->name('personnel_delete_deployment');
 			Route::post('/{deployment}/update',  [DeploymentController::class, 'update'])->name('personnel_update_deployment');
 		});
-
+		
 		// PROGRESSION
 		Route::group(['prefix' => 'progression'], function () {
 			Route::post('{personnel}/store', [ProgressionController::class, 'store'])->name('personnel_store_progression');
@@ -97,6 +99,7 @@ Route::group(['prefix' => 'dashboard'], function (){
 		});
 		
 		Route::get('export/{type}',  [PersonnelController::class, 'export']);
+		
 		
 		Route::post('/synched', [SyncController::class, 'synched'])->name('synched_personnel');
 

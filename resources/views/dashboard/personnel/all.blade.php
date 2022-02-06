@@ -81,47 +81,64 @@
     <script src="{{ asset('js/datatable/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('js/datatable/buttons.print.min.js') }}"></script>
     <script>
+
+        // LOADS UP ALL UNSYNCHED USERS
+        async function get_unsynched(){
+            const response = await axios.get(`{!! route('personnel_unsynched') !!}`)
+            return response.data
+        }
+
         $(function() {
             
             $('.modal').modal();
 
-            $('#sync_cloud').click(function(){
-                let user = {!! $user !!}
-                $('#modal1 > .modal-content > p').html(`${user.length} total records to be syncronized.`)
-                $('#modal1 > .modal-content > .count').html(`0/${user.length}`)
+            // TRIGGERS OPEN THE SYNC MODAL
+            $('#sync_cloud').click(async function(){
+                let users = []
+                await get_unsynched().then((rep_users) => {
+                    users = rep_users
+                })
+                users.length > 0 ? '' : $('#sync').attr('disabled', true)
+                $('#modal1 > .modal-content > .progress > .determinate').attr('style', 'width:0%')
+                $('#modal1 > .modal-content > p').html(`${users.length} total records to be syncronized.`)
+                $('#modal1 > .modal-content > .count').html(`0/${users.length}`)
                 $('#modal1').modal('open')
             })
-            $('#sync').click(function(){
-                let user = {!! $user !!}
+
+            // PUSHES UNSYNCHED RECORDS TO CLOUD
+            $('#sync').click(async function(){
+               
+                let users = []
+                await get_unsynched().then((rep_users) => {
+                    users = rep_users
+                })
+
                 $('#modal1 > .modal-content > .progress > .determinate').attr('class', 'indeterminate')
-                user.forEach((value, index, array) => {
+           
+                users.forEach((value, index, array) => {
                     axios.post('http://admin.nscdc.gov.ng/api/personnel/sync', {
                     user: value
                     }).then((res) => {
-                        
-                        console.log(res);
-                        
+                        // CHECKS IF RECORD IS STORED IN THE CLOUD
                         if(res.data.status){
-
-                            // MARK LOCAL RECORD AS SYNCHED
+                            // MARKS LOCAL RECORD AS SYNCHED
                             axios.post(`{!! route('synched_personnel') !!}`, {
                                 user: res.data.user
                             }).then((value) => {
+                                // CHECKS IF LOCAL RECORD IS MARKED SUCCESSFULLY
                                 if(value){
-                                    $('#modal1 > .modal-content > .count').html(`${index+1}/${user.length}`)
-                                    if(user.length == index+1){
+                                    $('#modal1 > .modal-content > .count').html(`${index+1}/${users.length}`)
+                                    if(users.length == index+1){
                                         $('#modal1 > .modal-content > .progress > .indeterminate').attr('class', 'determinate')
-                                        $('#modal1 > .modal-content > .progress > .indeterminate').attr({'style': 'width:100%'})
+                                        $('#modal1 > .modal-content > .progress > .determinate').attr('style', 'width:100%')
+                                        $('#sync').attr('disabled', true)
                                     }
                                 }
                             })
-
-
                         }else{
                             $('#modal1 > .modal-content > .progress > .indeterminate').attr('class', 'determinate')
-                            $('#modal1 > .modal-content > .progress > .indeterminate').attr({'style': 'width:0%'})
+                            $('#modal1 > .modal-content > .progress > .determinate').attr('style', 'width:0%')
                         }
-                        
                         
                     })
                 })
