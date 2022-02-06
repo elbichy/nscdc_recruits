@@ -18,11 +18,6 @@ class SyncController extends Controller
     // }
 
     // GET ALL UNSYNCHED PERSONNEL
-    public function unsynched()
-    {
-        return 'Hi';
-    }
-
 
     public function store(Request $request){
 
