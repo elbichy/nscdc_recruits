@@ -183,6 +183,59 @@
     }
     .app nav .nav-wrapper {
         padding: 0 0 0 0px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .app nav .nav-wrapper .search_wrapper div {
+        flex: 1;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 6px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+        position: relative;
+        top: 14px;
+        width: 200px;
+    }
+    .app nav .nav-wrapper .search_wrapper div input {
+        margin: 0;
+        border: none;
+        outline: none;
+        color: #fff;
+    }
+    .app nav .nav-wrapper .search_wrapper div input:focus {
+        margin: 0;
+        border: none;
+        outline: none;
+        color: #fff;
+    }
+    .app nav .nav-wrapper .search_wrapper span {
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        background: #fff;
+        position: relative;
+        top: 16px;
+    }
+    .app nav .nav-wrapper .search_wrapper span p {
+        display: block;
+        color: #666;
+        border-bottom: 1px solid #eee;
+        padding: 0 8px;
+    }
+    .app nav .nav-wrapper .search_wrapper span a {
+        display: block;
+        width: 100%;
+        color: rgb(16, 99, 167);
+        font-weight: bold;
+        background-color: #fff;
+        border-bottom: 1px solid #eee;
+        padding: 0 8px;
+    }
+    .app nav .nav-wrapper .search_wrapper span a:hover {
+        background-color: #eee;
     }
     .app nav .nav-wrapper #show-side-nav {
         height: 100%;

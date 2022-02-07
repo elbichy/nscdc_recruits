@@ -39,7 +39,7 @@
                     <a href="/{{request()->segment(1)}}/{{ request()->segment(2) }}/{{request()->segment(3)}}/{{request()->segment(4)}}/{{request()->segment(5)}}" class="breadcrumb">{{ strtoupper(request()->segment(5)) }}</a>
                 @endif
             </div>
-            <div class="search_wrapper hide-on-small-and-down">
+            <div class="search_wrapper">
                 <div>
                     <input type="text" name="search" id="search" placeholder="Search">
                     <i class="material-icons">search</i>
