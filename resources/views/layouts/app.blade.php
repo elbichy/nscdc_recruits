@@ -105,7 +105,50 @@
                 })
             }
         }
+
+        function search(event){
+
+            let value = event.currentTarget.value.length > 0 ? event.currentTarget.value : false
+            if(value.length > 0 || event.keyCode == 8 || event.keyCode == 46){
+                axios.get(`/dashboard/personnel/search/${value}`).then((res) => {
+                    // console.log(res);
+                    let result = res.data.data
+
+                    $('.results').css('display', 'flex')
+                    // $('.results').append(`<p>${result.length} record(s) found.</p>`)
+                    let rows = `<p disabled>${result.length} records found!</p>`
+                    result.forEach((value, index, array) => {
+                        rows +=`<a href="/dashboard/personnel/${value.id}">${value.name}</a>`
+                    })
+                    $('.results').html(rows)
+                })
+            }
+        }
+
         $(document).ready(function() {
+
+            $('.search_wrapper > div > i').click(function(){
+                $('.search_wrapper > div > input').focus()
+            })
+
+            $('.search_wrapper > div > input').keyup(function(event){
+                search(event)
+            })
+            $('.search_wrapper > div > input').focus(function(event){
+                search(event)
+            })
+
+            $('body').click(function(evt){    
+                if(evt.target.id == "results")
+                    return;
+                //For descendants of menu_content being clicked, remove this check if you do not want to put constraint on descendants.
+                if($(evt.target).closest('#results').length)
+                    return;             
+
+                //Do processing of click event here for every element except with id menu_content
+                $('.results').css('display', 'none')
+            });
+
             
             $('.sidenav').sidenav();
             $('.collapsible').collapsible()

@@ -1,5 +1,5 @@
 {{-- NAVBAR --}}
-<div id="space-for-sidenave" class="navbar-fixed">
+<div id="space-for-sidenav" class="navbar-fixed">
     <nav>
         <div class="nav-wrapper">
             {{-- Show View --}}
@@ -39,7 +39,15 @@
                     <a href="/{{request()->segment(1)}}/{{ request()->segment(2) }}/{{request()->segment(3)}}/{{request()->segment(4)}}/{{request()->segment(5)}}" class="breadcrumb">{{ strtoupper(request()->segment(5)) }}</a>
                 @endif
             </div>
-            
+            <div class="search_wrapper hide-on-small-and-down">
+                <div>
+                    <input type="text" name="search" id="search" placeholder="Search">
+                    <i class="material-icons">search</i>
+                </div>
+                <span class="results" id="results">
+                    {{-- <a>results</a> --}}
+                </span>
+            </div>
             {{-- OTHER MENU RIGHT --}}
             <a href="#" data-target="slide-out" class="sidenav-trigger hide-on-large-only right"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
@@ -57,6 +65,7 @@
                     </a>
                 </li>
             </ul>
+            
             <ul class="right hide-on-small-only">
                  <p style="padding-right:12px;"><a class="dropdown-trigger"  data-target="dropdown1" href="#!"  style="display: inline-block;">{{ auth()->user()->name }} <i class="material-icons right">arrow_drop_down</i></a></p>
             </ul>

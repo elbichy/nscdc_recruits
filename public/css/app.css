@@ -193,50 +193,120 @@ input {
   .app .form_wrap .form .input-field .prefix:active {
     color: var(--primary-bg-mid) !important;
   }
-  .app nav {
+  .app #space-for-sidenav {
+    width: 100%;
+    position: fixed;
+    height: 64px;
+  }
+  .app #space-for-sidenav nav {
+    height: 100%;
+    width: 100%;
+    position: relative;
     background: var(--primary-bg-dark);
     background: linear-gradient(90deg, var(--primary-bg-dark) 0%, var(--primary-bg-light) 100%);
   }
-  .app nav .nav-wrapper {
+  .app #space-for-sidenav nav .nav-wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: center;
     padding: 0 0 0 0px;
   }
-  .app nav .nav-wrapper #show-side-nav {
+  .app #space-for-sidenav nav .nav-wrapper #show-side-nav {
     height: 100%;
     float: left;
     display: flex;
     justify-content: center;
   }
-  .app nav .nav-wrapper #show-side-nav:hover {
+  .app #space-for-sidenav nav .nav-wrapper #show-side-nav:hover {
     background: rgba(0, 0, 0, 0.2);
   }
-  .app nav .nav-wrapper .breadcrumbWrap {
+  .app #space-for-sidenav nav .nav-wrapper .breadcrumbWrap {
     margin-left: 310px;
+    justify-self: flex-start;
   }
-  .app nav .nav-wrapper .breadcrumbWrap .breadcrumb {
+  .app #space-for-sidenav nav .nav-wrapper .breadcrumbWrap .breadcrumb {
     font-size: 14px;
   }
-  .app nav .nav-wrapper ul p #dropdown1 {
+  .app #space-for-sidenav nav .nav-wrapper .search_wrapper {
+    margin-left: auto;
+    height: 100%;
+    position: relative;
+  }
+  .app #space-for-sidenav nav .nav-wrapper .search_wrapper div {
+    flex: 1;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    position: relative;
+    top: 14px;
+  }
+  .app #space-for-sidenav nav .nav-wrapper .search_wrapper div input {
+    margin: 0;
+    border: none;
+    outline: none;
+    color: #fff;
+  }
+  .app #space-for-sidenav nav .nav-wrapper .search_wrapper div input:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
+  .app #space-for-sidenav nav .nav-wrapper .search_wrapper span {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    background: #fff;
+    position: relative;
+    top: 16px;
+  }
+  .app #space-for-sidenav nav .nav-wrapper .search_wrapper span p {
+    display: block;
+    color: #666;
+    border-bottom: 1px solid #eee;
+    padding: 0 8px;
+  }
+  .app #space-for-sidenav nav .nav-wrapper .search_wrapper span a {
+    display: block;
+    width: 100%;
+    color: #1063a7;
+    font-weight: bold;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 0 8px;
+  }
+  .app #space-for-sidenav nav .nav-wrapper .search_wrapper span a:hover {
+    background-color: #eee;
+  }
+  .app #space-for-sidenav nav .nav-wrapper ul {
+    justify-self: flex-end;
+    margin-left: auto;
+  }
+  .app #space-for-sidenav nav .nav-wrapper ul p #dropdown1 {
     top: 64px !important;
   }
-  .app nav .nav-wrapper ul p #dropdown1 li a {
+  .app #space-for-sidenav nav .nav-wrapper ul p #dropdown1 li a {
     color: #0e6f9e !important;
   }
-  .app nav .logOutBtn {
+  .app #space-for-sidenav nav .logOutBtn {
     width: 100%;
     height: 100%;
     display: flex;
     margin-left: 0px;
   }
-  .app nav .logOutBtn a {
+  .app #space-for-sidenav nav .logOutBtn a {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
   }
-  .app nav .logOutBtn a:hover {
+  .app #space-for-sidenav nav .logOutBtn a:hover {
     background: rgba(0, 0, 0, 0.1);
   }
-  .app nav .logOutBtn a i {
+  .app #space-for-sidenav nav .logOutBtn a i {
     margin-left: 0 !important;
   }
   .app .sidenav.sidenav-fixed {
@@ -380,6 +450,7 @@ input {
   .app .my-content-wrapper,
 .app .space-for-sidenav {
     padding-left: 300px;
+    padding-top: 64px;
   }
   .app .my-content-wrapper {
     position: relative;

@@ -48,6 +48,8 @@ Route::group(['prefix' => 'dashboard'], function (){
 		Route::post('/store', [PersonnelController::class, 'store'])->name('store_personnel');
 		Route::get('{user}/edit/', [PersonnelController::class, 'edit'])->name('personnel_edit');
 		
+		Route::get('/search/{search_value}', [PersonnelController::class, 'search'])->name('search_personnel');
+
 		Route::post('{user}/change_password/', [PersonnelController::class, 'change_password'])->name('personnel_change_password');
 		// Route::post('{user}/delete/', [PersonnelController::class, 'change_password'])->name('personnel_delete');
 		

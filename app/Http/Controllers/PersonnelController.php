@@ -561,6 +561,15 @@ class PersonnelController extends Controller
         $rank = $rank !== NULL ? $rank->full_title : '';
         return view('dashboard/personnel/edit', compact(['banks', 'pfas', 'formations', 'personnel', 'lga', 'rank']));
     }
+    
+    // SEARCH A PERSONNEL
+    public function search($search_value)
+    {
+        $result = User::where('service_number', 'LIKE', '%'.$search_value.'%')
+        ->orWhere('name', 'LIKE', '%'.$search_value.'%')
+        ->paginate(3);
+        return response()->json($result);
+    }
 
     // EDIT PERSONNEL PASSWORD
     public function change_password(Request $request, User $user)
