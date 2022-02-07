@@ -196,7 +196,7 @@
         background: rgba(0, 0, 0, 0.1);
         border-radius: 3px;
         position: relative;
-        top: 14px;
+        top: 10px;
         width: 200px;
     }
     .app nav .nav-wrapper .search_wrapper div input {
