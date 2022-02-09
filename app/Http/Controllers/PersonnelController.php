@@ -40,7 +40,18 @@ class PersonnelController extends Controller
             ->addColumn('checkbox', function($redeployment) {
                 return '<input type="checkbox" name="personnelCheckbox[]" class="personnelCheckbox browser-default" value="'.$redeployment->id.'" />';
             })
-            ->rawColumns(['name', 'checkbox'])
+            ->addColumn('view', function($redeployment) {
+                if(!$redeployment->synched){
+                    return '
+                        <a href="#" style="margin-left:5px;" class="red-text" title="push to cloud"><i class="fas fa-cloud-upload fa-lg"></i></a>
+                    ';
+                }else{
+                    return '
+                        <span style="margin-left:5px;" class="green-text"><i class="fad fa-check-double fa-lg"></i></span>
+                    ';
+                }
+            })
+            ->rawColumns(['name', 'checkbox', 'view'])
             ->make();
     }
     public function unsynched(){

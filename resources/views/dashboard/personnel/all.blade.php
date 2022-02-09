@@ -42,7 +42,7 @@
                                 <th>DOPA</th>
                                 <th>Rank</th>
                                 <th>Formation</th>
-                                <th>Synched</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -57,7 +57,7 @@
                                 <th>DOPA</th>
                                 <th>Rank</th>
                                 <th>Formation</th>
-                                <th>Synched</th>
+                                <th></th>
                             </tr>
                         </tfoot>
                     </table>
@@ -90,7 +90,13 @@
 
         $(function() {
             
-            $('.modal').modal();
+            $('.modal').modal({
+                dismissible: false,
+                onCloseEnd: function(){
+                    console.log("Yeah");
+                    $('#users-table').DataTable().draw()
+                }
+            });
 
             // TRIGGERS OPEN THE SYNC MODAL
             $('#sync_cloud').click(async function(){
@@ -98,7 +104,7 @@
                 await get_unsynched().then((rep_users) => {
                     users = rep_users
                 })
-                users.length > 0 ? '' : $('#sync').attr('disabled', true)
+                users.length > 0 ? $('#sync').attr('disabled', false) : $('#sync').attr('disabled', true)
                 $('#modal1 > .modal-content > .progress > .determinate').attr('style', 'width:0%')
                 $('#modal1 > .modal-content > p').html(`${users.length} total records to be syncronized.`)
                 $('#modal1 > .modal-content > .count').html(`0/${users.length}`)
@@ -109,21 +115,32 @@
             $('#sync').click(async function(){
                
                 let users = []
-                await get_unsynched().then((rep_users) => {
-                    users = rep_users
+                await get_unsynched().then((resp_users) => {
+                    users = resp_users
                 })
 
                 $('#modal1 > .modal-content > .progress > .determinate').attr('class', 'indeterminate')
            
-                users.forEach((value, index, array) => {
-                    axios.post('http://admin.nscdc.gov.ng/api/personnel/sync', {
-                    user: value
-                    }).then((res) => {
+                users.forEach(async function (value, index, array) {
+                   
+                    await axios.post('http://admin.nscdc.gov.ng/api/personnel/sync', {
+
+                        user: {
+                            ...value,
+                            _token: `{!! csrf_token() !!}`
+                        }
+
+                    }).then(async function(res) {
+
                         // CHECKS IF RECORD IS STORED IN THE CLOUD
                         if(res.data.status){
                             // MARKS LOCAL RECORD AS SYNCHED
-                            axios.post(`{!! route('synched_personnel') !!}`, {
-                                user: res.data.user
+                            await axios.post(`{!! route('synched_personnel') !!}`, {
+                                user: {
+                                    ...res.data.user,
+                                    _token: `{!! csrf_token() !!}`
+                                }
+                                    
                             }).then((value) => {
                                 // CHECKS IF LOCAL RECORD IS MARKED SUCCESSFULLY
                                 if(value){
@@ -147,6 +164,7 @@
 
             // $('#users-table').wrapAll(`<div style="; overflow-x: scroll;"></div>`);
             $('#users-table').DataTable({
+                pageLength: 5,
                 dom: 'lBfrtip',
                 buttons: [
                     'csv', 'excel', 'pdf'
@@ -172,7 +190,7 @@
                     { data: 'dopa', name: 'dopa'},
                     { data: 'rank_short', name: 'rank_short'},
                     { data: 'current_formation', name: 'current_formation'},
-                    { data: 'synched', name: 'synched'}
+                    { data: 'view', name: 'view', "orderable": false, "searchable": false}
                 ],
                 initComplete: function () {
                     this.api().columns().every(function () {
