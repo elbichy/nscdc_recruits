@@ -45,7 +45,7 @@
 						<fieldset id="form" class="row" style="margin-bottom: 0px; padding: 0px; border: none;">
 							{{-- OLD PASSWORD --}}
 							<div class="input-field col s12 l4">
-								<input id="old_pass" name="old_pass" type="password" value="{{ old('old_pass') }}" class="fillable" placeholder="Old password"  required>
+								<input id="old_pass" name="old_pass" type="password" value="{{ old('old_pass') }}" class="fillable" placeholder="Old password">
 								@if ($errors->has('old_pass'))
 									<span class="helper-text red-text">
 										<strong>{{ $errors->first('old_pass') }}</strong>
@@ -112,6 +112,8 @@
 										<p>{{ $personnel->sex != null ? $personnel->sex : 'N/A' }}</p>
 									</div>
 								</div>
+							</div>
+							<div class="row">
 								<div class="col s12 l2">
 									<div class="detailWrap">
 										<h6>Blood group</h6>
@@ -136,13 +138,14 @@
 										<p>{{ $personnel->weight != null ? strtoupper($personnel->weight) : 'N/A' }}</p>
 									</div>
 								</div>
-								
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Marital status</h6>
 										<p>{{ $personnel->marital_status != null ? ucfirst($personnel->marital_status) : 'N/A' }}</p>
 									</div>
 								</div>
+							</div>
+							<div class="row">
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Name of Spouse</h6>
@@ -161,7 +164,8 @@
 										<p>{{ $personnel->residential_address != null ? ucwords($personnel->residential_address) : 'N/A' }}</p>
 									</div>
 								</div>
-
+							</div>
+							<div class="row">
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Place of Birth</h6>
@@ -174,13 +178,14 @@
 										<p>{{ $personnel->permanent_address != null ? ucwords($personnel->permanent_address) : 'N/A' }}</p>
 									</div>
 								</div>
+							</div>
+							<div class="row">
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>State of origin</h6>
 										<p>{{ $state != NULL ? ucwords($state->state_name) : 'N/A' }}</p>
 									</div>
 								</div>
-
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>LGA</h6>
@@ -199,13 +204,14 @@
 										<p>{{ $personnel->email != null ? $personnel->email : 'N/A' }}</p>
 									</div>
 								</div>
+							</div>
+							<div class="row">
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Service no.</h6>
 										<p>{{ $personnel->service_number }}</p>
 									</div>
 								</div>
-
 								<div class="col s12 l6">
 									<div class="detailWrap">
 										<h6>Current Rank</h6>
@@ -218,13 +224,14 @@
 										<p>{{ $personnel->gl != null ? $personnel->gl : 'N/A' }}</p>
 									</div>
 								</div>
+							</div>
+							<div class="row">
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Step</h6>
 										<p>{{ $personnel->step != null ? $personnel->step : 'N/A'  }}</p>
 									</div>
 								</div>
-
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Date of 1st Appt.</h6>
@@ -243,13 +250,14 @@
 										<p>{{ $personnel->dopa != null ? $personnel->dopa : 'N/A'  }}</p>
 									</div>
 								</div>
+							</div>
+							<div class="row">
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Paypoint</h6>
 										<p>{{ $personnel->paypoint != null ? $personnel->paypoint : 'N/A'  }}</p>
 									</div>
 								</div>
-
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Salary structure</h6>
@@ -268,13 +276,14 @@
 										<p>{{ $personnel->account_number != null ? $personnel->account_number : 'N/A' }}</p>
 									</div>
 								</div>
+							</div>
+							<div class="row">
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>BVN</h6>
 										<p>{{ $personnel->bvn != null ? $personnel->bvn : 'N/A' }}</p>
 									</div>
 								</div>
-
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>IPPS No.</h6>
@@ -292,14 +301,15 @@
 										<h6>NHIS No.</h6>
 										<p>{{ $personnel->nhis_number != null ? $personnel->nhis_number : 'N/A' }}</p>
 									</div>
-								</div>	
+								</div>
+							</div>
+							<div class="row">	
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>NHF No.</h6>
 										<p>{{ $personnel->nhf != null ? $personnel->nhf : 'N/A' }}</p>
 									</div>
 								</div>
-
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>PFA</h6>
@@ -317,7 +327,9 @@
 										<h6>Specialization</h6>
 										<p>{{ $personnel->specialization != null ? $personnel->specialization : 'N/A' }}</p>
 									</div>
-								</div>	
+								</div>
+							</div>
+							<div class="row">
 								<div class="fieldset" id="countdowntimer">
 									<legend><p>
 										Count down till retirement

@@ -70,6 +70,11 @@ class ProgressionController extends Controller
                 'rank_short' => $rank->short_title,
                 'dopa' => $request->effective_date
             ]);
+            if($personnel->synched){
+                $personnel->update([
+                    'synched' => 0
+                ]);
+            }
             Alert::success('Progression record added successfully!', 'Success!')->autoclose(2500);
             return redirect()->back();
         }
@@ -116,6 +121,11 @@ class ProgressionController extends Controller
             'effective_date' => $request->effective_date
         ]);
         if($update){
+            if($progression->user->synched){
+                $progression->user->update([
+                    'synched' => 0
+                ]);
+            }
             Alert::success('Progression record updated successfully!', 'Success!')->autoclose(2500);
             return redirect()->back();
         }

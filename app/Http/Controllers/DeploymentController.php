@@ -93,6 +93,11 @@ class DeploymentController extends Controller
         
 
         if($updated){
+            if($personnel->synched){
+                $personnel->update([
+                    'synched' => 0
+                ]);
+            }
             Alert::success('Deployment record added successfully!', 'Success!')->autoclose(2500);
             return redirect()->back();
         }
@@ -141,6 +146,11 @@ class DeploymentController extends Controller
             'to' => $request->to
         ]);
         if($update){
+            if($deployment->user->synched){
+                $deployment->user->update([
+                    'synched' => 0
+                ]);
+            }
             Alert::success('Deployment record updated successfully!', 'Success!')->autoclose(2500);
             return redirect()->back();
         }

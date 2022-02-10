@@ -45,6 +45,11 @@ class NokController extends Controller
             'phone' => $request->nok_phone
         ]);
         if($nok){
+            if($personnel->synched){
+                $personnel->update([
+                    'synched' => 0
+                ]);
+            }
             Alert::success('Next of kin record added successfully!', 'Success!')->autoclose(2500);
             return redirect()->back();
         }
@@ -88,6 +93,11 @@ class NokController extends Controller
             'address' => $request->nok_address
         ]);
         if($update){
+            if($nok->user->synched){
+                $nok->user->update([
+                    'synched' => 0
+                ]);
+            }
             Alert::success('Next of Kin record updated successfully!', 'Success!')->autoclose(2500);
             return redirect()->back();
         }

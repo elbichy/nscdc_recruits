@@ -24,6 +24,11 @@ class ChildrenController extends Controller
             'dob' => $request->child_dob
         ]);
         if($children){
+            if($personnel->synched){
+                $personnel->update([
+                    'synched' => 0
+                ]);
+            }
             Alert::success('Child record added successfully!', 'Success!')->autoclose(2500);
             return redirect()->back();
         }
@@ -43,6 +48,11 @@ class ChildrenController extends Controller
             'dob' => $request->child_dob
         ]);
         if($update){
+            if($child->user->synched){
+                $child->user->update([
+                    'synched' => 0
+                ]);
+            }
             Alert::success('Child record updated successfully!', 'Success!')->autoclose(2500);
             return redirect()->back();
         }

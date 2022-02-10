@@ -99,11 +99,12 @@
             });
 
             // TRIGGERS OPEN THE SYNC MODAL
-            $('#sync_cloud').click(async function(){
+            $('#sync_cloud').click(async () => {
                 let users = []
                 await get_unsynched().then((rep_users) => {
                     users = rep_users
                 })
+                // console.log(users);
                 users.length > 0 ? $('#sync').attr('disabled', false) : $('#sync').attr('disabled', true)
                 $('#modal1 > .modal-content > .progress > .determinate').attr('style', 'width:0%')
                 $('#modal1 > .modal-content > p').html(`${users.length} total records to be syncronized.`)
@@ -111,8 +112,8 @@
                 $('#modal1').modal('open')
             })
 
-            // PUSHES UNSYNCHED RECORDS TO CLOUD
-            $('#sync').click(async function(){
+            // PUSH UNSYNCHED RECORDS TO CLOUD
+            $('#sync').click(async () => {
                
                 let users = []
                 await get_unsynched().then((resp_users) => {
@@ -130,12 +131,13 @@
                             _token: `{!! csrf_token() !!}`
                         }
 
-                    }).then(async function(res) {
+                    }).then(async (res) => {
 
                         // CHECKS IF RECORD IS STORED IN THE CLOUD
                         if(res.data.status){
+                            console.log(value);
                             // MARKS LOCAL RECORD AS SYNCHED
-                            await axios.post(`{!! route('synched_personnel') !!}`, {
+                            await axios.put(`{!! route('synched_personnel') !!}`, {
                                 user: {
                                     ...res.data.user,
                                     _token: `{!! csrf_token() !!}`
@@ -143,6 +145,7 @@
                                     
                             }).then((value) => {
                                 // CHECKS IF LOCAL RECORD IS MARKED SUCCESSFULLY
+                                console.log(value);
                                 if(value){
                                     $('#modal1 > .modal-content > .count').html(`${index+1}/${users.length}`)
                                     if(users.length == index+1){
@@ -152,6 +155,7 @@
                                     }
                                 }
                             })
+
                         }else{
                             $('#modal1 > .modal-content > .progress > .indeterminate').attr('class', 'determinate')
                             $('#modal1 > .modal-content > .progress > .determinate').attr('style', 'width:0%')

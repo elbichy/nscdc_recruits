@@ -54,6 +54,8 @@ class PersonnelController extends Controller
             ->rawColumns(['name', 'checkbox', 'view'])
             ->make();
     }
+
+    // GET ALL UNSYNCHED USERS
     public function unsynched(){
         $users = User::whereDate('dofa', '2019-01-01')->where('synched', 0)->with(['noks', 'children', 'progressions', 'qualifications'])->get();
         return response()->json($users);
@@ -425,77 +427,40 @@ class PersonnelController extends Controller
     // UPLOAD A FILE(S)
     public function upload_file(Request $request, User $user)
     {
-        $storage_drive = env("FILESYSTEM_DRIVER");
-        
-        if($storage_drive == 'do_spaces'){
-            // DIGITAL OCEAN OPTION //
-            $image_name = $user->passport;
-            if($request->has('passport')){
-                $val = $request->validate([
-                    'passport' => 'required|image|mimes:jpeg,png,jpg,|max:300|dimensions:max_width=800,max_height=800',
-                ]);
-                $file = $request->file('passport');
-                $image = $file->getClientOriginalName();
-                $ext = pathinfo($image, PATHINFO_EXTENSION);
-                $image_name = $user->service_number.'.'.$ext;
-                $file->storePubliclyAs('public/documents/'.$user->service_number.'/passport/', strtolower($image_name));
+        // LOCAL FILE STORAGE GOES HERE //
+        $image_name = $user->passport;
+        if($request->has('passport')){
+            $request->validate([
+                'passport' => 'required|image|mimes:jpeg,png,jpg,|max:300|dimensions:max_width=800,max_height=800',
+            ]);
+            $file = $request->file('passport');
+            $image = $file->getClientOriginalName();
+            $ext = pathinfo($image, PATHINFO_EXTENSION);
+            $image_name = $user->service_number.'.'.$ext;
+            $file->storeAs('public/documents/'.$user->service_number.'/passport/', $image_name);
 
-                $url = Storage::url('public/documents/'.$user->service_number.'/passport/'.strtolower($image_name));
-
-                $personnel = $user->update([
-                    'passport' => $url
+            $uploaded = $user->update([
+                'passport' => $image_name,
+            ]);
+            if($uploaded && $user->synched){
+                $user->update([
+                    'synched' => 0
                 ]);
             }
-
-            if($request->has('file')){
-                $images = $request->file('file');
-                foreach($images as $image)
-                {
-                    $file_name = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-                    $image->storePubliclyAs ('public/documents/'.$user->service_number.'/', strtolower($image->getClientOriginalName()));
-
-                    $url = Storage::url('public/documents/'.$user->service_number.'/'.strtolower($image->getClientOriginalName()));
-
-                    $upload = $user->documents()->create([
-                        'title' => ucwords($file_name),
-                        'file' => $url
-                    ]);
-                }
-            }
-            // DIGITAL OCEAN OPTION ENDS HERE//
         }
-        else{
-            // LOCAL FILE STORAGE GOES HERE //
-            $image_name = $user->passport;
-            if($request->has('passport')){
-                $request->validate([
-                    'passport' => 'required|image|mimes:jpeg,png,jpg,|max:300|dimensions:max_width=800,max_height=800',
-                ]);
-                $file = $request->file('passport');
-                $image = $file->getClientOriginalName();
-                $ext = pathinfo($image, PATHINFO_EXTENSION);
-                $image_name = $user->service_number.'.'.$ext;
-                $file->storeAs('public/documents/'.$user->service_number.'/passport/', $image_name);
 
-                $personnel = $user->update([
-                    'passport' => $image_name,
+        if($request->has('file')){
+            $images = $request->file('file');
+            foreach($images as $image)
+            {
+                $file_name = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                $image->storeAs('public/documents/'.$user->service_number.'/', $image->getClientOriginalName());
+
+                $upload = $user->documents()->create([
+                    'title' => $file_name,
+                    'file' => $image->getClientOriginalName()
                 ]);
             }
-
-            if($request->has('file')){
-                $images = $request->file('file');
-                foreach($images as $image)
-                {
-                    $file_name = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-                    $image->storeAs('public/documents/'.$user->service_number.'/', $image->getClientOriginalName());
-
-                    $upload = $user->documents()->create([
-                        'title' => $file_name,
-                        'file' => $image->getClientOriginalName()
-                    ]);
-                }
-            }
-            // LOCAL FILE STORAGE ENDS HERE //
         }
 
         Alert::success('File(s) uploaded successfully!', 'Success!')->autoclose(2500);
@@ -589,26 +554,25 @@ class PersonnelController extends Controller
             'password' => 'required|confirmed|min:6',
         ]);
         
-        if(auth()->user()->role === 'global_admin'){
-            $user->update([
-                'password' => Hash::make($request->password)
-            ]);
-            Alert::success('Personnel password updated successfully!', 'Success!')->autoclose(2500);
-        }
-        else if($user->password != null){
+        if(auth()->user()->id == $user->id || auth()->user()->hasRole('super admin')){
+            
             if(Hash::check($request->old_pass, $user->password)){
-                $user->update([
+                // return $request;
+                $updated = $user->update([
                     'password' => Hash::make($request->password)
                 ]);
+                if($updated && $user->synched){
+                    $user->update([
+                        'synched' => 0
+                    ]);
+                }
                 Alert::success('Personnel password updated successfully!', 'Success!')->autoclose(2500);
             }else{
-                Alert::error('Sorry your old password does not match with password on the database', 'Error!')->autoclose(2500);
+                Alert::error('Sorry your old password does not match with password in our record', 'Error!')->autoclose(2500);
             }
+
         }else{
-            $user->update([
-                'password' => Hash::make($request->password)
-            ]);
-            Alert::success('Personnel password updated successfully!', 'Success!')->autoclose(2500);
+            Alert::error('Sorry you don\'t have required permission to execute this action', 'Error!')->autoclose(2500);
         }
         return back();
     }
@@ -629,25 +593,23 @@ class PersonnelController extends Controller
             'dopa' => 'required|date'
         ]);
 
-        $image_name = $user->passport;
-        if($request->has('passport')){
+        // $image_name = $user->passport;
+        // if($request->has('passport')){
 
-            $val = $request->validate([
-                'passport' => 'required|image|mimes:jpeg,png,jpg,|max:200',
-            ]);
+        //     $val = $request->validate([
+        //         'passport' => 'required|image|mimes:jpeg,png,jpg,|max:200',
+        //     ]);
 
-            $file = $request->file('passport');
-            $image = $file->getClientOriginalName();
-            $ext = pathinfo($image, PATHINFO_EXTENSION);
-            $image_name = $request->service_number.'.'.$ext;
-            $file->storeAs('public/documents/'.$request->service_number.'/passport/', $image_name);
-        }
+        //     $file = $request->file('passport');
+        //     $image = $file->getClientOriginalName();
+        //     $ext = pathinfo($image, PATHINFO_EXTENSION);
+        //     $image_name = $request->service_number.'.'.$ext;
+        //     $file->storeAs('public/documents/'.$request->service_number.'/passport/', $image_name);
+        // }
 
         $rank = Rank::where('cadre', $request->cadre)->where('gl', $request->gl)->first();
-        
-        // return $request;
 
-        $personnel = $user->update([
+        $updated = $user->update([
             'name' => $request->name,
             'dob' => $request->dob,
             'sex' => $request->sex,
@@ -684,12 +646,14 @@ class PersonnelController extends Controller
             'ippis_number' => $request->ippis_number,
             'nhf' => $request->nhf,
             'pfa' => $request->pfa,
-            'pen_number' => $request->pen_number,
-            'specialization' => $request->specialization,
-            'passport' => $image_name,
+            'pen_number' => $request->pen_number
         ]);
         
-
+        if($updated && $user->synched){
+            $user->update([
+                'synched' => 0
+            ]);
+        }
         // if($request->has('command')){
         //     $user->formations()->create([
         //         'command' => $request->command
@@ -721,7 +685,12 @@ class PersonnelController extends Controller
         // Storage::deleteDirectory('public/documents/'.$user->service_number);
         $user->status = $request->reason;
         $user->save();
-        $user->delete();
+        $deleted = $user->delete();
+        if($deleted && $user->synched){
+            $user->update([
+                'synched' => 0
+            ]);
+        }
         Alert::success('Personnel record deleted successfully!', 'Success!')->autoclose(2500);
         return redirect()->route('personnel_all');
     }

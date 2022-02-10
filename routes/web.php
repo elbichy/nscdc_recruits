@@ -42,7 +42,7 @@ Route::group(['prefix' => 'dashboard'], function (){
 		Route::get('/all', [PersonnelController::class, 'index'])->name('personnel_all')->middleware(['role:super admin|personnel manager']);
 		Route::get('/get_all', [PersonnelController::class, 'get_all'])->name('personnel_get_all');
 		Route::get('/unsynched', [PersonnelController::class, 'unsynched'])->name('personnel_unsynched');
-		// Route::get('/unsynched', [SyncController::class, 'unsynched'])->name('unsynched_personnel');
+		Route::put('/synched', [SyncController::class, 'synched'])->name('synched_personnel');
 		Route::get('/{user}', [PersonnelController::class, 'show'])->name('personnel_show');
 		Route::get('/{user}/ros', [PersonnelController::class, 'ros'])->name('personnel_ros');
 		Route::post('/store', [PersonnelController::class, 'store'])->name('store_personnel');
@@ -101,9 +101,6 @@ Route::group(['prefix' => 'dashboard'], function (){
 		});
 		
 		Route::get('export/{type}',  [PersonnelController::class, 'export']);
-		
-		
-		Route::post('/synched', [SyncController::class, 'synched'])->name('synched_personnel');
 
 	});
 
