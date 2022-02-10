@@ -21,5 +21,5 @@ Route::get('/get-lgoo/{id}', function($id) {
     $data = State::find($id)->lgas;
 	return response()->json($data);
 })->name('get_lgas');
-Route::put('/synched', [SyncController::class, 'synched'])->name('synched_personnel');
+Route::put('/personnel/synched', [SyncController::class, 'synched'])->name('synched_personnel');
 Route::post('/personnel/sync', [SyncController::class, 'store'])->name('user_sync');

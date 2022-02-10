@@ -132,7 +132,15 @@ class SyncController extends Controller
     }
 
     // MARK USER SYNCHED COLUMN AS 1
-    public function synched(Request $request, User $user){
-        return $user->update(['synched' => 1]);
+    public function synched(Request $request){
+        try {
+
+            $user = User::where('service_number', $request->service_number)->first();
+            $synched = $user->update(['synched' => 1]);
+            return $synched;
+
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
     }
 }

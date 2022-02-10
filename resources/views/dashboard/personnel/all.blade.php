@@ -135,14 +135,10 @@
 
                         // CHECKS IF RECORD IS STORED IN THE CLOUD
                         if(res.data.status){
-                            console.log(value);
+                            // console.log(value);
                             // MARKS LOCAL RECORD AS SYNCHED
                             await axios.put(`{!! route('synched_personnel') !!}`, {
-                                user: {
-                                    ...res.data.user,
-                                    _token: `{!! csrf_token() !!}`
-                                }
-                                    
+                                service_number: value.service_number
                             }).then((value) => {
                                 // CHECKS IF LOCAL RECORD IS MARKED SUCCESSFULLY
                                 console.log(value);
