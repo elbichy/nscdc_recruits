@@ -107,7 +107,6 @@
         }
 
         function search(event){
-
             let value = event.currentTarget.value.length > 0 ? event.currentTarget.value : false
             if(value.length > 0 || event.keyCode == 8 || event.keyCode == 46){
                 axios.get(`/dashboard/personnel/search/${value}`).then((res) => {
