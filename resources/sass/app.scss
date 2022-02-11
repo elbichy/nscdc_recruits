@@ -1154,6 +1154,9 @@
                                                 padding: 4px 0;
                                                 font-size: 15px;
                                             }
+                                            p {
+                                                word-break: break-all;
+                                            }
                                         }
                                     }
                                     #countdowntimer {

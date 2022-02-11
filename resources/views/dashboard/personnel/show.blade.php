@@ -97,7 +97,7 @@
 								<div class="col s12 l6">
 									<div class="detailWrap">
 										<h6>Service name</h6>
-										<p>{{ $personnel->name }}</p>
+										<p>{{ strtoupper($personnel->name) }}</p>
 									</div>
 								</div>
 								<div class="col s12 l3">
@@ -109,7 +109,7 @@
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Gender</h6>
-										<p>{{ $personnel->sex != null ? $personnel->sex : 'N/A' }}</p>
+										<p>{{ $personnel->sex != null ? strtoupper($personnel->sex) : 'N/A' }}</p>
 									</div>
 								</div>
 							</div>
@@ -141,7 +141,7 @@
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Marital status</h6>
-										<p>{{ $personnel->marital_status != null ? ucfirst($personnel->marital_status) : 'N/A' }}</p>
+										<p>{{ $personnel->marital_status != null ? strtoupper($personnel->marital_status) : 'N/A' }}</p>
 									</div>
 								</div>
 							</div>
@@ -149,19 +149,19 @@
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Name of Spouse</h6>
-										<p>{{ $personnel->name_of_spouse != null ? ucfirst($personnel->name_of_spouse) : 'N/A' }}</p>
+										<p>{{ $personnel->name_of_spouse != null ? strtoupper($personnel->name_of_spouse) : 'N/A' }}</p>
 									</div>
 								</div>
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Date of Marriage</h6>
-										<p>{{ $personnel->date_of_marriage != null ? ucfirst($personnel->date_of_marriage) : 'N/A' }}</p>
+										<p>{{ $personnel->date_of_marriage != null ? $personnel->date_of_marriage : 'N/A' }}</p>
 									</div>
 								</div>
 								<div class="col s12 l6">
 									<div class="detailWrap">
 										<h6>Residential address</h6>
-										<p>{{ $personnel->residential_address != null ? ucwords($personnel->residential_address) : 'N/A' }}</p>
+										<p>{{ $personnel->residential_address != null ? strtoupper($personnel->residential_address) : 'N/A' }}</p>
 									</div>
 								</div>
 							</div>
@@ -169,13 +169,13 @@
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Place of Birth</h6>
-										<p>{{ $personnel->place_of_birth != NULL ? ucwords($personnel->place_of_birth) : 'N/A' }}</p>
+										<p>{{ $personnel->place_of_birth != NULL ? strtoupper($personnel->place_of_birth) : 'N/A' }}</p>
 									</div>
 								</div>
 								<div class="col s12 l9">
 									<div class="detailWrap">
 										<h6>Permanent address</h6>
-										<p>{{ $personnel->permanent_address != null ? ucwords($personnel->permanent_address) : 'N/A' }}</p>
+										<p>{{ $personnel->permanent_address != null ? strtoupper($personnel->permanent_address) : 'N/A' }}</p>
 									</div>
 								</div>
 							</div>
@@ -183,13 +183,13 @@
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>State of origin</h6>
-										<p>{{ $state != NULL ? ucwords($state->state_name) : 'N/A' }}</p>
+										<p>{{ $state != NULL ? strtoupper($state->state_name) : 'N/A' }}</p>
 									</div>
 								</div>
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>LGA</h6>
-										<p>{{ $lga != NULL ? ucwords($lga->lg_name) : 'N/A' }}</p>
+										<p>{{ $lga != NULL ? strtoupper($lga->lg_name) : 'N/A' }}</p>
 									</div>
 								</div>
 								<div class="col s12 l2">
@@ -201,7 +201,7 @@
 								<div class="col s12 l4">
 									<div class="detailWrap">
 										<h6>Email</h6>
-										<p>{{ $personnel->email != null ? $personnel->email : 'N/A' }}</p>
+										<p>{{ $personnel->email != null ? strtolower($personnel->email) : 'N/A' }}</p>
 									</div>
 								</div>
 							</div>
@@ -255,7 +255,7 @@
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Paypoint</h6>
-										<p>{{ $personnel->paypoint != null ? $personnel->paypoint : 'N/A'  }}</p>
+										<p>{{ $personnel->paypoint != null ? strtoupper($personnel->paypoint) : 'N/A'  }}</p>
 									</div>
 								</div>
 								<div class="col s12 l3">
@@ -267,7 +267,7 @@
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>Bank</h6>
-										<p>{{ $personnel->bank != null ? ucwords($personnel->bank) : 'N/A' }}</p>
+										<p>{{ $personnel->bank != null ? strtoupper($personnel->bank) : 'N/A' }}</p>
 									</div>
 								</div>
 								<div class="col s12 l3">
@@ -313,7 +313,7 @@
 								<div class="col s12 l3">
 									<div class="detailWrap">
 										<h6>PFA</h6>
-										<p>{{ $personnel->pfa != null ? ucwords($personnel->pfa) : 'N/A' }}</p>
+										<p>{{ $personnel->pfa != null ? strtoupper($personnel->pfa) : 'N/A' }}</p>
 									</div>
 								</div>	
 								<div class="col s12 l3">
@@ -460,9 +460,9 @@
 									@if($personnel->noks->count() > 0)
 										@foreach($personnel->noks as $nok)
 											<tr>
-												<td>{{ ucwords($nok->name) }}</td>
-												<td>{{ ucwords($nok->relationship) }}</td>
-												<td>{{ ucwords($nok->address) }}</td>
+												<td>{{ strtoupper($nok->name) }}</td>
+												<td>{{ strtoupper($nok->relationship) }}</td>
+												<td>{{ strtoupper($nok->address) }}</td>
 												<td>{{ $nok->phone }}</td>
 												{{-- @canany(['isGlobalAdmin', 'isStateAdmin']) --}}
 												<td>
@@ -628,9 +628,9 @@
 									@if($personnel->children->count() > 0)
 										@foreach($personnel->children as $child)
 											<tr>
-												<td>{{ ucwords($child->name) }}</td>
-												<td>{{ ucwords($child->sex) }}</td>
-												<td>{{ ucwords($child->dob) }}</td>
+												<td>{{ strtoupper($child->name) }}</td>
+												<td>{{ strtoupper($child->sex) }}</td>
+												<td>{{ $child->dob }}</td>
 												{{-- @canany(['isGlobalAdmin', 'isStateAdmin']) --}}
 												<td>
 													<button data-child_id="{{ $child->id }}" data-child_name="{{ $child->name }}" data-child_sex="{{ $child->sex }}" data-child_dob="{{ $child->dob }}" class="edit_child" class="red-text" title="Edit record" style="background: transparent; border: none; cursor: pointer; margin-right: 10px;">
@@ -1230,8 +1230,8 @@
 									@if($personnel->progressions->count() > 0)
 										@foreach($personnel->progressions as $progression)
 											<tr>
-												<td>{{ ucfirst($progression->type) }}</td>
-												<td>{{ ucfirst($progression->cadre) }}</td>
+												<td>{{ strtoupper($progression->type) }}</td>
+												<td>{{ strtoupper($progression->cadre) }}</td>
 												<td>{{ $progression->gl }}</td>
 												<td>{{ $progression->rank_full }}</td>
 												<td>{{ $progression->rank_short }}</td>

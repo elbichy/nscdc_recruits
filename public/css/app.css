@@ -1085,6 +1085,9 @@ input {
     padding: 4px 0;
     font-size: 15px;
   }
+  .app .my-content-wrapper .content-container .sectionWrap .sectionProfileWrap .profile .infoWrap .row .col .detailWrap p {
+    word-break: break-all;
+  }
   .app .my-content-wrapper .content-container .sectionWrap .sectionProfileWrap .profile .infoWrap .row #countdowntimer {
     width: 100%;
     display: flex;
