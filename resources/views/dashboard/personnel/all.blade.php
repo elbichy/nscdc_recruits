@@ -20,10 +20,10 @@
         </div>
         <div class="content-container">
             <div class="sectionWrap">
-                {{-- SALES HEADING --}}
+                {{-- SECTION HEADING --}}
                 <h6 class="center sectionHeading">PERSONNEL - All RECORDS</h6>
 
-                {{-- SALES TABLE --}}
+                {{-- SECTION TABLE --}}
                 <div class="sectionTableWrap z-depth-1">
                     <div class="row topMenuWrap">
                         <a id="sync_cloud" class="waves-effect waves-light btn-small" style="display: block"><i class="material-icons left">cloud</i>SYNC CLOUD</a>
@@ -37,11 +37,12 @@
                                 <th>Fullname</th>
                                 <th>Svc No.</th>
                                 <th>Sex</th>
-                                <th>DOB</th>
+                                {{-- <th>DOB</th> --}}
                                 <th>DOFA</th>
                                 <th>DOPA</th>
                                 <th>Rank</th>
                                 <th>Formation</th>
+                                <th>Passport</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -52,11 +53,12 @@
                                 <th>Fullname</th>
                                 <th>Svc No.</th>
                                 <th>Sex</th>
-                                <th>DOB</th>
+                                {{-- <th>DOB</th> --}}
                                 <th>DOFA</th>
                                 <th>DOPA</th>
                                 <th>Rank</th>
                                 <th>Formation</th>
+                                <th>Passport</th>
                                 <th></th>
                             </tr>
                         </tfoot>
@@ -185,11 +187,12 @@
                     { data: 'name', name: 'name' },
                     { data: 'service_number', name: 'service_number'},
                     { data: 'sex', name: 'sex'},
-                    { data: 'dob', name: 'dob'},
+                    // { data: 'dob', name: 'dob'},
                     { data: 'dofa', name: 'dofa'},
                     { data: 'dopa', name: 'dopa'},
                     { data: 'rank_short', name: 'rank_short'},
                     { data: 'current_formation', name: 'current_formation'},
+                    { data: 'passport', name: 'passport', "orderable": false, "searchable": false},
                     { data: 'view', name: 'view', "orderable": false, "searchable": false}
                 ],
                 initComplete: function () {
