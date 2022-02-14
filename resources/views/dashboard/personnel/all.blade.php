@@ -126,7 +126,7 @@
            
                 users.forEach(async function (value, index, array) {
                    
-                    await axios.post('http://admin.nscdc.gov.ng/api/personnel/sync', {
+                    await axios.post('https://admin.nscdc.gov.ng/api/personnel/sync', {
 
                         user: {
                             ...value,
