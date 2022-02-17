@@ -24,10 +24,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $total_personnel = User::whereDate('dofa', '2019-01-01')->count();
-        $synched = User::whereDate('dofa', '2019-01-01')->where('synched', 1)->count();
-        $unsynched = User::whereDate('dofa', '2019-01-01')->where('synched', 0)->count();
-        $admin = User::whereDate('dofa', '!=', '2019-01-01')->count();
+        $total_personnel = User::whereDate('dofa', '2022-01-21')->count();
+        $synched = User::whereDate('dofa', '2022-01-21')->where('synched', 1)->count();
+        $unsynched = User::whereDate('dofa', '2022-01-21')->where('synched', 0)->count();
+        $admin = User::whereDate('dofa', '!=', '2022-01-21')->count();
         return view('dashboard.dashboard', compact(['total_personnel', 'synched', 'unsynched', 'admin']));
     }
 

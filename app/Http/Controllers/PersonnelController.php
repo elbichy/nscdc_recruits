@@ -98,7 +98,7 @@ class PersonnelController extends Controller
 
     // GET ALL UNSYNCHED USERS
     public function unsynched(){
-        $users = User::whereDate('dofa', '2019-01-01')->where('synched', 0)->with(['noks', 'children', 'progressions', 'qualifications'])->get();
+        $users = User::whereDate('dofa', '2022-01-21')->where('synched', 0)->with(['noks', 'children', 'progressions', 'qualifications'])->get();
         return response()->json($users);
     }
     
