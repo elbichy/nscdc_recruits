@@ -32,7 +32,7 @@ class PersonnelController extends Controller
         return view('dashboard.personnel.all');
     }
     public function get_all(){
-        $personnel = User::whereDate('dofa', '2022-01-21')
+        $personnel = User::whereDate('dofa', '2022-01-31')
         ->orderByRaw(
             "FIELD(
                 rank_full, 
@@ -98,7 +98,7 @@ class PersonnelController extends Controller
 
     // GET ALL UNSYNCHED USERS
     public function unsynched(){
-        $users = User::whereDate('dofa', '2022-01-21')->where('synched', 0)->with(['noks', 'children', 'progressions', 'qualifications'])->get();
+        $users = User::whereDate('dofa', '2022-01-31')->where('synched', 0)->with(['noks', 'children', 'progressions', 'qualifications'])->get();
         return response()->json($users);
     }
     
