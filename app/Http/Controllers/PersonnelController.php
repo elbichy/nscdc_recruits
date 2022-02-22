@@ -101,6 +101,16 @@ class PersonnelController extends Controller
         $users = User::whereDate('dofa', '2022-01-31')->where('synched', 0)->with(['noks', 'children', 'progressions', 'qualifications'])->get();
         return response()->json($users);
     }
+
+    // UNSYNC USERS
+    public function unsync(){
+        $users = User::whereDate('dofa', '2022-01-31')->where('synched', 1)->get();
+        
+        foreach($users as $user):
+            $user->update([ 'synched' => 0 ]);
+        endforeach;
+        return $users->count().' users have been unsynched!';
+    }
     
 
     // CREATE NEW PERSONNEL
