@@ -36,10 +36,11 @@
                                 <th>SN</th>
                                 <th>Fullname</th>
                                 <th>Svc No.</th>
+                                <th>Email</th>
                                 <th>Sex</th>
                                 {{-- <th>DOB</th> --}}
-                                <th>DOFA</th>
-                                <th>DOPA</th>
+                                {{-- <th>DOFA</th> --}}
+                                {{-- <th>DOPA</th> --}}
                                 <th>Rank</th>
                                 <th>Formation</th>
                                 <th>Passport</th>
@@ -52,10 +53,11 @@
                                 <th>SN</th>
                                 <th>Fullname</th>
                                 <th>Svc No.</th>
+                                <th>Email</th>
                                 <th>Sex</th>
                                 {{-- <th>DOB</th> --}}
-                                <th>DOFA</th>
-                                <th>DOPA</th>
+                                {{-- <th>DOFA</th> --}}
+                                {{-- <th>DOPA</th> --}}
                                 <th>Rank</th>
                                 <th>Formation</th>
                                 <th>Passport</th>
@@ -186,10 +188,11 @@
                     },
                     { data: 'name', name: 'name' },
                     { data: 'service_number', name: 'service_number'},
+                    { data: 'email', name: 'email'},
                     { data: 'sex', name: 'sex'},
                     // { data: 'dob', name: 'dob'},
-                    { data: 'dofa', name: 'dofa'},
-                    { data: 'dopa', name: 'dopa'},
+                    // { data: 'dofa', name: 'dofa'},
+                    // { data: 'dopa', name: 'dopa'},
                     { data: 'rank_short', name: 'rank_short'},
                     { data: 'current_formation', name: 'current_formation'},
                     { data: 'passport', name: 'passport', "orderable": false, "searchable": false},

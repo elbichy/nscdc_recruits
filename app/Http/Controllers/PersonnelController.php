@@ -67,6 +67,9 @@ class PersonnelController extends Controller
             ->editColumn('name', function ($personnel) {
                 return "<b><a href=\"/dashboard/personnel/$personnel->id\">$personnel->name</a></b>";
             })
+            ->editColumn('email', function ($personnel) {
+                return strtolower($personnel->email);
+            })
             ->addColumn('checkbox', function($redeployment) {
                 return '<input type="checkbox" name="personnelCheckbox[]" class="personnelCheckbox browser-default" value="'.$redeployment->id.'" />';
             })
