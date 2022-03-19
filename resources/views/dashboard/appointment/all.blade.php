@@ -8,7 +8,7 @@
             <p>Select an excel file containing redeployment table and submit</p>
             @if ($errors->import->count())
                 <div class="errors row  red darken-1" style="padding: 4px; margin:4px 0px;" >
-                    <p class="col s12 white-text">There is an error from excel on column labeled "{{$errors->import->first()}}". ensure there are no trailing white-space or upper-cases then try to import again.</p>
+                    <p class="col s12 white-text">Thefollowing error occured: "{{$errors->import->first()}}". correct then try to import again.</p>
                 </div>
             @endif
             <form style="margin-top: 15px; margin-bottom: 0px; padding: 10px;" action="{{ route('store_imported_appointment') }}" method="post" enctype="multipart/form-data" id="importData" class="row">

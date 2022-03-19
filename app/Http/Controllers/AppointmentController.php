@@ -125,8 +125,7 @@ class AppointmentController extends Controller
                 Alert::success('Promotion records imported successfully!', 'Success!')->autoclose(222500);
                 return back();
             } catch (\Throwable $th) {
-                $index = trim(explode(":", $th->getMessage())[1]); 
-                return back()->withErrors($index, 'import');
+                return back()->withErrors($th->getMessage(), 'import');
             }
         }
     }
