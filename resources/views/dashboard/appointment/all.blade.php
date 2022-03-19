@@ -462,7 +462,7 @@
         });
     </script> --}}
     {{-- @endif --}}
-    @if ($errors->import->count())
+    @if ($errors->any())
     <script>
         $(function() {
             $('.importModal').modal('open');
