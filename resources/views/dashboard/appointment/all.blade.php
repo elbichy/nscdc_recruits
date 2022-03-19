@@ -455,13 +455,13 @@
 
     </script>
 
-    @if ($errors->any())
+    {{-- @if ($errors->any())
     <script>
         $(function() {
             $('.appointmentEditModal').modal('open');
         });
-    </script>
-    @endif
+    </script> --}}
+    {{-- @endif --}}
     @if ($errors->import->count())
     <script>
         $(function() {
