@@ -18,7 +18,6 @@ class SyncController extends Controller
     // }
 
     // GET ALL UNSYNCHED PERSONNEL
-
     public function store(Request $request){
 
         try {
@@ -130,7 +129,6 @@ class SyncController extends Controller
             return response()->json(['status'=> false, 'message'=> $e->getMessage()]);
         }
     }
-
     // MARK USER SYNCHED COLUMN AS 1
     public function synched(Request $request){
         try {
