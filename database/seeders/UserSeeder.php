@@ -28,7 +28,6 @@ class UserSeeder extends Seeder
             array('id' => '1','formation_id' => '1','user_id' => '1','command' => 'National Headquarters','department' => 'DCG Admin office','designation' => 'Secretary','from' => '2019-08-21','to' => '2021-03-14','created_at' => '2021-03-13 19:45:21','updated_at' => '2021-03-14 07:21:32'),
             array('id' => '2','formation_id' => '1','user_id' => '1','command' => 'National Headquarters','department' => 'Public Relations','designation' => 'Secretary II','from' => '2016-02-08','to' => '2017-05-15','created_at' => '2021-03-14 07:32:03','updated_at' => '2021-03-14 07:32:03'),
             array('id' => '3','formation_id' => '1','user_id' => '1','command' => 'National Headquarters','department' => 'ICT Unit','designation' => 'Web Developer','from' => '2017-05-15','to' => '2019-08-21','created_at' => '2021-03-14 07:33:40','updated_at' => '2021-03-14 07:33:40'),
-            array('id' => '4','formation_id' => '1','user_id' => '1','command' => 'National Headquarters','department' => 'R&D','designation' => 'Secretary','from' => '2017-05-15','to' => '2019-08-21','created_at' => '2021-03-14 07:33:40','updated_at' => '2021-03-14 07:33:40')
         );
         $formation_user2 = array(
             array('id' => '4','formation_id' => '1','user_id' => '2','command' => 'National Headquarters','department' => 'Procurement','designation' => 'Secretary','from' => '2019-08-21','to' => '2021-03-14','created_at' => '2021-03-13 19:45:21','updated_at' => '2021-03-14 07:21:32'),
@@ -394,7 +393,7 @@ class UserSeeder extends Seeder
         User::insert([
             'name' => 'Folorunsho K. Serah',
             'username' => '31188',
-            'email' => 'sman@gmail.com',
+            'email' => 'serah@gmail.com',
             'email_verified_at' => NULL,
             'password' => Hash::make('08065324129'),
             'remember_token' => NULL,
