@@ -52,7 +52,7 @@ class UserSeeder extends Seeder
             array('id' => '10','formation_id' => '1','user_id' => '8','command' => 'National Headquarters','department' => 'D&A','designation' => 'Secretary','from' => '2019-08-21','to' => '2021-03-14','created_at' => '2021-03-13 19:45:21','updated_at' => '2021-03-14 07:21:32'),
         );
         $formation_user9 = array(
-            array('id' => '11','formation_id' => '1','user_id' => '7','command' => 'National Headquarters','department' => 'R&D','designation' => 'Secretary','from' => '2019-08-21','to' => '2021-03-14','created_at' => '2021-03-13 19:45:21','updated_at' => '2021-03-14 07:21:32'),
+            array('id' => '11','formation_id' => '1','user_id' => '9','command' => 'National Headquarters','department' => 'R&D','designation' => 'Secretary','from' => '2019-08-21','to' => '2021-03-14','created_at' => '2021-03-13 19:45:21','updated_at' => '2021-03-14 07:21:32'),
         );
 
         $qualifications = array(
